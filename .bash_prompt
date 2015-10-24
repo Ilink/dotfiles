@@ -1,0 +1,4 @@
+D=$'\e[37;40m'
+export PS1='\n${Pink_monokai}\u${D}@${Orange_monokai}\h${D} ${Green_monokai}\w\
+$(__git_ps1 " (%s)")${D}\n$ '
+
