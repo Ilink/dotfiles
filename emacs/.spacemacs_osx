@@ -331,10 +331,13 @@ or just one char if that's not possible"
 
   (setq helm-buffers-fuzzy-matching 1)
 
-
-  ;;(define-key evil-normal-state-map (kbd "<home>") 'back-to-indentation)
   (define-key evil-normal-state-map (kbd "<home>") 'spacemacs/smart-move-beginning-of-line)
   (define-key evil-normal-state-map (kbd "<end>") 'evil-end-of-line)
+
+  ;; since we remap ":" to ";" for command mode, spacemacs takes it upon itself to remap
+  ;; the binding in the leader (SPC-;) which overrides the comment block key.
+  (spacemacs/set-leader-keys ";" 'evilnc-comment-or-uncomment-lines)
+  (spacemacs/set-leader-keys ":" 'helm-M-x)
 
   (setq-default dotspacemacs-configuration-layers '(
                                                     (auto-completion :variables
