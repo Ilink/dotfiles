@@ -346,11 +346,9 @@ or just one char if that's not possible"
 
   ;; since we remap ":" to ";" for command mode, spacemacs takes it upon itself to remap
   ;; the binding in the leader (SPC-;) which overrides the comment block key.
-  (spacemacs/set-leader-keys ";" 'evilnc-comment-or-uncomment-lines)
+  (spacemacs/set-leader-keys "\'" 'evilnc-comment-or-uncomment-lines)
   ;; this doesnt seem to work, unmaps the above..
   ;; (spacemacs/set-leader-keys ":" 'helm-M-x)
-  ;; but a "'" is ok
-  (spacemacs/set-leader-keys "\'" 'helm-M-x)
 
   (setq-default dotspacemacs-configuration-layers '(
                                                     (auto-completion :variables
