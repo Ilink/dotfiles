@@ -23,8 +23,15 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
-     ;; better-defaults
+     ;;auto-completion
+     (auto-completion :variables
+                      auto-completion-return-key-behavior 'complete
+                      auto-completion-tab-key-behavior 'complete
+                      auto-completion-complete-with-key-sequence nil
+                      auto-completion-complete-with-key-sequence-delay 0.1
+                      auto-completion-private-snippets-directory nil)
+     
+     better-defaults
      emacs-lisp
      ;; git
      ;; markdown
@@ -42,6 +49,7 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       dtrt-indent
+                                      ;;centered-cursor-mode
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
@@ -296,7 +304,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
   ;; tab stuff
   (setq dtrt-indent-mode 1)
-
   (defun backward-delete-whitespace-to-column ()
     "delete back to the previous column of whitespace, or as much whitespace as possible,
 or just one char if that's not possible"
@@ -315,19 +322,20 @@ or just one char if that's not possible"
 
   ;; this makes it so exiting insert doesnt move the cursor back
   (setq evil-move-cursor-back nil)
-
-
+  
   (setq save-place-file "~/.emacs.d/saveplace")
   (setq-default save-place t)
   (require 'saveplace)
 
-  ;; these first two don't work, but the one for the mouse does
-  ;;(define-key evil-normal-state-map [-] 'spacemacs/next-useful-buffer)
-  ;;(global-set-key "-" 'spacemacs/next-useful-buffer)
-  ;;(global-set-key [mouse-4] 'spacemacs/next-useful-buffer)
-
+  ;; buffer controls
+  (define-key evil-normal-state-map (kbd "=") 'spacemacs/next-useful-buffer)
+  (define-key evil-normal-state-map (kbd "-") 'spacemacs/previous-useful-buffer)
 
   (setq helm-buffers-fuzzy-matching 1)
+
+
+  ;;(define-key evil-normal-state-map (kbd "<home>") 'back-to-indentation)
+  (define-key evil-normal-state-map (kbd "<home>") 'spacemacs/smart-move-beginning-of-line)
 
   ;; smooth scrolling stuff
   ;;(setq redisplay-dont-pause t
@@ -348,7 +356,16 @@ or just one char if that's not possible"
         scroll-down-aggressively 0.01)
 
   (setq-default scroll-up-aggressively 0.01
-        scroll-down-aggressively 0.01)
+                scroll-down-aggressively 0.01)
+
+  (setq-default dotspacemacs-configuration-layers '(
+                                                    (auto-completion :variables
+                                                                     auto-completion-return-key-behavior 'complete
+                                                                     auto-completion-tab-key-behavior 'cycle
+                                                                     auto-completion-complete-with-key-sequence nil
+                                                                     auto-completion-complete-with-key-sequence-delay 0.1
+                                                                     auto-completion-private-snippets-directory nil)
+                                                    ))
 )
 
 
