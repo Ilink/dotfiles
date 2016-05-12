@@ -1,12 +1,38 @@
-execute pathogen#infect()
-execute pathogen#helptags()
+set nocompatible
+filetype off
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'https://github.com/ctrlpvim/ctrlp.vim.git'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'https://github.com/rking/ag.vim'
+Plugin 'https://github.com/scrooloose/nerdcommenter'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+set paste
 set ff=unix
 filetype on
 filetype indent on
 filetype plugin on
 syntax on
 set laststatus=2
-"set statusline=%<%f\%h%m%r%=%-20.(line=%l\ \ col=%c%V\ \ totlin=%L%)\ \ \%h%m%r%=%-40(bytval=0x%B,%n%Y%)\%P
 set ofu=syntaxcomplete#Complete
 set number
 set shiftwidth=4
@@ -26,53 +52,82 @@ set history=500
 set undolevels=500
 set title
 set grepprg=grep\ -nH
-
-" :let Grep_OpenQuickfixWindow = 0
+set hidden
 
 source $VIMRUNTIME/mswin.vim
 behave mswin
-let g:nerdtree_tabs_open_on_console_startup=1
-" This keeps the cwd set to the
-" root of the nerd tree
-let g:NERDTreeChDirMode       = 2
+
+
+set runtimepath^=~/.vim/bundle/ctrlp.vim
 let g:ctrlp_working_path_mode = 'rw'
 " Should never open a duplicate
 " instead it will switch to buffer
 let g:ctrlp_switch_buffer = 'ET'
+
+" airline config
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline_theme='distinguished'
+let g:airline_powerline_fonts = 1
+
+let g:NERDCreateDefaultMappings = 0
 
 " elflord actually works if xterm-256 isnt
 " available; hybrid breaks horribly
 "colorscheme elflord
 colorscheme hybrid 
 
-"Key Bindings"
+"Leader Key Bindings
+"""""""""""""""""""""""""""
+" to make space leader key work, must unmap space
+nnoremap <SPACE> <Nop>
+let mapleader = "\<Space>"
+
+" Project/file management
+nnoremap <Leader>pf :CtrlP<CR>
+
+" Buffer management
+nnoremap <Leader>bd :bdelete<CR>
+
+" Window management
+" nnoremap <Leader>wd :windowclose<CR>
+
+" map leader + [1-9] to jump to a window
+let i = 1
+while i <= 9
+    execute 'nnoremap <Leader>' . i . ' :' . i . 'wincmd w<CR>'
+        let i = i + 1
+        endwhile
+
+" Misc
+" search (silver searcher) with ag.vim
+nnoremap <Leader>/ :Ag<Space>
+nnoremap <Leader>' :call NERDComment("n", "Toggle")<CR> 
+
+"Key Bindings
+""""""""""""""""""""""""
 "move back and forth between arrows"
 nmap <silent> <A-C-Up> :wincmd k<CR>
 nmap <silent> <A-C-Down> :wincmd j<CR>
 nmap <silent> <A-C-Left> :wincmd h<CR>
 nmap <silent> <A-C-Right> :wincmd l<CR>
 
-" these are broken :(
-":noremap , <esc>yy 
-":inoremap <C-c> <esc>yyi
-" :inoremap <C-c> yyi
-
 :nnoremap ; :
 :ca W w
-:ca nto NERDTreeTabsOpen
-:ca ntc NERDTreeTabsClose
-:ca sidebarOpen NERDTreeTabsOpen
-:ca sidebarClose NERDTreeTabsClose
-:ca sidebar NERDTreeTabsToggle
-":noremap <C-]> :bn<CR>
 :map - :bprev<CR>
 :map = :bnext<CR>
 :map <S-w> :MBEbd<CR> 
 :map <Home> ^
-"nnoremap <silent> <esc> :noh<CR><esc>
-:noremap f :Rgrep 
+:noremap f :Ag<Space>
 
 " Comment hotkeys
 smap <C-/> <C-_>b 
 imap <C-/> <Leader>__
+
+" Indent stuff
+imap <S-Tab> <C-o><<
+vmap <S-TAB> <gv
+vmap <TAB> >gv
 
