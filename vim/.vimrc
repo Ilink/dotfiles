@@ -12,6 +12,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'https://github.com/rking/ag.vim'
 Plugin 'https://github.com/scrooloose/nerdcommenter'
+" Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -53,6 +54,7 @@ set undolevels=500
 set title
 set grepprg=grep\ -nH
 set hidden
+set clipboard=unnamed,unnamedplus " use system clipboard by default
 
 "source $VIMRUNTIME/mswin.vim
 "behave mswin
@@ -72,6 +74,15 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme='distinguished'
 let g:airline_powerline_fonts = 1
+
+
+" ycm
+""""""""""""""""""""""""""
+let g:ycm_server_python_interpreter='/usr/local/bin/python'
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
+let g:ycm_allow_changing_updatetime = 0
+"let g:ycm_autoclose_preview_window_after_completion = 1
+"let g:ycm_autoclose_preview_window_after_insertion = 1
 
 function! WindowNumber()
     let str=tabpagewinnr(tabpagenr())
