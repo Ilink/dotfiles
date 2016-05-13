@@ -54,9 +54,8 @@ set title
 set grepprg=grep\ -nH
 set hidden
 
-source $VIMRUNTIME/mswin.vim
-behave mswin
-
+"source $VIMRUNTIME/mswin.vim
+"behave mswin
 
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 let g:ctrlp_working_path_mode = 'rw'
@@ -64,7 +63,9 @@ let g:ctrlp_working_path_mode = 'rw'
 " instead it will switch to buffer
 let g:ctrlp_switch_buffer = 'ET'
 
+
 " airline config
+""""""""""""""""""""""""""
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
@@ -72,6 +73,14 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme='distinguished'
 let g:airline_powerline_fonts = 1
 
+function! WindowNumber()
+    let str=tabpagewinnr(tabpagenr())
+        return str
+        endfunction
+let g:airline_section_b = '%{WindowNumber()}'
+let g:airline_section_a_inactive = '%{WindowNumber()}'
+
+let g:airline_section_a = '%{WindowNumber()} %#__accent_bold#%{airline#util#wrap(airline#parts#mode(),0)}%#__restore__#%{airline#util#append(airline#parts#crypt(),0)}%{airline#util#append(airline#parts#paste(),0)}%{airline#util#append(airline#parts#spell(),0)}%{airline#util#append("",0)}%{airline#util#append(airline#parts#iminsert(),0)}'
 let g:NERDCreateDefaultMappings = 0
 
 " elflord actually works if xterm-256 isnt
@@ -92,7 +101,9 @@ nnoremap <Leader>pf :CtrlP<CR>
 nnoremap <Leader>bd :bdelete<CR>
 
 " Window management
-" nnoremap <Leader>wd :windowclose<CR>
+nnoremap <Leader>wd :close<CR>
+" toggle single vertical split. use a new buffer
+" move buffer left or right
 
 " map leader + [1-9] to jump to a window
 let i = 1
@@ -104,7 +115,8 @@ while i <= 9
 " Misc
 " search (silver searcher) with ag.vim
 nnoremap <Leader>/ :Ag<Space>
-nnoremap <Leader>' :call NERDComment("n", "Toggle")<CR> 
+nnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
+
 
 "Key Bindings
 """"""""""""""""""""""""
@@ -121,10 +133,6 @@ nmap <silent> <A-C-Right> :wincmd l<CR>
 :map <S-w> :MBEbd<CR> 
 :map <Home> ^
 :noremap f :Ag<Space>
-
-" Comment hotkeys
-smap <C-/> <C-_>b 
-imap <C-/> <Leader>__
 
 " Indent stuff
 imap <S-Tab> <C-o><<
