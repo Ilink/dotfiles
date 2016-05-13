@@ -88,7 +88,7 @@ function! WindowNumber()
     let str=tabpagewinnr(tabpagenr())
         return str
         endfunction
-let g:airline_section_b = '%{WindowNumber()}'
+"let g:airline_section_b = '%{WindowNumber()}'
 let g:airline_section_a_inactive = '%{WindowNumber()}'
 
 let g:airline_section_a = '%{WindowNumber()} %#__accent_bold#%{airline#util#wrap(airline#parts#mode(),0)}%#__restore__#%{airline#util#append(airline#parts#crypt(),0)}%{airline#util#append(airline#parts#paste(),0)}%{airline#util#append(airline#parts#spell(),0)}%{airline#util#append("",0)}%{airline#util#append(airline#parts#iminsert(),0)}'
