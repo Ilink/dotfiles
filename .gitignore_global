@@ -1,0 +1,4 @@
+# use this with:
+# git config --global core.excludesfile ~/.gitignore_global
+
+*.vim-bookmarks
