@@ -12,6 +12,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'https://github.com/rking/ag.vim'
 Plugin 'https://github.com/scrooloose/nerdcommenter'
+Plugin 'jceb/vim-orgmode'
 " Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
