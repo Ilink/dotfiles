@@ -12,6 +12,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'https://github.com/rking/ag.vim'
 Plugin 'https://github.com/scrooloose/nerdcommenter'
+Plugin 'MattesGroeger/vim-bookmarks'
 " Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
@@ -77,6 +78,12 @@ let g:airline_theme='distinguished'
 let g:airline_powerline_fonts = 1
 
 
+" bookmarks
+""""""""""""""""""""""""""
+let g:bookmark_save_per_working_dir = 1
+let g:bookmark_auto_save = 1
+
+
 " ycm
 """"""""""""""""""""""""""
 let g:ycm_server_python_interpreter='/usr/local/bin/python'
@@ -130,6 +137,12 @@ nnoremap <Leader>/ :Ag<Space>
 nnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
 vnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
 
+" Bookmarks
+nnoremap <Leader>mm :BookmarkToggle<CR>
+nnoremap <Leader>mn :BookmarkNext<CR>
+nnoremap <Leader>mp :BookmarkPrev<CR>
+nnoremap <Leader>ma :BookmarkShowAll<CR>
+nnoremap <Leader>ml :BookmarkShowAll<CR>
 
 "Key Bindings
 """"""""""""""""""""""""
