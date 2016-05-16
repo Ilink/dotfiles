@@ -128,6 +128,7 @@ while i <= 9
 " search (silver searcher) with ag.vim
 nnoremap <Leader>/ :Ag<Space>
 nnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
+vnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
 
 
 "Key Bindings
