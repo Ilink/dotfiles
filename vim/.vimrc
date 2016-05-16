@@ -12,7 +12,6 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'https://github.com/rking/ag.vim'
 Plugin 'https://github.com/scrooloose/nerdcommenter'
-Plugin 'jceb/vim-orgmode'
 " Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
@@ -56,6 +55,7 @@ set title
 set grepprg=grep\ -nH
 set hidden
 set clipboard=unnamed,unnamedplus " use system clipboard by default
+set splitbelow
 
 "source $VIMRUNTIME/mswin.vim
 "behave mswin
@@ -144,6 +144,7 @@ nmap <silent> <A-C-Right> :wincmd l<CR>
 :map = :bnext<CR>
 :map <S-w> :MBEbd<CR> 
 :map <Home> ^
+:inoremap <Home> ^ 
 :noremap f :Ag<Space>
 
 " Indent stuff
