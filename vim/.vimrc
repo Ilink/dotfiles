@@ -13,6 +13,8 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'https://github.com/rking/ag.vim'
 Plugin 'https://github.com/scrooloose/nerdcommenter'
 Plugin 'MattesGroeger/vim-bookmarks'
+Plugin 'xolox/vim-easytags'
+Plugin 'xolox/vim-misc'
 " Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
@@ -57,6 +59,7 @@ set grepprg=grep\ -nH
 set hidden
 set clipboard=unnamed,unnamedplus " use system clipboard by default
 set splitbelow
+:set path+=**
 
 "source $VIMRUNTIME/mswin.vim
 "behave mswin
@@ -143,6 +146,12 @@ nnoremap <Leader>mn :BookmarkNext<CR>
 nnoremap <Leader>mp :BookmarkPrev<CR>
 nnoremap <Leader>ma :BookmarkShowAll<CR>
 nnoremap <Leader>ml :BookmarkShowAll<CR>
+
+" Goto
+" goto definition
+nnoremap <Leader>gd <C-]>
+" try to open file under cursor
+nnoremap <Leader>gf gf 
 
 "Key Bindings
 """"""""""""""""""""""""
