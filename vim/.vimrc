@@ -15,6 +15,7 @@ Plugin 'https://github.com/scrooloose/nerdcommenter'
 Plugin 'MattesGroeger/vim-bookmarks'
 Plugin 'xolox/vim-easytags'
 Plugin 'xolox/vim-misc'
+Plugin 'mhinz/vim-startify'
 " Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
@@ -79,6 +80,12 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme='distinguished'
 let g:airline_powerline_fonts = 1
+
+
+" startify
+""""""""""""""""""""""""""
+let g:startify_session_persistence = 1
+let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks'] 
 
 
 " bookmarks
