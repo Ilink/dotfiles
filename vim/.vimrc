@@ -60,7 +60,8 @@ set grepprg=grep\ -nH
 set hidden
 set clipboard=unnamed,unnamedplus " use system clipboard by default
 set splitbelow
-:set path+=**
+set path+=**
+set cursorline " highlight line under cursor
 
 "source $VIMRUNTIME/mswin.vim
 "behave mswin
