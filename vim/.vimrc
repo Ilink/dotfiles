@@ -16,6 +16,7 @@ Plugin 'MattesGroeger/vim-bookmarks'
 Plugin 'xolox/vim-easytags'
 Plugin 'xolox/vim-misc'
 Plugin 'mhinz/vim-startify'
+Plugin 'scrooloose/nerdtree'
 " Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
@@ -160,6 +161,9 @@ nnoremap <Leader>ml :BookmarkShowAll<CR>
 nnoremap <Leader>gd <C-]>
 " try to open file under cursor
 nnoremap <Leader>gf gf 
+
+" NERDTree
+nnoremap <Leader>tt :NERDTreeToggle<CR>
 
 "Key Bindings
 """"""""""""""""""""""""
