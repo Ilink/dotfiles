@@ -165,6 +165,12 @@ nnoremap <Leader>gf gf
 " NERDTree
 nnoremap <Leader>tt :NERDTreeToggle<CR>
 
+" Registers
+nnoremap <Leader>rr :registers<CR>
+" The named 'x' buffer is used for cut (d) operations
+" see key binding remaps for d below.
+nnoremap <Leader>rx "xp
+
 "Key Bindings
 """"""""""""""""""""""""
 "move back and forth between arrows"
@@ -186,4 +192,9 @@ nmap <silent> <A-C-Right> :wincmd l<CR>
 imap <S-Tab> <C-o><<
 vmap <S-TAB> <gv
 vmap <TAB> >gv
+
+" Give delete its own named buffer by default so it doesn't overwrite
+" the last yank.
+nnoremap d "xd
+vnoremap d "xd
 
