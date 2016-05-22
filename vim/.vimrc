@@ -127,6 +127,7 @@ let mapleader = "\<Space>"
 
 " Project/file management
 nnoremap <Leader>pf :CtrlP<CR>
+nnoremap <Leader>ps :SSave<CR>
 
 " Buffer management
 nnoremap <Leader>bd :bdelete<CR>
