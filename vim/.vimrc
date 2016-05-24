@@ -17,6 +17,7 @@ Plugin 'xolox/vim-easytags'
 Plugin 'xolox/vim-misc'
 Plugin 'mhinz/vim-startify'
 Plugin 'scrooloose/nerdtree'
+Plugin 'Raimondi/delimitMate'
 " Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
@@ -63,6 +64,7 @@ set clipboard=unnamed,unnamedplus " use system clipboard by default
 set splitbelow
 set path+=**
 set cursorline " highlight line under cursor
+set autoindent
 
 "source $VIMRUNTIME/mswin.vim
 "behave mswin
@@ -94,6 +96,10 @@ let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks']
 """"""""""""""""""""""""""
 let g:bookmark_save_per_working_dir = 1
 let g:bookmark_auto_save = 1
+
+" ctrlp
+""""""""""""""""""""""""""
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 
 " ycm
@@ -199,3 +205,25 @@ vmap <TAB> >gv
 nnoremap d "xd
 vnoremap d "xd
 
+" I cant keep track of multiple registers anyway, so fuck it
+nnoremap y "cy
+vnoremap y "cy
+
+nnoremap p "cp
+vnoremap p "cp
+
+" misc
+"augroup autocom
+    "autocmd!
+    ""executes the command on quit
+     "autocmd VimLeave *.cpp  
+
+    ""execute the command on write
+    "autocmd BufWritePost,FileWritePost *.cpp !your_commad
+"augroup END
+
+" This fixes airline symbols on some of my machines
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
