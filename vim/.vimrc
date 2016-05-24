@@ -137,6 +137,7 @@ nnoremap <Leader>ps :SSave<CR>
 
 " Buffer management
 nnoremap <Leader>bd :bdelete<CR>
+nnoremap <Leader>bf :CtrlPBuffer<CR>
 
 " Window management
 nnoremap <Leader>wd :close<CR>
