@@ -92,7 +92,14 @@ let g:airline_powerline_fonts = 1
 """"""""""""""""""""""""""
 let g:startify_session_persistence = 1
 let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks'] 
+let g:startify_session_savevars = [
+           \ 'g:startify_session_savevars',
+           \ 'g:buftabline_session_order'
+\ ]
 
+" let g:startify_session_savevars = [
+"            \ 'g:startify_session_savevars'
+" \ ]
 
 " bookmarks
 """"""""""""""""""""""""""
@@ -106,6 +113,12 @@ let delimitMate_expand_cr = 1
 " ctrlp
 """"""""""""""""""""""""""
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
+" comments
+""""""""""""""""""""""""""
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'both'
+" let g:NERDDefaultAlign = 'start'
 
 " themes
 """"""""""""""""""""""""""
@@ -244,3 +257,8 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 let g:airline_symbols.space = "\ua0"
+
+
+
+" session test for tabline ordering
+" let g:buftabline_session_order = ["~/.vimrc", "plugin/buftabline.vim"]
