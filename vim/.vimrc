@@ -222,12 +222,12 @@ nnoremap p "cp
 vnoremap p "cp
 
 " Buffer manipulation
-:map - :BuffReorderPrevBuffer<CR>
-:map = :BuffReorderNextBuffer<CR>
+:nnoremap - :BuffReorderPrevBuffer<CR>
+:nnoremap = :BuffReorderNextBuffer<CR>
 ":map - :bprev<CR>
 ":map = :bnext<CR>
-:map <c-[> :BuffReorderMoveCurBufBackward<CR>
-:map <c-]> :BuffReorderMoveCurBufForward<CR>
+:nnoremap <c-k> :BuffReorderMoveCurBufBackward<CR>
+:nnoremap <c-l> :BuffReorderMoveCurBufForward<CR>
 
 " misc
 "augroup autocom
