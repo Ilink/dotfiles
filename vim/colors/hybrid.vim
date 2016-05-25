@@ -321,8 +321,9 @@ exe "hi! StatusLine"    .s:fg_comment     .s:bg_background  .s:fmt_revr
 exe "hi! StatusLineNC"  .s:fg_window      .s:bg_comment     .s:fmt_revr
 "exe "hi! TabLine"       .s:fg_foreground  .s:bg_darkcolumn  .s:fmt_revr
 
+exe "hi! TabLine"       .s:fg_foreground  .s:bg_background .s:fmt_none
 exe "hi! TabLineSel"       .s:fg_blue .s:bg_background .s:fmt_revr
-exe "hi! TabLineFill"       .s:fg_background .s:bg_line .s:fmt_revr
+exe "hi! TabLineFill"       .s:fg_none .s:bg_background .s:fmt_revr
 
 "   TabLineFill"
 "   TabLineSel"
