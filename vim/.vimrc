@@ -43,7 +43,6 @@ set laststatus=2
 set ofu=syntaxcomplete#Complete
 set number
 set shiftwidth=4
-set autoindent
 set copyindent
 set tabstop=4
 set backspace=indent,eol,start
@@ -65,6 +64,8 @@ set splitbelow
 set path+=**
 set cursorline " highlight line under cursor
 set autoindent
+set cindent
+set smartindent
 
 "source $VIMRUNTIME/mswin.vim
 "behave mswin
@@ -96,6 +97,10 @@ let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks']
 """"""""""""""""""""""""""
 let g:bookmark_save_per_working_dir = 1
 let g:bookmark_auto_save = 1
+
+" delimit mate
+""""""""""""""""""""""""""
+let delimitMate_expand_cr = 1
 
 " ctrlp
 """"""""""""""""""""""""""
