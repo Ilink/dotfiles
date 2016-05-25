@@ -18,6 +18,7 @@ Plugin 'xolox/vim-misc'
 Plugin 'mhinz/vim-startify'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Raimondi/delimitMate'
+Plugin 'ilink/vim-buftabline'
 " Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
@@ -106,6 +107,10 @@ let delimitMate_expand_cr = 1
 """"""""""""""""""""""""""
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
+" themes
+""""""""""""""""""""""""""
+let g:hybrid_use_iTerm_colors = 1
+let g:hybrid_custom_term_colors = 1
 
 " ycm
 """"""""""""""""""""""""""
@@ -194,8 +199,6 @@ nmap <silent> <A-C-Right> :wincmd l<CR>
 
 :nnoremap ; :
 :ca W w
-:map - :bprev<CR>
-:map = :bnext<CR>
 :map <S-w> :MBEbd<CR> 
 :map <Home> ^
 :inoremap <Home> ^ 
@@ -217,6 +220,14 @@ vnoremap y "cy
 
 nnoremap p "cp
 vnoremap p "cp
+
+" Buffer manipulation
+:map - :BuffReorderPrevBuffer<CR>
+:map = :BuffReorderNextBuffer<CR>
+":map - :bprev<CR>
+":map = :bnext<CR>
+:map <c-[> :BuffReorderMoveCurBufBackward<CR>
+:map <c-]> :BuffReorderMoveCurBufForward<CR>
 
 " misc
 "augroup autocom
