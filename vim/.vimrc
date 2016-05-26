@@ -239,15 +239,6 @@ vnoremap p "cp
 :nnoremap <c-k> :BuffReorderMoveCurBufBackward<CR>
 :nnoremap <c-l> :BuffReorderMoveCurBufForward<CR>
 
-" misc
-"augroup autocom
-    "autocmd!
-    ""executes the command on quit
-     "autocmd VimLeave *.cpp  
-
-    ""execute the command on write
-    "autocmd BufWritePost,FileWritePost *.cpp !your_commad
-"augroup END
 
 " This fixes airline symbols on some of my machines
 if !exists('g:airline_symbols')
@@ -257,7 +248,6 @@ let g:airline_symbols.space = "\ua0"
 
 
 " Pasting stuff without ruining the formatting
-" set pastetoggle=<F10>
 set pastetoggle=<F2>
 " windows
 inoremap <C-v> <F10><C-r>+<F10>
