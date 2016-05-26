@@ -18,6 +18,7 @@ Plugin 'xolox/vim-misc'
 Plugin 'mhinz/vim-startify'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'ilink/vim-buftabline'
 " Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
@@ -43,7 +44,6 @@ set laststatus=2
 set ofu=syntaxcomplete#Complete
 set number
 set shiftwidth=4
-set autoindent
 set copyindent
 set tabstop=4
 set backspace=indent,eol,start
@@ -65,6 +65,8 @@ set splitbelow
 set path+=**
 set cursorline " highlight line under cursor
 set autoindent
+set cindent
+set smartindent
 
 "source $VIMRUNTIME/mswin.vim
 "behave mswin
@@ -90,6 +92,10 @@ let g:airline_powerline_fonts = 1
 """"""""""""""""""""""""""
 let g:startify_session_persistence = 1
 let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks'] 
+let g:startify_session_savevars = [
+           \ 'g:startify_session_savevars',
+           \ 'g:buftabline_session_order'
+\ ]
 
 
 " bookmarks
@@ -97,10 +103,23 @@ let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks']
 let g:bookmark_save_per_working_dir = 1
 let g:bookmark_auto_save = 1
 
+" delimit mate
+""""""""""""""""""""""""""
+let delimitMate_expand_cr = 1
+
 " ctrlp
 """"""""""""""""""""""""""
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
+" comments
+""""""""""""""""""""""""""
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'both'
+
+" themes
+""""""""""""""""""""""""""
+let g:hybrid_use_iTerm_colors = 1
+let g:hybrid_custom_term_colors = 1
 
 " ycm
 """"""""""""""""""""""""""
@@ -189,8 +208,6 @@ nmap <silent> <A-C-Right> :wincmd l<CR>
 
 :nnoremap ; :
 :ca W w
-:map - :bprev<CR>
-:map = :bnext<CR>
 :map <S-w> :MBEbd<CR> 
 :map <Home> ^
 :inoremap <Home> ^ 
@@ -212,6 +229,14 @@ vnoremap y "cy
 
 nnoremap p "cp
 vnoremap p "cp
+
+" Buffer manipulation
+:nnoremap - :BuffReorderPrevBuffer<CR>
+:nnoremap = :BuffReorderNextBuffer<CR>
+":map - :bprev<CR>
+":map = :bnext<CR>
+:nnoremap <c-k> :BuffReorderMoveCurBufBackward<CR>
+:nnoremap <c-l> :BuffReorderMoveCurBufForward<CR>
 
 " misc
 "augroup autocom
