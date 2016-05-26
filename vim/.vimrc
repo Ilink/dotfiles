@@ -19,6 +19,7 @@ Plugin 'mhinz/vim-startify'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'ilink/vim-buftabline'
+Plugin 'ConradIrwin/vim-bracketed-paste'
 " Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
@@ -66,6 +67,7 @@ set cursorline " highlight line under cursor
 set autoindent
 set cindent
 set smartindent
+set tags=./tags;
 
 "source $VIMRUNTIME/mswin.vim
 "behave mswin
@@ -252,6 +254,20 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 let g:airline_symbols.space = "\ua0"
+
+
+" Pasting stuff without ruining the formatting
+" set pastetoggle=<F10>
+set pastetoggle=<F2>
+" windows
+inoremap <C-v> <F10><C-r>+<F10>
+inoremap <S-Insert> <F10><C-r>+<F10>
+" os x
+inoremap <m-v> <F10><C-r>+<F10>
+
+" this just flat out doesnt work
+" map <m-v> :set paste<CR>o<esc>"*]p:set nopaste<CR>
+
 
 
 
