@@ -89,6 +89,21 @@ let g:airline_theme='distinguished'
 let g:airline_powerline_fonts = 1
 
 
+function! WindowNumber()
+    let str=tabpagewinnr(tabpagenr())
+        return str
+        endfunction
+"let g:airline_section_b = '%{WindowNumber()}'
+let g:airline_section_a_inactive = '%{WindowNumber()}'
+
+let g:airline_section_a = '%{WindowNumber()} %#__accent_bold#%{airline#util#wrap(airline#parts#mode(),0)}%#__restore__#%{airline#util#append(airline#parts#crypt(),0)}%{airline#util#append(airline#parts#paste(),0)}%{airline#util#append(airline#parts#spell(),0)}%{airline#util#append("",0)}%{airline#util#append(airline#parts#iminsert(),0)}'
+
+" This fixes airline symbols on some of my machines
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
+
 " startify
 """"""""""""""""""""""""""
 let g:startify_session_persistence = 1
@@ -130,16 +145,12 @@ let g:ycm_allow_changing_updatetime = 0
 "let g:ycm_autoclose_preview_window_after_completion = 1
 "let g:ycm_autoclose_preview_window_after_insertion = 1
 
-function! WindowNumber()
-    let str=tabpagewinnr(tabpagenr())
-        return str
-        endfunction
-"let g:airline_section_b = '%{WindowNumber()}'
-let g:airline_section_a_inactive = '%{WindowNumber()}'
-
-let g:airline_section_a = '%{WindowNumber()} %#__accent_bold#%{airline#util#wrap(airline#parts#mode(),0)}%#__restore__#%{airline#util#append(airline#parts#crypt(),0)}%{airline#util#append(airline#parts#paste(),0)}%{airline#util#append(airline#parts#spell(),0)}%{airline#util#append("",0)}%{airline#util#append(airline#parts#iminsert(),0)}'
+" NERD
+""""""""""""""""""""""""""
 let g:NERDCreateDefaultMappings = 0
 
+" Color Theme
+""""""""""""""""""""""""""
 " elflord actually works if xterm-256 isnt
 " available; hybrid breaks horribly
 "colorscheme elflord
@@ -240,11 +251,6 @@ vnoremap p "cp
 :nnoremap <c-l> :BuffReorderMoveCurBufForward<CR>
 
 
-" This fixes airline symbols on some of my machines
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_symbols.space = "\ua0"
 
 
 " Pasting stuff without ruining the formatting
