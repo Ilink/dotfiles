@@ -223,7 +223,7 @@ nmap <silent> <A-C-Right> :wincmd l<CR>
 :ca W w
 :map <S-w> :MBEbd<CR> 
 :map <Home> ^
-:inoremap <Home> ^ 
+:imap <Home> <C-o><Home> 
 :noremap f :Ag<Space>
 
 " Indent stuff
