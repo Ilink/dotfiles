@@ -14,7 +14,7 @@ Plugin 'https://github.com/rking/ag.vim'
 Plugin 'https://github.com/scrooloose/nerdcommenter'
 Plugin 'MattesGroeger/vim-bookmarks'
 " Plugin 'xolox/vim-easytags'
-Plugin 'xolox/vim-misc'
+" Plugin 'xolox/vim-misc'
 Plugin 'mhinz/vim-startify'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
@@ -70,15 +70,17 @@ set cindent
 set smartindent
 set tags=./tags;
 
-"source $VIMRUNTIME/mswin.vim
-"behave mswin
 
+" ctrlp
+""""""""""""""""""""""""""
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 let g:ctrlp_working_path_mode = 'rw'
 " Should never open a duplicate
 " instead it will switch to buffer
 let g:ctrlp_switch_buffer = 'ET'
-
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+let g:ctrlp_regexp_search=1
+let g:ctrlp_lazy_update=1
 
 " airline config
 """"""""""""""""""""""""""
@@ -123,10 +125,6 @@ let g:bookmark_auto_save = 1
 " delimit mate
 """"""""""""""""""""""""""
 let delimitMate_expand_cr = 1
-
-" ctrlp
-""""""""""""""""""""""""""
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 " comments
 """"""""""""""""""""""""""
@@ -246,10 +244,10 @@ nnoremap p "cp
 vnoremap p "cp
 
 " Buffer manipulation
-:nnoremap - :BuffReorderPrevBuffer<CR>
-:nnoremap = :BuffReorderNextBuffer<CR>
-":map - :bprev<CR>
-":map = :bnext<CR>
+" :nnoremap - :BuffReorderPrevBuffer<CR>
+" :nnoremap = :BuffReorderNextBuffer<CR>
+:map - :bprev<CR>
+:map = :bnext<CR>
 :nnoremap <c-k> :BuffReorderMoveCurBufBackward<CR>
 :nnoremap <c-l> :BuffReorderMoveCurBufForward<CR>
 
@@ -269,5 +267,8 @@ inoremap <m-v> <F10><C-r>+<F10>
 
 
 
+set foldmethod=indent
+set foldlevel=99
+set foldlevelstart=99
 
 
