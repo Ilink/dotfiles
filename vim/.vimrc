@@ -13,13 +13,14 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'https://github.com/rking/ag.vim'
 Plugin 'https://github.com/scrooloose/nerdcommenter'
 Plugin 'MattesGroeger/vim-bookmarks'
-Plugin 'xolox/vim-easytags'
+" Plugin 'xolox/vim-easytags'
 Plugin 'xolox/vim-misc'
 Plugin 'mhinz/vim-startify'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'ilink/vim-buftabline'
+" Plugin 'ilink/vim-buftabline'
 Plugin 'ConradIrwin/vim-bracketed-paste'
+Plugin 'w0ng/vim-hybrid'
 " Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
@@ -132,11 +133,6 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'both'
 
-" themes
-""""""""""""""""""""""""""
-let g:hybrid_use_iTerm_colors = 1
-let g:hybrid_custom_term_colors = 1
-
 " ycm
 """"""""""""""""""""""""""
 let g:ycm_server_python_interpreter='/usr/local/bin/python'
@@ -154,7 +150,14 @@ let g:NERDCreateDefaultMappings = 0
 " elflord actually works if xterm-256 isnt
 " available; hybrid breaks horribly
 "colorscheme elflord
+set background=dark
+
+" let g:hybrid_use_iTerm_colors = 1
+" let g:hybrid_custom_term_colors = 1
+
 colorscheme hybrid 
+
+
 
 "Leader Key Bindings
 """""""""""""""""""""""""""
