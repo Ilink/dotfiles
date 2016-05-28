@@ -70,6 +70,14 @@ set cindent
 set smartindent
 set tags=./tags;
 
+" remove auto comment extension stuff
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" can override these with inline settings in actual text files apparently
+set foldmethod=indent
+set foldlevel=99
+set foldlevelstart=99
+
 
 " ctrlp
 """"""""""""""""""""""""""
@@ -130,6 +138,8 @@ let delimitMate_expand_cr = 1
 """"""""""""""""""""""""""
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'both'
+let g:NERDCompactSexyComs = 0
+let g:NERDDefaultNesting = 0
 
 " ycm
 """"""""""""""""""""""""""
@@ -240,8 +250,18 @@ vnoremap d "xd
 nnoremap y "cy
 vnoremap y "cy
 
-nnoremap p "cp
-vnoremap p "cp
+" the [p part pastes at the cursor instead of the next line
+nnoremap p "c[p
+vnoremap p "c[p
+
+" I switched <x> to be the same as the old <d> key
+" so it does cut
+nnoremap x "cd
+vnoremap x "cd
+" vnoremap x "c<Del>
+nnoremap xx "cdd
+" vnoremap xx "cdd
+
 
 " Buffer manipulation
 " :nnoremap - :BuffReorderPrevBuffer<CR>
@@ -266,9 +286,5 @@ inoremap <m-v> <F10><C-r>+<F10>
 " map <m-v> :set paste<CR>o<esc>"*]p:set nopaste<CR>
 
 
-
-set foldmethod=indent
-set foldlevel=99
-set foldlevelstart=99
 
 
