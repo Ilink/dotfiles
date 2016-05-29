@@ -1,0 +1,8 @@
+From https://sourceware.org/gdb/wiki/STLSupport
+
+Check out the following to some dir
+the location in .gdbinit is /usr/share/gdb_pretty
+
+	svn co svn://gcc.gnu.org/svn/gcc/trunk/libstdc++-v3/python
+
+Modify .gdbinit to wherever you decide to check this out to
