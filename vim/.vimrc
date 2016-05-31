@@ -18,7 +18,7 @@ Plugin 'MattesGroeger/vim-bookmarks'
 Plugin 'mhinz/vim-startify'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
-" Plugin 'ilink/vim-buftabline'
+Plugin 'ilink/vim-buftabline'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'w0ng/vim-hybrid'
 " Plugin 'Valloric/YouCompleteMe'
@@ -63,6 +63,7 @@ set title
 set grepprg=grep\ -nH
 set hidden
 set clipboard=unnamed,unnamedplus " use system clipboard by default
+" set clipboard=unnamedplus " use system clipboard by default
 set splitbelow
 set path+=**
 set cursorline " highlight line under cursor
@@ -222,6 +223,32 @@ nnoremap <Leader>rr :registers<CR>
 " see key binding remaps for d below.
 nnoremap <Leader>rx "xp
 
+
+" Functions
+""""""""""""""""""""""""
+function! NextBufRestricted(dir)
+    let curBufNum = bufnr("%")
+    let curBufName = bufname(curBufNum)
+    if curBufName != "NERD_tree_1" && getbufvar(curBufNum, "&buftype") != "quickfix" 
+        if a:dir == 0 
+            exec ":BuffReorderNextBuffer"
+        else
+            exec ":BuffReorderPrevBuffer"
+        endif
+    endif
+endfunction
+
+function! SudoWrite()
+    execute ":w !sudo tee > /dev/null %"
+endfunction
+com! -bar SudoWrite call SudoWrite()
+
+" Another way of doing this:
+" http://stackoverflow.com/a/7078429/187469
+" cmap w!! w !sudo tee > /dev/null %
+
+
+
 "Key Bindings
 """"""""""""""""""""""""
 "move back and forth between arrows"
@@ -267,11 +294,15 @@ nnoremap xx "cdd
 " Buffer manipulation
 " :nnoremap - :BuffReorderPrevBuffer<CR>
 " :nnoremap = :BuffReorderNextBuffer<CR>
-:map - :bprev<CR>
-:map = :bnext<CR>
+" :map - :bprev<CR>
+" :map = :bnext<CR>
 :nnoremap <c-k> :BuffReorderMoveCurBufBackward<CR>
 :nnoremap <c-l> :BuffReorderMoveCurBufForward<CR>
 
+:nnoremap - :call NextBufRestricted(-1)<CR>
+:nnoremap = :call NextBufRestricted(0)<CR>
+" :map - :bprev<CR>
+" :map = :bnext<CR>
 
 
 
@@ -286,6 +317,11 @@ inoremap <m-v> <F10><C-r>+<F10>
 " this just flat out doesnt work
 " map <m-v> :set paste<CR>o<esc>"*]p:set nopaste<CR>
 
+
+" Colors for tab plugin
+exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guibg=DarkGrey" 
+exe "hi! TabLineSel term=reverse cterm=reverse ctermfg=110 ctermbg=234 gui=bold" 
+exe "hi! TabLineFill term=reverse cterm=reverse ctermfg=234 ctermbg=235 gui=reverse" 
 
 
 
