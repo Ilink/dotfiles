@@ -23,6 +23,7 @@ Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'w0ng/vim-hybrid'
 " Plugin 'Valloric/YouCompleteMe'
 Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'majutsushi/tagbar'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -210,7 +211,7 @@ nnoremap <Leader>ml :BookmarkShowAll<CR>
 
 " Goto
 " goto definition
-nnoremap <Leader>gd <C-]>
+nnoremap <Leader>gd g<C-]>
 " try to open file under cursor
 nnoremap <Leader>gf gf 
 
@@ -222,6 +223,16 @@ nnoremap <Leader>rr :registers<CR>
 " The named 'x' buffer is used for cut (d) operations
 " see key binding remaps for d below.
 nnoremap <Leader>rx "xp
+
+" Jumps
+nnoremap <Leader>jn <C-I>
+nnoremap <Leader>jb <C-O>
+
+
+" i want a function which just jumps back and forth
+" from current to previous
+" nnoremap <Leader>jj <C-O>
+
 
 
 " Functions
