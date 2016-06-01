@@ -24,6 +24,7 @@ Plugin 'w0ng/vim-hybrid'
 " Plugin 'Valloric/YouCompleteMe'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'majutsushi/tagbar'
+Plugin 'dbakker/vim-projectroot'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -211,12 +212,19 @@ nnoremap <Leader>ml :BookmarkShowAll<CR>
 
 " Goto
 " goto definition
-nnoremap <Leader>gd g<C-]>
+" nnoremap <Leader>gd g<C-]>
+nnoremap <Leader>gd :cs find g <C-R>=expand("<cword>")<CR><CR>  
 " try to open file under cursor
 nnoremap <Leader>gf gf 
+" cscope show list of callers
+" i wonder how this works with namespace::function
+" cscope doesnt work with namespace::function it seems
+nnoremap <Leader>gc :cs find c <C-R>=expand("<cword>")<CR><CR>  
+
 
 " NERDTree
 nnoremap <Leader>tt :NERDTreeToggle<CR>
+
 
 " Registers
 nnoremap <Leader>rr :registers<CR>
@@ -334,5 +342,35 @@ exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guibg=DarkGrey"
 exe "hi! TabLineSel term=reverse cterm=reverse ctermfg=110 ctermbg=234 gui=bold" 
 exe "hi! TabLineFill term=reverse cterm=reverse ctermfg=234 ctermbg=235 gui=reverse" 
 
+
+
+" cscope
+set cscopetag cscopeverbose
+
+function! GetCscopeFile()
+    return projectroot#guess() . "/cscope.out" 
+endfunction
+
+
+if filereadable(GetCscopeFile())
+    execute("silent cs add " . GetCscopeFile())
+    " silent cs add cscope.out
+endif
+
+function! SetupSession()
+    " optimistically assume we dont have more than 1
+    try
+        silent cs remove 1
+    catch
+    endtry
+
+    try
+        let cscopeFile = GetCscopeFile() 
+        execute("silent cs add " . cscopeFile)
+    catch
+    endtry
+endfunction
+
+autocmd SessionLoadPost * call SetupSession()
 
 
