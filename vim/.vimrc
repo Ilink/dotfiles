@@ -73,6 +73,8 @@ set autoindent
 set cindent
 set smartindent
 set tags=./tags;
+set lazyredraw
+set ttyfast
 
 " remove auto comment extension stuff
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -345,6 +347,7 @@ exe "hi! TabLineFill term=reverse cterm=reverse ctermfg=234 ctermbg=235 gui=reve
 
 
 " cscope
+""""""""""""""""""""""""
 set cscopetag cscopeverbose
 
 function! GetCscopeFile()
@@ -374,3 +377,6 @@ endfunction
 autocmd SessionLoadPost * call SetupSession()
 
 
+" Misc syntax
+""""""""""""""""""""""""
+au BufRead,BufNewFile *.scala set filetype=java
