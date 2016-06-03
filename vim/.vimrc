@@ -25,6 +25,9 @@ Plugin 'w0ng/vim-hybrid'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'majutsushi/tagbar'
 Plugin 'dbakker/vim-projectroot'
+Plugin 'qpkorr/vim-bufkill'
+Plugin 'vim-scripts/C-fold'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -80,9 +83,10 @@ set ttyfast
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " can override these with inline settings in actual text files apparently
-set foldmethod=indent
-set foldlevel=99
-set foldlevelstart=99
+" set foldmethod=indent
+set foldmethod=syntax
+set foldlevel=1
+set foldlevelstart=4
 
 
 " ctrlp
@@ -186,6 +190,9 @@ nnoremap <Leader>ps :SSave<CR>
 " Buffer management
 nnoremap <Leader>bd :bdelete<CR>
 nnoremap <Leader>bf :CtrlPBuffer<CR>
+
+" Folding
+nnoremap <Leader>ff za
 
 " Window management
 nnoremap <Leader>wd :close<CR>
