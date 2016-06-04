@@ -85,8 +85,11 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 " can override these with inline settings in actual text files apparently
 " set foldmethod=indent
 set foldmethod=syntax
+" still not entirely sure what these 2 do
 set foldlevel=1
 set foldlevelstart=4
+" no folds within folds
+set foldnestmax=1
 
 
 " ctrlp
@@ -192,7 +195,13 @@ nnoremap <Leader>bd :bdelete<CR>
 nnoremap <Leader>bf :CtrlPBuffer<CR>
 
 " Folding
+" toggle fold
 nnoremap <Leader>ff za
+" close all folds
+nnoremap <Leader>fc zM
+" open all folds
+nnoremap <Leader>fo zR 
+
 
 " Window management
 nnoremap <Leader>wd :close<CR>
