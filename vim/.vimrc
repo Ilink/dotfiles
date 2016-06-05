@@ -239,7 +239,7 @@ nnoremap <Leader>gf gf
 " i wonder how this works with namespace::function
 " cscope doesnt work with namespace::function it seems
 nnoremap <Leader>gc :cs find c <C-R>=expand("<cword>")<CR><CR>  
-
+nnoremap <Leader>gs :call ToggleHeaderSrc()<CR> 
 
 " NERDTree
 nnoremap <Leader>tt :NERDTreeToggle<CR>
@@ -256,6 +256,10 @@ nnoremap <Leader>jn <C-I>
 nnoremap <Leader>jb <C-O>
 nnoremap <Leader>jfb :JumpFileBack<CR>
 nnoremap <Leader>jfn :JumpFileForward<CR>
+
+nnoremap <Leader>cb g;
+nnoremap <Leader>cn g, 
+
 
 
 " i want a function which just jumps back and forth
@@ -286,6 +290,27 @@ com! -bar SudoWrite call SudoWrite()
 " Another way of doing this:
 " http://stackoverflow.com/a/7078429/187469
 " cmap w!! w !sudo tee > /dev/null %
+
+function! ToggleHeaderSrc()
+    let curFile = expand("%")
+    let found = 0
+
+    if curFile[-4:-1] == ".cpp"
+        let tgtFile = curFile[0:-5] . ".h"
+        let found = 1
+    elseif curFile[-4:-1] == ".hpp"  
+        let tgtFile = curFile[0:-5] . ".cpp"
+        let found = 1
+    elseif curFile[-2:-1] == ".h"
+        let tgtFile = curFile[0:-3] . ".cpp"
+        let found = 1
+    endif
+
+    if found && filereadable(tgtFile)
+        execute("e " . tgtFile)
+    endif
+        
+endfunction
 
 
 
@@ -399,7 +424,6 @@ autocmd SessionLoadPost * call SetupSession()
 " Misc syntax
 """"""""""""""""""""""""
 au BufRead,BufNewFile *.scala set filetype=java
-
 
 
 
