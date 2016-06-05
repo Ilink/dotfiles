@@ -25,9 +25,9 @@ Plugin 'w0ng/vim-hybrid'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'majutsushi/tagbar'
 Plugin 'dbakker/vim-projectroot'
-Plugin 'qpkorr/vim-bufkill'
+" Plugin 'qpkorr/vim-bufkill'
 Plugin 'vim-scripts/C-fold'
-
+Plugin 'ilink/vim-jumplist-files'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -84,9 +84,10 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " can override these with inline settings in actual text files apparently
 " set foldmethod=indent
+" set foldmethod=expr
 set foldmethod=syntax
 " still not entirely sure what these 2 do
-set foldlevel=1
+set foldlevel=2
 set foldlevelstart=4
 " no folds within folds
 set foldnestmax=1
@@ -253,6 +254,8 @@ nnoremap <Leader>rx "xp
 " Jumps
 nnoremap <Leader>jn <C-I>
 nnoremap <Leader>jb <C-O>
+nnoremap <Leader>jfb :JumpFileBack<CR>
+nnoremap <Leader>jfn :JumpFileForward<CR>
 
 
 " i want a function which just jumps back and forth
@@ -396,3 +399,8 @@ autocmd SessionLoadPost * call SetupSession()
 " Misc syntax
 """"""""""""""""""""""""
 au BufRead,BufNewFile *.scala set filetype=java
+
+
+
+
+
