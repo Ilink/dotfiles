@@ -83,14 +83,16 @@ set ttyfast
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " can override these with inline settings in actual text files apparently
-" set foldmethod=indent
-set foldmethod=syntax
+set foldmethod=indent
+" set foldmethod=syntax
 " still not entirely sure what these 2 do
 set foldlevel=1
 set foldlevelstart=4
 " no folds within folds
 set foldnestmax=1
 
+
+syntax sync minlines=256
 
 " ctrlp
 """"""""""""""""""""""""""
@@ -217,7 +219,8 @@ while i <= 9
 
 " Misc
 " search (silver searcher) with ag.vim
-nnoremap <Leader>/ :Ag<Space>
+" nnoremap <Leader>/ :Ag<Space>
+nnoremap <Leader>/ :Ag --cpp<Space>
 nnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
 vnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
 
@@ -299,7 +302,6 @@ nmap <silent> <A-C-Right> :wincmd l<CR>
 :map <S-w> :MBEbd<CR> 
 :map <Home> ^
 :imap <Home> <esc><Home>i
-:noremap f :Ag<Space>
 
 " Indent stuff
 imap <S-Tab> <C-o><<
