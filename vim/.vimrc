@@ -25,7 +25,7 @@ Plugin 'w0ng/vim-hybrid'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'majutsushi/tagbar'
 Plugin 'dbakker/vim-projectroot'
-" Plugin 'qpkorr/vim-bufkill'
+Plugin 'ilink/vim-bufkill'
 Plugin 'vim-scripts/C-fold'
 Plugin 'ilink/vim-jumplist-files'
 
@@ -104,6 +104,10 @@ let g:ctrlp_switch_buffer = 'ET'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 let g:ctrlp_regexp_search=1
 let g:ctrlp_lazy_update=1
+
+" bufkill
+""""""""""""""""""""""""""
+let g:BufKillCreateMappings = 0 
 
 " airline config
 """"""""""""""""""""""""""
@@ -193,7 +197,9 @@ nnoremap <Leader>pf :CtrlP<CR>
 nnoremap <Leader>ps :SSave<CR>
 
 " Buffer management
-nnoremap <Leader>bd :bdelete<CR>
+" nnoremap <Leader>bd :call BetterDelBuf()<CR>
+nnoremap <Leader>bd :BD<CR>
+nnoremap <Leader>bu :BUNDO<CR>
 nnoremap <Leader>bf :CtrlPBuffer<CR>
 
 " Folding
@@ -314,6 +320,11 @@ function! ToggleHeaderSrc()
         
 endfunction
 
+function! BetterDelBuf()
+    let curBuf = bufnr('%')
+    call NextBufRestricted(-1)
+    execute "bd " . curBuf
+endfunction
 
 
 "Key Bindings
@@ -432,10 +443,4 @@ autocmd SessionLoadPost * call SetupSession()
 """"""""""""""""""""""""
 au BufRead,BufNewFile *.scala set filetype=java
 
-
-function! BetterDelBuf()
-    let curBuf = bufnr('%')
-    call NextBufRestricted(-1)
-    execute "bd " . curBuf
-endfunction
 
