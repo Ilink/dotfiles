@@ -20,7 +20,19 @@ set auto-load scripts-directory /usr/share/gdb/auto-load/usr/lib:.
 
 python
 import sys
+import os
+
 sys.path.insert(0, '/usr/share/gdb_pretty/python')
 from libstdcxx.v6.printers import register_libstdcxx_printers
 register_libstdcxx_printers (None)
+
+
+old_pwd = os.getcwd()
+# gdb.execute('cd /path/to/some/script')
+# gdb.execute('source source-me.gdbinit')
+
+# Restore old directory in case we had to change it
+gdb.execute('cd %s' % old_pwd)
+    
+    
 end
