@@ -433,5 +433,9 @@ autocmd SessionLoadPost * call SetupSession()
 au BufRead,BufNewFile *.scala set filetype=java
 
 
-
+function! BetterDelBuf()
+    let curBuf = bufnr('%')
+    call NextBufRestricted(-1)
+    execute "bd " . curBuf
+endfunction
 
