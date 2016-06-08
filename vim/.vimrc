@@ -330,6 +330,12 @@ nmap <silent> <A-C-Right> :wincmd l<CR>
 :map <Home> ^
 :imap <Home> <esc><Home>i
 
+" This keeps the cursor centered in the page as much as possible
+" Ordinarily page up and page down bring the cursor all the way to the top or
+" bottom
+nmap <PAGEDOWN> <C-d>
+nmap <PAGEUP> <C-u>
+
 " Indent stuff
 imap <S-Tab> <C-o><<
 vmap <S-TAB> <gv
