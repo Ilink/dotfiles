@@ -236,7 +236,9 @@ while i <= 9
 " Misc
 " search (silver searcher) with ag.vim
 " nnoremap <Leader>/ :Ag<Space>
-nnoremap <Leader>/ :Ag --cpp<Space>
+" TODO: have this detect what to search for based upon
+" the current filetype
+nnoremap <Leader>/ :Ag --cpp --cc<Space>
 nnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
 vnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
 
