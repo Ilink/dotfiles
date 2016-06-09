@@ -78,6 +78,9 @@ set smartindent
 set tags=./tags;
 set lazyredraw
 set ttyfast
+set encoding=utf-8
+set fileencoding=utf-8
+
 
 " remove auto comment extension stuff
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -144,10 +147,6 @@ let g:startify_session_savevars = [
 \ ]
 
 
-" bookmarks
-""""""""""""""""""""""""""
-let g:bookmark_save_per_working_dir = 1
-let g:bookmark_auto_save = 1
 
 " delimit mate
 """"""""""""""""""""""""""
@@ -184,6 +183,17 @@ set background=dark
 
 colorscheme hybrid 
 
+
+" bookmarks
+" This has to go after the colorscheme stuff
+""""""""""""""""""""""""""
+let g:bookmark_save_per_working_dir = 1
+let g:bookmark_auto_save = 1
+highlight BookmarkSign ctermfg=110
+highlight BookmarkLine ctermbg=235 
+" let g:bookmark_sign = '♥'
+let g:bookmark_sign = '*'
+let g:bookmark_highlight_lines = 1
 
 
 "Leader Key Bindings
