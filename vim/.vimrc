@@ -314,6 +314,7 @@ com! -bar SudoWrite call SudoWrite()
 function! ToggleHeaderSrc()
     let curFile = expand("%")
     let found = 0
+    let altTgtFile = "" 
 
     if curFile[-4:-1] == ".cpp"
         let tgtFile = curFile[0:-5] . ".h"
@@ -322,12 +323,22 @@ function! ToggleHeaderSrc()
         let tgtFile = curFile[0:-5] . ".cpp"
         let found = 1
     elseif curFile[-2:-1] == ".h"
-        let tgtFile = curFile[0:-3] . ".cpp"
+        let prefix = curFile[0:-3]  
+        let tgtFile = prefix . ".cpp"
+        let altTgtFile = prefix . ".c"  
+        let found = 1
+    elseif curFile[-2:-1] == ".c"
+        let prefix = curFile[0:-3]  
+        let tgtFile = prefix . ".h"
         let found = 1
     endif
 
-    if found && filereadable(tgtFile)
-        execute("e " . tgtFile)
+    if found 
+        if filereadable(tgtFile)
+            execute("e " . tgtFile)
+        elseif altTgtFile != "" && filereadable(altTgtFile)
+            execute("e " . altTgtFile)
+        endif
     endif
         
 endfunction
