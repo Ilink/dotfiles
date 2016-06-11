@@ -58,7 +58,6 @@ set showmatch
 set ignorecase
 set smartcase
 set smarttab
-set shiftwidth=4
 set softtabstop=4
 set expandtab
 set hlsearch
@@ -84,6 +83,9 @@ set fileencoding=utf-8
 
 " remove auto comment extension stuff
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" markdown auto-new line insertion
+autocmd FileType markdown setlocal textwidth=60 
 
 " can override these with inline settings in actual text files apparently
 set foldmethod=indent
