@@ -18,7 +18,7 @@ Plugin 'MattesGroeger/vim-bookmarks'
 Plugin 'mhinz/vim-startify'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'ilink/vim-buftabline'
+" Plugin 'ilink/vim-buftabline'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'w0ng/vim-hybrid'
 " Plugin 'Valloric/YouCompleteMe'
@@ -158,6 +158,10 @@ let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'both'
 let g:NERDCompactSexyComs = 0
 let g:NERDDefaultNesting = 0
+let g:NERDCommentEmptyLines = 1
+let g:NERDCustomDelimiters = {
+    \ 'c':{ 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/'}
+\ }
 
 " ycm
 """"""""""""""""""""""""""
@@ -295,9 +299,11 @@ function! NextBufRestricted(dir)
     let curBufName = bufname(curBufNum)
     if curBufName != "NERD_tree_1" && getbufvar(curBufNum, "&buftype") != "quickfix" 
         if a:dir == 0 
-            exec ":BuffReorderNextBuffer"
+            " exec ":BuffReorderNextBuffer"
+            exec ":bn"
         else
-            exec ":BuffReorderPrevBuffer"
+            " exec ":BuffReorderPrevBuffer"
+            exec ":bp"
         endif
     endif
 endfunction
