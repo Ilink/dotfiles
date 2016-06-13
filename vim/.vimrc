@@ -222,6 +222,9 @@ nnoremap <Leader>fc zM
 " open all folds
 nnoremap <Leader>fo zR 
 
+" Find and replace
+nnoremap <Leader>rv :%s/\%Vfind/repl/g
+nnoremap <Leader>rr :%s/find/repl/g
 
 " Window management
 nnoremap <Leader>wd :close<CR>
