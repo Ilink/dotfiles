@@ -4,3 +4,6 @@
 *.vim-bookmarks
 *.swp
 *.swo
+*.o
+*.so
+*.a
