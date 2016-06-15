@@ -247,13 +247,13 @@ while i <= 9
 
 " Misc
 " search (silver searcher) with ag.vim
-" nnoremap <Leader>/ :Ag<Space>
-" TODO: have this detect what to search for based upon
-" the current filetype
-nnoremap <Leader>/ :Ag! --cpp --cc<Space>
-" nnoremap <Leader>/ :call SearchPrompt()<CR>  
-nnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
+" nnoremap <Leader>/ :Ag! --cpp --cc<Space>
+
+" The <C-R>=fn()<CR> part will get the result of the function
+" and place it into the command
+nnoremap <Leader>/ :Ag! <C-R>=GetSearchFtype()<CR><Space>
 vnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
+nnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
 
 " Bookmarks
 nnoremap <Leader>mm :BookmarkToggle<CR>
@@ -372,15 +372,16 @@ function! SessionSavePrompt()
   execute(":SSave")
 endfunction
 
-function! SearchPrompt()
+function! GetSearchFtype()
     let search_types = ""
-    if g:session_type == "cpp"
-        let search_types = "--cc --cpp"
+    if exists('g:session_type')
+        if g:session_type == "cpp"
+            let search_types = "--cc --cpp"
+        endif
     endif
-    " nnoremap <Leader>/ :Ag! --cpp --cc<Space>
-
-    execute(":Ag! " . search_types . "<Space>")
+    return search_types
 endfunction
+
 
 "Key Bindings
 """"""""""""""""""""""""
