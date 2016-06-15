@@ -252,13 +252,9 @@ while i <= 9
 " The <C-R>=fn()<CR> part will get the result of the function
 " and place it into the command
 nnoremap <Leader>/ :Ag! <C-R>=GetSearchFtype()<CR><Space>
-" the 'y' isnt used but i dont know another way of avoding the junk that gets
-" inserted when entering command mode from visual mode
-" vnoremap <Leader>/ y:Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>=GetVisualSelection()<CR>
-vnoremap <Leader>/ y:Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>=Quote(GetVisualSelection())<CR>
-" vnoremap <Leader>/ y:Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>=PasteVisualSelection()<CR>
-" vnoremap <Leader>/ y:Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>">
-" vnoremap <Leader>/ :Ag! <C-R>=GetVisualSelection()<CR>
+" :<C-U> enters command mode and deletes (Ctrl-u) the '<,'> range
+" automatically inserted due to the visual selection.
+vnoremap <Leader>/ :<C-U>Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>=Quote(GetVisualSelection())<CR>
 vnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
 nnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
 
@@ -479,6 +475,10 @@ inoremap <m-v> <F10><C-r>+<F10>
 " this just flat out doesnt work
 " map <m-v> :set paste<CR>o<esc>"*]p:set nopaste<CR>
 
+" this takes a few moments to appear because it's not unique enough
+" vnoremap / y/<C-R>"
+" this appears instantly
+vnoremap // y/<C-R>"<CR>
 
 " Colors for tab plugin
 exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guibg=DarkGrey" 
