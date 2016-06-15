@@ -141,11 +141,13 @@ let g:airline_symbols.space = "\ua0"
 
 " startify
 """"""""""""""""""""""""""
+
 let g:startify_session_persistence = 1
 let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks'] 
 let g:startify_session_savevars = [
            \ 'g:startify_session_savevars',
-           \ 'g:buftabline_session_order'
+           \ 'g:buftabline_session_order',
+           \ 'g:session_type'
 \ ]
 
 
@@ -210,7 +212,8 @@ let mapleader = "\<Space>"
 
 " Project/file management
 nnoremap <Leader>pf :CtrlP<CR>
-nnoremap <Leader>ps :SSave<CR>
+" nnoremap <Leader>ps :SSave<CR>
+nnoremap <Leader>ps :call SessionSavePrompt()<CR>
 
 " Buffer management
 " nnoremap <Leader>bd :call BetterDelBuf()<CR>
@@ -248,6 +251,7 @@ while i <= 9
 " TODO: have this detect what to search for based upon
 " the current filetype
 nnoremap <Leader>/ :Ag! --cpp --cc<Space>
+" nnoremap <Leader>/ :call SearchPrompt()<CR>  
 nnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
 vnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
 
@@ -360,6 +364,23 @@ function! BetterDelBuf()
     execute "bd " . curBuf
 endfunction
 
+function! SessionSavePrompt()
+  let curline = getline('.')
+  call inputsave()
+  let g:session_type = input('Session type: ') | redraw
+  call inputrestore()
+  execute(":SSave")
+endfunction
+
+function! SearchPrompt()
+    let search_types = ""
+    if g:session_type == "cpp"
+        let search_types = "--cc --cpp"
+    endif
+    " nnoremap <Leader>/ :Ag! --cpp --cc<Space>
+
+    execute(":Ag! " . search_types . "<Space>")
+endfunction
 
 "Key Bindings
 """"""""""""""""""""""""
