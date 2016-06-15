@@ -252,6 +252,13 @@ while i <= 9
 " The <C-R>=fn()<CR> part will get the result of the function
 " and place it into the command
 nnoremap <Leader>/ :Ag! <C-R>=GetSearchFtype()<CR><Space>
+" the 'y' isnt used but i dont know another way of avoding the junk that gets
+" inserted when entering command mode from visual mode
+" vnoremap <Leader>/ y:Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>=GetVisualSelection()<CR>
+vnoremap <Leader>/ y:Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>=Quote(GetVisualSelection())<CR>
+" vnoremap <Leader>/ y:Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>=PasteVisualSelection()<CR>
+" vnoremap <Leader>/ y:Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>">
+" vnoremap <Leader>/ :Ag! <C-R>=GetVisualSelection()<CR>
 vnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
 nnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
 
@@ -382,6 +389,22 @@ function! GetSearchFtype()
     return search_types
 endfunction
 
+function! Quote(str)
+    let str = '"' . a:str . '"'
+    return str
+endfunction
+
+" http://stackoverflow.com/a/6271254/187469
+function! GetVisualSelection()
+  " Why is this not a built-in Vim script function?!
+  let [lnum1, col1] = getpos("'<")[1:2]
+  let [lnum2, col2] = getpos("'>")[1:2]
+  let lines = getline(lnum1, lnum2)
+  let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+  let lines[0] = lines[0][col1 - 1:]
+  let str = join(lines, "\n")
+  return join(lines, "\n")
+endfunction
 
 "Key Bindings
 """"""""""""""""""""""""
