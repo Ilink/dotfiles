@@ -8,7 +8,8 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'https://github.com/ctrlpvim/ctrlp.vim.git'
-Plugin 'vim-airline/vim-airline'
+" Plugin 'vim-airline/vim-airline'
+Plugin 'ilink/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'https://github.com/rking/ag.vim'
 Plugin 'https://github.com/scrooloose/nerdcommenter'
