@@ -281,12 +281,6 @@ nnoremap <Leader>gs :call ToggleHeaderSrc()<CR>
 nnoremap <Leader>tt :NERDTreeToggle<CR>
 
 
-" Registers
-nnoremap <Leader>rr :registers<CR>
-" The named 'x' buffer is used for cut (d) operations
-" see key binding remaps for d below.
-nnoremap <Leader>rx "xp
-
 " Jumps
 nnoremap <Leader>jn <C-I>
 nnoremap <Leader>jb <C-O>
@@ -450,21 +444,15 @@ nnoremap xx "cdd
 
 
 " Buffer manipulation
-" :nnoremap - :BuffReorderPrevBuffer<CR>
-" :nnoremap = :BuffReorderNextBuffer<CR>
-" :map - :bprev<CR>
-" :map = :bnext<CR>
 :nnoremap <c-k> :AirlineMoveCurBufBackward<CR>
-" :nnoremap <c-k> :BuffReorderMoveCurBufBackward<CR>
 :nnoremap <c-l> :AirlineMoveCurBufForward<CR>
-" :nnoremap <c-l> :BuffReorderMoveCurBufForward<CR>
 
 :nnoremap - :call NextBufRestricted(-1)<CR>
 :nnoremap = :call NextBufRestricted(0)<CR>
 " :map - :bprev<CR>
 " :map = :bnext<CR>
-:nnoremap <c-h> :AirlinePrevBuffer<CR>
-:nnoremap <c-j> :AirlineNextBuffer<CR>
+" :nnoremap <c-h> :AirlinePrevBuffer<CR>
+" :nnoremap <c-j> :AirlineNextBuffer<CR>
 
 
 
