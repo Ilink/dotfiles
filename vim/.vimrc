@@ -146,7 +146,7 @@ let g:startify_session_persistence = 1
 let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks'] 
 let g:startify_session_savevars = [
            \ 'g:startify_session_savevars',
-           \ 'g:buftabline_session_order',
+           \ 'g:airline_session_order',
            \ 'g:session_type'
 \ ]
 
@@ -311,11 +311,11 @@ function! NextBufRestricted(dir)
     let curBufName = bufname(curBufNum)
     if curBufName != "NERD_tree_1" && getbufvar(curBufNum, "&buftype") != "quickfix" 
         if a:dir == 0 
-            " exec ":BuffReorderNextBuffer"
-            exec ":bn"
+            exec ":AirlineNextBuffer"
+            " exec ":bn"
         else
-            " exec ":BuffReorderPrevBuffer"
-            exec ":bp"
+            exec ":AirlinePrevBuffer"
+            " exec ":bp"
         endif
     endif
 endfunction
@@ -454,13 +454,17 @@ nnoremap xx "cdd
 " :nnoremap = :BuffReorderNextBuffer<CR>
 " :map - :bprev<CR>
 " :map = :bnext<CR>
-:nnoremap <c-k> :BuffReorderMoveCurBufBackward<CR>
-:nnoremap <c-l> :BuffReorderMoveCurBufForward<CR>
+:nnoremap <c-k> :AirlineMoveCurBufBackward<CR>
+" :nnoremap <c-k> :BuffReorderMoveCurBufBackward<CR>
+:nnoremap <c-l> :AirlineMoveCurBufForward<CR>
+" :nnoremap <c-l> :BuffReorderMoveCurBufForward<CR>
 
 :nnoremap - :call NextBufRestricted(-1)<CR>
 :nnoremap = :call NextBufRestricted(0)<CR>
 " :map - :bprev<CR>
 " :map = :bnext<CR>
+:nnoremap <c-h> :AirlinePrevBuffer<CR>
+:nnoremap <c-j> :AirlineNextBuffer<CR>
 
 
 
