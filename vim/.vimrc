@@ -414,6 +414,8 @@ nmap <silent> <A-C-Right> :wincmd l<CR>
 " http://stackoverflow.com/a/4016817/187469
 inoremap <expr> j pumvisible() ? "\<C-N>" : "j"
 inoremap <expr> k pumvisible() ? "\<C-P>" : "k"
+" Use escape to quit the completion menu, but not exit insert mode
+inoremap <expr> <Esc> pumvisible() ? "\<C-E>" : "\<Esc>"
 
 " This keeps the cursor centered in the page as much as possible
 " Ordinarily page up and page down bring the cursor all the way to the top or
