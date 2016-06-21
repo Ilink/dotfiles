@@ -29,6 +29,7 @@ Plugin 'dbakker/vim-projectroot'
 Plugin 'ilink/vim-bufkill'
 Plugin 'vim-scripts/C-fold'
 Plugin 'ilink/vim-jumplist-files'
+Plugin 'ervandew/supertab'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -417,6 +418,8 @@ inoremap <expr> j pumvisible() ? "\<C-N>" : "j"
 inoremap <expr> k pumvisible() ? "\<C-P>" : "k"
 " Use escape to quit the completion menu, but not exit insert mode
 inoremap <expr> <Esc> pumvisible() ? "\<C-E>" : "\<Esc>"
+" this feels kinda bad, but might be worth considering
+" inoremap ;; <C-N>
 
 " This keeps the cursor centered in the page as much as possible
 " Ordinarily page up and page down bring the cursor all the way to the top or
