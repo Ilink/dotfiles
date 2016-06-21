@@ -410,6 +410,11 @@ nmap <silent> <A-C-Right> :wincmd l<CR>
 :map <Home> ^
 :imap <Home> <esc><Home>i
 
+" Allows j and k to navigate up/down within completion menu
+" http://stackoverflow.com/a/4016817/187469
+inoremap <expr> j pumvisible() ? "\<C-N>" : "j"
+inoremap <expr> k pumvisible() ? "\<C-P>" : "k"
+
 " This keeps the cursor centered in the page as much as possible
 " Ordinarily page up and page down bring the cursor all the way to the top or
 " bottom
