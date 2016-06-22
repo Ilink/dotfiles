@@ -417,7 +417,10 @@ nmap <silent> <A-C-Right> :wincmd l<CR>
 inoremap <expr> j pumvisible() ? "\<C-N>" : "j"
 inoremap <expr> k pumvisible() ? "\<C-P>" : "k"
 " Use escape to quit the completion menu, but not exit insert mode
-inoremap <expr> <Esc> pumvisible() ? "\<C-E>" : "\<Esc>"
+
+" This breaks the arrow keys
+" inoremap <expr> <Esc> pumvisible() ? "\<C-E>" : "\<Esc>"
+
 " this feels kinda bad, but might be worth considering
 " inoremap ;; <C-N>
 
@@ -524,5 +527,4 @@ autocmd SessionLoadPost * call SetupSession()
 " Misc syntax
 """"""""""""""""""""""""
 au BufRead,BufNewFile *.scala set filetype=java
-
 
