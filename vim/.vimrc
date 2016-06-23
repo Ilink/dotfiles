@@ -412,14 +412,24 @@ nmap <silent> <A-C-Right> :wincmd l<CR>
 :map <Home> ^
 :imap <Home> <esc><Home>i
 
+" Completion menu
 " Allows j and k to navigate up/down within completion menu
 " http://stackoverflow.com/a/4016817/187469
 inoremap <expr> j pumvisible() ? "\<C-N>" : "j"
 inoremap <expr> k pumvisible() ? "\<C-P>" : "k"
-" Use escape to quit the completion menu, but not exit insert mode
 
-" This breaks the arrow keys
-" inoremap <expr> <Esc> pumvisible() ? "\<C-E>" : "\<Esc>"
+" this makes arrow keys not break after escape is remapped below
+" taken from https://github.com/spf13/vim-autoclose/blob/master/plugin/autoclose.vim 
+" here is their explanation:
+"   the following simply creates an ambiguous mapping so vim fully
+"   processes the escape sequence for terminal keys, see 'ttimeout' for a
+"   rough explanation, this just forces it to work
+inoremap <silent> <C-[>OC <RIGHT>
+" close completion menu with escape but stay in insert mode
+inoremap <expr> <Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
+" accept selection with enter key
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
 
 " this feels kinda bad, but might be worth considering
 " inoremap ;; <C-N>
