@@ -501,11 +501,17 @@ exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guibg=DarkGrey"
 exe "hi! TabLineSel term=reverse cterm=reverse ctermfg=110 ctermbg=234 gui=bold" 
 exe "hi! TabLineFill term=reverse cterm=reverse ctermfg=234 ctermbg=235 gui=reverse" 
 
+" Maintain visual selection when indenting in visual mode
+vnoremap < <gv
+vnoremap > >gv
 
 
 " cscope
 """"""""""""""""""""""""
 set cscopetag cscopeverbose
+" Use quickfix instead of the other dumb menu
+" TODO: using the quickfix automatically opens the first entry. Fix so it doesnt!
+" set cscopequickfix=s-,c-,d-,i-,t-,e-
 
 function! GetCscopeFile()
     return projectroot#guess() . "/cscope.out" 
@@ -516,6 +522,14 @@ if filereadable(GetCscopeFile())
     execute("silent cs add " . GetCscopeFile())
     " silent cs add cscope.out
 endif
+
+function! CSRedir()
+	let temp_reg = @"
+	redir @"
+	silent! execute cmd
+    redir END
+    let output = copy(@")
+endfunction
 
 function! SetupSession()
     " optimistically assume we dont have more than 1
