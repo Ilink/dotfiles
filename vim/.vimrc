@@ -495,6 +495,9 @@ inoremap <m-v> <F10><C-r>+<F10>
 " vnoremap / y/<C-R>"
 " this appears instantly
 vnoremap // y/<C-R>"<CR>
+nnoremap // /<C-R>=expand("<cword>")<CR><CR>
+" nnoremap // :<C-U>Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>=Quote(GetVisualSelection())<CR>
+" nnoremap <Leader>gd :cs find g <C-R>=expand("<cword>")<CR><CR>  
 
 " Colors for tab plugin
 exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guibg=DarkGrey" 
@@ -537,4 +540,5 @@ autocmd SessionLoadPost * call SetupSession()
 " Misc syntax
 """"""""""""""""""""""""
 au BufRead,BufNewFile *.scala set filetype=java
+au BufRead,BufNewFile *.conf set filetype=apache
 
