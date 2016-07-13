@@ -81,7 +81,8 @@ set lazyredraw
 set ttyfast
 set encoding=utf-8
 set fileencoding=utf-8
-
+" this allows the cursor to go 1-past the end of the line
+" set virtualedit=onemore
 
 " remove auto comment extension stuff
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
