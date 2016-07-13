@@ -1,0 +1,10 @@
+if [ ! -f /usr/local/bin/vim ]; then
+	alias vi='/usr/bin/vim'
+else
+	alias vi='/usr/local/bin/vim'
+fi
+
+alias t='touch'
+alias ls='ls --color=auto'
+alias ll='ls -la'
+
