@@ -73,8 +73,8 @@ set clipboard=unnamed,unnamedplus " use system clipboard by default
 set splitbelow
 set path+=**
 set cursorline " highlight line under cursor
-set autoindent
-set cindent
+" set autoindent
+" set cindent
 set smartindent
 set tags=./tags;
 set lazyredraw
@@ -568,3 +568,15 @@ autocmd SessionLoadPost * call SetupSession()
 au BufRead,BufNewFile *.scala set filetype=java
 au BufRead,BufNewFile *.conf set filetype=apache
 
+
+" Find replace
+" replace accross all files in current directory
+" ag -l | xargs perl -pi -E 's/NetworkExp/Tracer/g'
+
+
+" This will keep the spaces after an indentation
+" Usually they go away if you make a newline and exit insert mode
+" http://stackoverflow.com/a/7413117/187469 
+inoremap <CR> <CR>x<BS>
+nnoremap o ox<BS>
+nnoremap O Ox<BS>
