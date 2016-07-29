@@ -102,6 +102,13 @@ set foldnestmax=1
 
 syntax sync minlines=256
 
+" Tags
+""""""""""""""""""""""""""
+" remove i to not search every file in our path 
+" http://stackoverflow.com/questions/2169645/vims-autocomplete-is-excruciatingly-slow
+set complete=.,w,b,u,t
+
+
 " ctrlp
 """"""""""""""""""""""""""
 set runtimepath^=~/.vim/bundle/ctrlp.vim
@@ -233,13 +240,17 @@ nnoremap <Leader>fc zM
 nnoremap <Leader>fo zR 
 
 " Find and replace
-nnoremap <Leader>rv :%s/\%Vfind/repl/g
+" TODO fix me
+" nnoremap <Leader>rv :%s/\%Vfind/repl/g 
 nnoremap <Leader>rr :%s/find/repl/g
 
 " Window management
 nnoremap <Leader>wd :close<CR>
-" toggle single vertical split. use a new buffer
-" move buffer left or right
+" the # specifies the buffer. <C-R> grabs function output
+nnoremap <Leader>ws :vsplit #<C-R>=bufnr('%')<CR><CR>
+" horizontal split
+nnoremap <Leader>wh :split #<C-R>=bufnr('%')<CR><CR>
+
 
 " map leader + [1-9] to jump to a window
 let i = 1
