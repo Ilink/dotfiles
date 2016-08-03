@@ -12,7 +12,7 @@ Plugin 'https://github.com/ctrlpvim/ctrlp.vim.git'
 Plugin 'ilink/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'https://github.com/rking/ag.vim'
-Plugin 'https://github.com/scrooloose/nerdcommenter'
+Plugin 'tomtom/tcomment_vim'
 Plugin 'MattesGroeger/vim-bookmarks'
 " Plugin 'xolox/vim-easytags'
 " Plugin 'xolox/vim-misc'
@@ -73,8 +73,8 @@ set clipboard=unnamed,unnamedplus " use system clipboard by default
 set splitbelow
 set path+=**
 set cursorline " highlight line under cursor
-" set autoindent
-" set cindent
+set autoindent
+set cindent
 set smartindent
 set tags=./tags;
 set lazyredraw
@@ -101,6 +101,13 @@ set foldnestmax=1
 
 
 syntax sync minlines=256
+
+" Tags
+""""""""""""""""""""""""""
+" remove i to not search every file in our path 
+" http://stackoverflow.com/questions/2169645/vims-autocomplete-is-excruciatingly-slow
+set complete=.,w,b,u,t
+
 
 " ctrlp
 """"""""""""""""""""""""""
@@ -161,14 +168,7 @@ let delimitMate_expand_cr = 1
 
 " comments
 """"""""""""""""""""""""""
-let g:NERDSpaceDelims = 1
-let g:NERDDefaultAlign = 'both'
-let g:NERDCompactSexyComs = 0
-let g:NERDDefaultNesting = 0
-let g:NERDCommentEmptyLines = 1
-let g:NERDCustomDelimiters = {
-    \ 'c':{ 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/'}
-\ }
+let g:tcommentMaps = 0 
 
 " ycm
 """"""""""""""""""""""""""
@@ -233,13 +233,17 @@ nnoremap <Leader>fc zM
 nnoremap <Leader>fo zR 
 
 " Find and replace
-nnoremap <Leader>rv :%s/\%Vfind/repl/g
+" TODO fix me
+" nnoremap <Leader>rv :%s/\%Vfind/repl/g 
 nnoremap <Leader>rr :%s/find/repl/g
 
 " Window management
 nnoremap <Leader>wd :close<CR>
-" toggle single vertical split. use a new buffer
-" move buffer left or right
+" the # specifies the buffer. <C-R> grabs function output
+nnoremap <Leader>ws :vsplit #<C-R>=bufnr('%')<CR><CR>
+" horizontal split
+nnoremap <Leader>wh :split #<C-R>=bufnr('%')<CR><CR>
+
 
 " map leader + [1-9] to jump to a window
 let i = 1
@@ -258,8 +262,11 @@ nnoremap <Leader>/ :Ag! <C-R>=GetSearchFtype()<CR><Space>
 " :<C-U> enters command mode and deletes (Ctrl-u) the '<,'> range
 " automatically inserted due to the visual selection.
 vnoremap <Leader>/ :<C-U>Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>=Quote(GetVisualSelection())<CR>
-vnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
-nnoremap <Leader>' :call NERDComment("n", "Toggle")<CR>
+
+" Comments
+" For some reason this doesnt with with nore
+vmap <Leader>' <Plug>TComment_gc
+nmap <Leader>' <Plug>TComment_gcc
 
 " Bookmarks
 nnoremap <Leader>mm :BookmarkToggle<CR>
