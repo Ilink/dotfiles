@@ -293,6 +293,8 @@ nnoremap <Leader>jfn :JumpFileForward<CR>
 nnoremap <Leader>cb g;
 nnoremap <Leader>cn g, 
 
+" Tagbar
+nnoremap <Leader>bb :TagbarToggle<CR>
 
 
 " i want a function which just jumps back and forth
