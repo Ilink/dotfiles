@@ -436,6 +436,8 @@ nmap <silent> <A-C-Right> :wincmd l<CR>
 " http://stackoverflow.com/a/4016817/187469
 inoremap <expr> j pumvisible() ? "\<C-N>" : "j"
 inoremap <expr> k pumvisible() ? "\<C-P>" : "k"
+" " accept selection with enter key
+inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
 
 " this makes arrow keys not break after escape is remapped below
 " taken from https://github.com/spf13/vim-autoclose/blob/master/plugin/autoclose.vim 
@@ -446,8 +448,6 @@ inoremap <expr> k pumvisible() ? "\<C-P>" : "k"
 inoremap <silent> <C-[>OC <RIGHT>
 " close completion menu with escape but stay in insert mode
 inoremap <expr> <Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
-" accept selection with enter key
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 
 " this feels kinda bad, but might be worth considering
@@ -584,9 +584,9 @@ au BufRead,BufNewFile *.conf set filetype=apache
 " This will keep the spaces after an indentation
 " Usually they go away if you make a newline and exit insert mode
 " http://stackoverflow.com/a/7413117/187469 
-inoremap <CR> <CR>x<BS>
-nnoremap o ox<BS>
-nnoremap O Ox<BS>
+" inoremap <CR> <CR>x<BS>
+" nnoremap o ox<BS>
+" nnoremap O Ox<BS>
 
 
 " Misc extra keyword highlights
