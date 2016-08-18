@@ -75,6 +75,9 @@ set path+=**
 set cursorline " highlight line under cursor
 set autoindent
 set cindent
+" http://stackoverflow.com/a/7623017/187469
+" makes public/private not get indented
+set cinoptions=g-1
 set smartindent
 set tags=./tags;
 set lazyredraw
@@ -117,8 +120,14 @@ let g:ctrlp_working_path_mode = 'rw'
 " instead it will switch to buffer
 let g:ctrlp_switch_buffer = 'ET'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+" let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard --exclude=*\.js --exclude=*html']
 let g:ctrlp_regexp_search=1
 let g:ctrlp_lazy_update=1
+" let g:ctrlp_custom_ignore = {
+"     \ 'dir':  '\v(contrib)|([\/]\.(git|hg|svn|js|html))$',
+"     \ 'file': '\v\.(exe|so|dll|js|html)$',
+"     \ 'link': 'FFFFFF',
+"     \ }
 
 " bufkill
 """"""""""""""""""""""""""
@@ -578,3 +587,18 @@ au BufRead,BufNewFile *.conf set filetype=apache
 inoremap <CR> <CR>x<BS>
 nnoremap o ox<BS>
 nnoremap O Ox<BS>
+
+
+" Misc extra keyword highlights
+"""""""""""""""""""""""""""""""""""
+" this should be orange with the hybrid color scheme
+hi! Important ctermfg=173 
+match Important /NOTE/
+
+" Misc Notes
+"""""""""""""""""""""""""""
+" using vim to write git commit messages has problems sometimes (warnings on
+" startup). This seems to fix it:
+"       git config --global core.editor /usr/bin/vim
+" where the path to vim matches your environment
+
