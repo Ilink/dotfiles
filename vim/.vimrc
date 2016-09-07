@@ -30,6 +30,8 @@ Plugin 'ilink/vim-bufkill'
 Plugin 'vim-scripts/C-fold'
 Plugin 'ilink/vim-jumplist-files'
 Plugin 'ervandew/supertab'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -89,9 +91,6 @@ set fileencoding=utf-8
 
 " remove auto comment extension stuff
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
-" markdown auto-new line insertion
-autocmd FileType markdown setlocal textwidth=60 
 
 " can override these with inline settings in actual text files apparently
 set foldmethod=indent
@@ -158,6 +157,7 @@ if !exists('g:airline_symbols')
 endif
 let g:airline_symbols.space = "\ua0"
 
+
 " startify
 """"""""""""""""""""""""""
 
@@ -169,6 +169,12 @@ let g:startify_session_savevars = [
            \ 'g:session_type'
 \ ]
 
+" markdown
+""""""""""""""""""""""""""
+" I find the way it does indenting not helpful
+let g:vim_markdown_new_list_item_indent = 0
+" markdown auto-new line insertion
+autocmd FileType markdown setlocal textwidth=60 
 
 
 " delimit mate
@@ -233,6 +239,19 @@ nnoremap <Leader>bd :BD<CR>
 nnoremap <Leader>bu :BUNDO<CR>
 nnoremap <Leader>bf :CtrlPBuffer<CR>
 
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+" nmap <Leader>g1 <Plug>AirlineSelectTab1   
+nmap <Leader>g1 :AirlineGotoOrderedBuffer1<CR>
+nmap <Leader>g2 <Plug>AirlineSelectTab2
+nmap <Leader>g3 <Plug>AirlineSelectTab3   
+nmap <Leader>g4 <Plug>AirlineSelectTab4   
+nmap <Leader>g5 <Plug>AirlineSelectTab5   
+nmap <Leader>g6 <Plug>AirlineSelectTab6
+nmap <Leader>g7 <Plug>AirlineSelectTab7
+nmap <Leader>g8 <Plug>AirlineSelectTab8
+nmap <Leader>g9 <Plug>AirlineSelectTab9
+nmap <Leader>g0 :AirlineLastBuffer<CR>
+
 " Folding
 " toggle fold
 nnoremap <Leader>ff za
@@ -295,6 +314,7 @@ nnoremap <Leader>gf gf
 " cscope doesnt work with namespace::function it seems
 nnoremap <Leader>gc :cs find c <C-R>=expand("<cword>")<CR><CR>  
 nnoremap <Leader>gs :call ToggleHeaderSrc()<CR> 
+
 
 " NERDTree
 nnoremap <Leader>tt :NERDTreeToggle<CR>
@@ -382,6 +402,11 @@ function! BetterDelBuf()
     execute "bd " . curBuf
 endfunction
 
+" function! GotoLastTab()
+"     " execute "normal \<Plug>AirlineSelectTab1
+"     " call NextBufRestricted(-1)
+" endfunction
+
 function! SessionSavePrompt()
   let curline = getline('.')
   call inputsave()
@@ -430,6 +455,10 @@ nmap <silent> <A-C-Right> :wincmd l<CR>
 :map <S-w> :MBEbd<CR> 
 :map <Home> ^
 :imap <Home> <esc><Home>i
+" Since x got turned into cut, i need a new key to delete a single char
+nnoremap q x
+vnoremap q x
+nnoremap <S-q> q
 
 " Completion menu
 " Allows j and k to navigate up/down within completion menu
