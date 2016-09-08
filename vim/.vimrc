@@ -248,14 +248,14 @@ nnoremap <Leader>bf :CtrlPBuffer<CR>
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 " nmap <Leader>g1 <Plug>AirlineSelectTab1   
 nmap <Leader>g1 :AirlineGotoOrderedBuffer1<CR>
-nmap <Leader>g2 <Plug>AirlineSelectTab2
-nmap <Leader>g3 <Plug>AirlineSelectTab3   
-nmap <Leader>g4 <Plug>AirlineSelectTab4   
-nmap <Leader>g5 <Plug>AirlineSelectTab5   
-nmap <Leader>g6 <Plug>AirlineSelectTab6
-nmap <Leader>g7 <Plug>AirlineSelectTab7
-nmap <Leader>g8 <Plug>AirlineSelectTab8
-nmap <Leader>g9 <Plug>AirlineSelectTab9
+nmap <Leader>g2 :AirlineGotoOrderedBuffer2<CR>
+nmap <Leader>g3 :AirlineGotoOrderedBuffer3<CR>
+nmap <Leader>g4 :AirlineGotoOrderedBuffer4<CR>
+nmap <Leader>g5 :AirlineGotoOrderedBuffer5<CR>
+nmap <Leader>g6 :AirlineGotoOrderedBuffer6<CR>
+nmap <Leader>g7 :AirlineGotoOrderedBuffer7<CR>
+nmap <Leader>g8 :AirlineGotoOrderedBuffer8<CR>
+nmap <Leader>g9 :AirlineGotoOrderedBuffer9<CR>
 nmap <Leader>g0 :AirlineLastBuffer<CR>
 
 " Folding
