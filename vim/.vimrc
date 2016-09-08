@@ -30,8 +30,10 @@ Plugin 'ilink/vim-bufkill'
 Plugin 'vim-scripts/C-fold'
 Plugin 'ilink/vim-jumplist-files'
 Plugin 'ervandew/supertab'
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
+" Plugin 'godlygeek/tabular'
+" Plugin 'plasticboy/vim-markdown'
+Plugin 'ilink/vim-flavored-markdown'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -172,10 +174,14 @@ let g:startify_session_savevars = [
 " markdown
 """"""""""""""""""""""""""
 " I find the way it does indenting not helpful
-let g:vim_markdown_new_list_item_indent = 0
+" let g:vim_markdown_new_list_item_indent = 0
 " markdown auto-new line insertion
 autocmd FileType markdown setlocal textwidth=60 
-
+" autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+augroup markdown
+    au!
+    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+augroup END
 
 " delimit mate
 """"""""""""""""""""""""""
@@ -556,23 +562,28 @@ exe "hi! TabLineFill term=reverse cterm=reverse ctermfg=234 ctermbg=235 gui=reve
 vnoremap < <gv
 vnoremap > >gv
 
+" ctags
+"""""""""""
+set tags=./tags;
+" set tags+=./tags;../.git/tags
+" set tags=../.git/tags
 
 " cscope
 """"""""""""""""""""""""
-set cscopetag cscopeverbose
-" Use quickfix instead of the other dumb menu
-" TODO: using the quickfix automatically opens the first entry. Fix so it doesnt!
-" set cscopequickfix=s-,c-,d-,i-,t-,e-
+" set cscopetag cscopeverbose
+" " Use quickfix instead of the other dumb menu
+" " TODO: using the quickfix automatically opens the first entry. Fix so it doesnt!
+" " set cscopequickfix=s-,c-,d-,i-,t-,e-
+"
+" function! GetCscopeFile()
+"     return projectroot#guess() . "/cscope.out" 
+" endfunction
 
-function! GetCscopeFile()
-    return projectroot#guess() . "/cscope.out" 
-endfunction
 
-
-if filereadable(GetCscopeFile())
-    execute("silent cs add " . GetCscopeFile())
-    " silent cs add cscope.out
-endif
+" if filereadable(GetCscopeFile())
+"     execute("silent cs add " . GetCscopeFile())
+"     " silent cs add cscope.out
+" endif
 
 function! CSRedir()
 	let temp_reg = @"
@@ -589,11 +600,11 @@ function! SetupSession()
     catch
     endtry
 
-    try
-        let cscopeFile = GetCscopeFile() 
-        execute("silent cs add " . cscopeFile)
-    catch
-    endtry
+    " try
+    "     let cscopeFile = GetCscopeFile() 
+    "     execute("silent cs add " . cscopeFile)
+    " catch
+    " endtry
 endfunction
 
 autocmd SessionLoadPost * call SetupSession()
