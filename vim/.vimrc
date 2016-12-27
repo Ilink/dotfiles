@@ -7,7 +7,8 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'https://github.com/ctrlpvim/ctrlp.vim.git'
+" Plugin 'https://github.com/ctrlpvim/ctrlp.vim.git'
+Plugin 'wincent/command-t'
 " Plugin 'vim-airline/vim-airline'
 Plugin 'ilink/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -30,10 +31,14 @@ Plugin 'ilink/vim-bufkill'
 Plugin 'vim-scripts/C-fold'
 Plugin 'ilink/vim-jumplist-files'
 Plugin 'ervandew/supertab'
+Plugin 'henrik/vim-indexed-search'
+Plugin 'vim-scripts/DoxygenToolkit.vim'
 " Plugin 'godlygeek/tabular'
 " Plugin 'plasticboy/vim-markdown'
-Plugin 'ilink/vim-flavored-markdown'
-
+" Plugin 'ilink/vim-flavored-markdown'
+" Plugin 'kana/vim-submode'
+" Plugin 'tpope/vim-fugitive'
+" Plugin 'xolox/vim-notes'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -86,10 +91,17 @@ set smartindent
 set tags=./tags;
 set lazyredraw
 set ttyfast
+set regexpengine=1
 set encoding=utf-8
 set fileencoding=utf-8
+set t_Co=256
+let &t_Co=256
 " this allows the cursor to go 1-past the end of the line
 " set virtualedit=onemore
+
+" improves performance but matches appear slower
+let g:matchparen_timeout = 20
+let g:matchparen_insert_timeout = 20
 
 " remove auto comment extension stuff
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -112,6 +124,9 @@ syntax sync minlines=256
 " http://stackoverflow.com/questions/2169645/vims-autocomplete-is-excruciatingly-slow
 set complete=.,w,b,u,t
 
+" Git
+""""""""""""""""""""""""""
+
 
 " ctrlp
 """"""""""""""""""""""""""
@@ -123,12 +138,18 @@ let g:ctrlp_switch_buffer = 'ET'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 " let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard --exclude=*\.js --exclude=*html']
 let g:ctrlp_regexp_search=1
-let g:ctrlp_lazy_update=1
+" let g:ctrlp_lazy_update=1
+let g:ctrlp_lazy_update=300
+" apparently some settings of this variable override the custom ignore below
+" not sure why
+unlet g:ctrlp_user_command
 " let g:ctrlp_custom_ignore = {
-"     \ 'dir':  '\v(contrib)|([\/]\.(git|hg|svn|js|html))$',
-"     \ 'file': '\v\.(exe|so|dll|js|html)$',
-"     \ 'link': 'FFFFFF',
-"     \ }
+" 	\ 'dir':  '\v(contrib)|([\/]\.(git|hg|svn|js|html))$',
+" 	\ 'file': '\v\.(exe|so|dll|js|html)$',
+" 	\ }
+" let g:ctrlp_custom_ignore = {
+" 	\ 'dir':  'contrib$\|\.git$\|\.hg$\|\.svn$\|bower_components$\|dist$\|node_modules$\|project_files$\|test$',
+"     \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$\|\.js$\|\.html$\|\.map$\|\.md5$\|\.png$\|\.jpg$' }
 
 " bufkill
 """"""""""""""""""""""""""
@@ -136,13 +157,71 @@ let g:BufKillCreateMappings = 0
 
 " airline config
 """"""""""""""""""""""""""
+" Returns true if at least delay seconds have elapsed since the last time this function was called, based on the time
+" contained in the variable "timer". The first time it is called, the variable is defined and the function returns
+" true.
+"
+" True means not zero.
+"
+" For example, to execute something no more than once every two seconds using a variable named "b:myTimer", do this:
+"
+" if LongEnough( "b:myTimer", 2 )
+"   <do the thing>
+" endif
+"
+" The optional 3rd parameter is the number of times to suppress the operation within the specified time and then let it
+" happen even though the required delay hasn't happened. For example:
+"
+" if LongEnough( "b:myTimer", 2, 5 )
+"   <do the thing>
+" endif
+"
+" Means to execute either every 2 seconds or every 5 calls, whichever happens first.
+function! LongEnough( timer, delay, ... )
+  let result = 0
+  let suppressionCount = 0
+  if ( exists( 'a:1' ) )
+    let suppressionCount = a:1
+  endif
+  " This is the first time we're being called.
+  if ( !exists( a:timer ) )
+    let result = 1
+  else
+    let timeElapsed = localtime() - {a:timer}
+    " If it's been a while...
+    if ( timeElapsed >= a:delay )
+      let result = 1
+    elseif ( suppressionCount > 0 )
+      let {a:timer}_callCount += 1
+      " It hasn't been a while, but the number of times we have been called has hit the suppression limit, so we activate
+      " anyway.
+      if ( {a:timer}_callCount >= suppressionCount )
+        let result = 1
+      endif
+    endif
+  endif
+  " Reset both the timer and the number of times we've been called since the last update.
+  if ( result )
+    let {a:timer} = localtime()
+    let {a:timer}_callCount = 0
+  endif
+  return result
+endfunction
+
+
+
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme='distinguished'
 let g:airline_powerline_fonts = 1
-
+" remove stupid whitespace garbage
+let g:airline_section_warning = ''
+" let g:airline_section_z = '%{g:airline_symbols.linenr} %l/%L %{%l/%L}'
+let g:airline_section_y = ''
+let g:airline_section_z = '%{g:airline_symbols.linenr} %l/%L (%p%%)'
+let g:airline#extensions#wordcount#enabled = 0
 
 function! WindowNumber()
     let str=tabpagewinnr(tabpagenr())
@@ -182,6 +261,7 @@ augroup markdown
     au!
     au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
 augroup END
+au BufRead,BufNewFile *.md set filetype=ghmarkdown
 
 " delimit mate
 """"""""""""""""""""""""""
@@ -267,8 +347,7 @@ nnoremap <Leader>fc zM
 nnoremap <Leader>fo zR 
 
 " Find and replace
-" TODO fix me
-" nnoremap <Leader>rv :%s/\%Vfind/repl/g 
+vnoremap <Leader>rr :<C-U>%s/\%Vfind/repl/g 
 nnoremap <Leader>rr :%s/find/repl/g
 
 " Window management
@@ -277,6 +356,12 @@ nnoremap <Leader>wd :close<CR>
 nnoremap <Leader>ws :vsplit #<C-R>=bufnr('%')<CR><CR>
 " horizontal split
 nnoremap <Leader>wh :split #<C-R>=bufnr('%')<CR><CR>
+" resize splits
+nnoremap <Leader>w+ :vertical res +
+nnoremap <Leader>w- :vertical res -
+
+" Doxygen
+nnoremap <Leader>dd :Dox<CR>
 
 
 " map leader + [1-9] to jump to a window
@@ -311,8 +396,8 @@ nnoremap <Leader>ml :BookmarkShowAll<CR>
 
 " Goto
 " goto definition
-" nnoremap <Leader>gd g<C-]>
-nnoremap <Leader>gd :cs find g <C-R>=expand("<cword>")<CR><CR>  
+nnoremap <Leader>gd g<C-]>
+" nnoremap <Leader>gd :cs find g <C-R>=expand("<cword>")<CR><CR>  
 " try to open file under cursor
 nnoremap <Leader>gf gf 
 " cscope show list of callers
@@ -448,6 +533,14 @@ function! GetVisualSelection()
   return join(lines, "\n")
 endfunction
 
+" http://stackoverflow.com/a/12216578/187469
+" also have to call ':profile pause' when done
+function! Profile()
+    exec "profile start ~/vim_profile.log"
+    exec "profile func *"
+    exec "profile file *"
+endfunction
+
 "Key Bindings
 """"""""""""""""""""""""
 "move back and forth between arrows"
@@ -457,6 +550,7 @@ nmap <silent> <A-C-Left> :wincmd h<CR>
 nmap <silent> <A-C-Right> :wincmd l<CR>
 
 :nnoremap ; :
+:vnoremap ; :
 :ca W w
 :map <S-w> :MBEbd<CR> 
 :map <Home> ^
@@ -465,6 +559,8 @@ nmap <silent> <A-C-Right> :wincmd l<CR>
 nnoremap q x
 vnoremap q x
 nnoremap <S-q> q
+
+" nmap <C-p> 
 
 " Completion menu
 " Allows j and k to navigate up/down within completion menu
@@ -511,6 +607,11 @@ vnoremap y "cy
 " the [p part pastes at the cursor instead of the next line
 nnoremap p "c[p
 vnoremap p "c[p
+" TODO make this work with the one below
+" replace currently selected text with default register
+" without yanking it
+" vnoremap p "_d[p
+
 
 " I switched <x> to be the same as the old <d> key
 " so it does cut
@@ -549,7 +650,8 @@ inoremap <m-v> <F10><C-r>+<F10>
 " vnoremap / y/<C-R>"
 " this appears instantly
 vnoremap // y/<C-R>"<CR>
-nnoremap // /<C-R>=expand("<cword>")<CR><CR>
+" the S-N at the end will take us back one match so we dont jump
+nnoremap // /<C-R>=expand("<cword>")<CR><CR><S-N>
 " nnoremap // :<C-U>Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>=Quote(GetVisualSelection())<CR>
 " nnoremap <Leader>gd :cs find g <C-R>=expand("<cword>")<CR><CR>  
 
@@ -609,6 +711,22 @@ endfunction
 
 autocmd SessionLoadPost * call SetupSession()
 
+" Jump Mode
+"""""""""""""""
+" Cant seem to make this plugin work how i would like, try again sometime
+
+" call submode#enter_with('undo/redo', 'n', '', 'g-', 'g-')
+" call submode#enter_with('undo/redo', 'n', '', 'g+', 'g+')
+" call submode#leave_with('undo/redo', 'n', '', '<Esc>')
+" call submode#map('undo/redo', 'n', '', '-', 'g-')
+" call submode#map('undo/redo', 'n', '', '+', 'g+')
+"" enter jump mode (also performs the first jump)
+" call submode#enter_with('jump_mode', 'n', '', '<Space>jn', '<C-I>')
+" call submode#enter_with('jump_mode', 'n', '', '<Space>jp', '<C-O>')
+" call submode#leave_with('jump_mode', 'n', '', '<Esc>')
+" " bind to forward and back jump
+" call submode#map('jump_mode', 'n', '', 'n', '<C-I>')
+" call submode#map('jump_mode', 'n', '', 'b', '<C-O>')
 
 " Misc syntax
 """"""""""""""""""""""""
