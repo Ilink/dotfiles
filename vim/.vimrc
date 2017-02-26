@@ -7,7 +7,10 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'https://github.com/ctrlpvim/ctrlp.vim.git'
+" Plugin 'https://github.com/ctrlpvim/ctrlp.vim.git'
+" This is my fork of ctrlp which re-uses its whole UI, but
+" adds my own fuzzy file matching server fuzd
+Plugin 'ilink/ctrlp.vim'
 " Plugin 'wincent/command-t'
 " Plugin 'vim-airline/vim-airline'
 Plugin 'ilink/vim-airline'
@@ -33,6 +36,7 @@ Plugin 'ilink/vim-jumplist-files'
 Plugin 'ervandew/supertab'
 Plugin 'henrik/vim-indexed-search'
 Plugin 'vim-scripts/DoxygenToolkit.vim'
+Plugin 'yegappan/mru'
 " Plugin 'godlygeek/tabular'
 " Plugin 'plasticboy/vim-markdown'
 " Plugin 'ilink/vim-flavored-markdown'
@@ -377,10 +381,12 @@ while i <= 9
 
 " The <C-R>=fn()<CR> part will get the result of the function
 " and place it into the command
-nnoremap <Leader>/ :Ag! <C-R>=GetSearchFtype()<CR><Space>
+" nnoremap <Leader>/ :Ag! <C-R>=GetSearchFtype()<CR><Space>
+nnoremap <Leader>/ :Ag! --cpp --cc<Space>
 " :<C-U> enters command mode and deletes (Ctrl-u) the '<,'> range
 " automatically inserted due to the visual selection.
 vnoremap <Leader>/ :<C-U>Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>=Quote(GetVisualSelection())<CR>
+vnoremap <Leader>/ :<C-U>Ag! --cpp --cc<Space><C-R>=Quote(GetVisualSelection())<CR>
 
 " Comments
 " For some reason this doesnt with with nore
@@ -422,6 +428,9 @@ nnoremap <Leader>cn g,
 
 " Tagbar
 nnoremap <Leader>bb :TagbarToggle<CR>
+
+" MRU
+nnoremap <C-M> :MRU <C-R>=getcwd()<CR><CR>
 
 
 " i want a function which just jumps back and forth
