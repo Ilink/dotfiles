@@ -11,22 +11,17 @@ Plugin 'VundleVim/Vundle.vim'
 " This is my fork of ctrlp which re-uses its whole UI, but
 " adds my own fuzzy file matching server fuzd
 Plugin 'ilink/ctrlp.vim'
-" Plugin 'wincent/command-t'
-" Plugin 'vim-airline/vim-airline'
-Plugin 'ilink/vim-airline'
+Plugin 'vim-airline/vim-airline'
+" Plugin 'ilink/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'https://github.com/rking/ag.vim'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'MattesGroeger/vim-bookmarks'
-" Plugin 'xolox/vim-easytags'
-" Plugin 'xolox/vim-misc'
 Plugin 'mhinz/vim-startify'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
-" Plugin 'ilink/vim-buftabline'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'w0ng/vim-hybrid'
-" Plugin 'Valloric/YouCompleteMe'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'majutsushi/tagbar'
 Plugin 'dbakker/vim-projectroot'
@@ -36,13 +31,6 @@ Plugin 'ilink/vim-jumplist-files'
 Plugin 'ervandew/supertab'
 Plugin 'henrik/vim-indexed-search'
 Plugin 'vim-scripts/DoxygenToolkit.vim'
-Plugin 'yegappan/mru'
-" Plugin 'godlygeek/tabular'
-" Plugin 'plasticboy/vim-markdown'
-" Plugin 'ilink/vim-flavored-markdown'
-" Plugin 'kana/vim-submode'
-" Plugin 'tpope/vim-fugitive'
-" Plugin 'xolox/vim-notes'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -329,18 +317,34 @@ nnoremap <Leader>bd :BD<CR>
 nnoremap <Leader>bu :BUNDO<CR>
 nnoremap <Leader>bf :CtrlPBuffer<CR>
 
+function GetListedBuffers()
+	return filter(range(1, bufnr('$')), 'buflisted(v:val)')
+endfunction
+
+function GetListedBuffer(idx)
+	let listed_buffs = GetListedBuffers()
+	if a:idx >= len(listed_buffs)
+	    return bufnr('%')
+    endif
+    return listed_buffs[a:idx]
+endfunction
+
+function! GetLastBuffer()
+	let listed_buffs = GetListedBuffers()
+	return listed_buffs[len(listed_buffs)-1]
+endfunction
+
 let g:airline#extensions#tabline#buffer_idx_mode = 1
-" nmap <Leader>g1 <Plug>AirlineSelectTab1   
-nmap <Leader>g1 :AirlineGotoOrderedBuffer1<CR>
-nmap <Leader>g2 :AirlineGotoOrderedBuffer2<CR>
-nmap <Leader>g3 :AirlineGotoOrderedBuffer3<CR>
-nmap <Leader>g4 :AirlineGotoOrderedBuffer4<CR>
-nmap <Leader>g5 :AirlineGotoOrderedBuffer5<CR>
-nmap <Leader>g6 :AirlineGotoOrderedBuffer6<CR>
-nmap <Leader>g7 :AirlineGotoOrderedBuffer7<CR>
-nmap <Leader>g8 :AirlineGotoOrderedBuffer8<CR>
-nmap <Leader>g9 :AirlineGotoOrderedBuffer9<CR>
-nmap <Leader>g0 :AirlineLastBuffer<CR>
+nmap <Leader>g1 :b<C-R>=GetListedBuffer(1)<CR><CR>
+nmap <Leader>g2 :b<C-R>=GetListedBuffer(2)<CR><CR>
+nmap <Leader>g3 :b<C-R>=GetListedBuffer(3)<CR><CR>
+nmap <Leader>g4 :b<C-R>=GetListedBuffer(4)<CR><CR>
+nmap <Leader>g5 :b<C-R>=GetListedBuffer(5)<CR><CR>
+nmap <Leader>g6 :b<C-R>=GetListedBuffer(6)<CR><CR>
+nmap <Leader>g7 :b<C-R>=GetListedBuffer(7)<CR><CR>
+nmap <Leader>g8 :b<C-R>=GetListedBuffer(8)<CR><CR>
+nmap <Leader>g9 :b<C-R>=GetListedBuffer(9)<CR><CR>
+nmap <Leader>g0 :b<C-R>=GetLastBuffer()<CR><CR>
 
 " Folding
 " toggle fold
@@ -430,7 +434,7 @@ nnoremap <Leader>cn g,
 nnoremap <Leader>bb :TagbarToggle<CR>
 
 " MRU
-nnoremap <C-M> :MRU <C-R>=getcwd()<CR><CR>
+" nnoremap <C-M> :MRU <C-R>=getcwd()<CR><CR>
 
 
 " i want a function which just jumps back and forth
@@ -635,8 +639,10 @@ nnoremap xx "cdd
 :nnoremap <c-k> :AirlineMoveCurBufBackward<CR>
 :nnoremap <c-l> :AirlineMoveCurBufForward<CR>
 
-:nnoremap - :call NextBufRestricted(-1)<CR>
-:nnoremap = :call NextBufRestricted(0)<CR>
+:nnoremap - :bprev<CR>
+:nnoremap = :bnext<CR>
+" :nnoremap - :call NextBufRestricted(-1)<CR>
+" :nnoremap = :call NextBufRestricted(0)<CR>
 " :map - :bprev<CR>
 " :map = :bnext<CR>
 " :nnoremap <c-h> :AirlinePrevBuffer<CR>
@@ -668,6 +674,10 @@ nnoremap // /<C-R>=expand("<cword>")<CR><CR><S-N>
 exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guibg=DarkGrey" 
 exe "hi! TabLineSel term=reverse cterm=reverse ctermfg=110 ctermbg=234 gui=bold" 
 exe "hi! TabLineFill term=reverse cterm=reverse ctermfg=234 ctermbg=235 gui=reverse" 
+
+" colors for indent guide
+hi IndentGuidesOdd  ctermbg=white
+hi IndentGuidesEven ctermbg=lightgrey
 
 " Maintain visual selection when indenting in visual mode
 vnoremap < <gv
