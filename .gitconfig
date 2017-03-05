@@ -1,0 +1,16 @@
+[push]
+    default = simple
+
+[credential]
+    helper = cache --timeout=3600
+
+[core]
+    excludesfile = ~/.gitignore_global
+    editor = vim
+
+[merge]
+    tool = vimdiff
+    conflictstyle = diff3
+
+[mergetool]
+    prompt = false
