@@ -20,6 +20,7 @@ defbce on    # use current bg color for erased chars
 
 termcapinfo xterm* ti@:te@
 startup_message off
+altscreen on
 
 
 # Setup Default Windows
