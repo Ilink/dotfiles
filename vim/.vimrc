@@ -11,8 +11,8 @@ Plugin 'VundleVim/Vundle.vim'
 " This is my fork of ctrlp which re-uses its whole UI, but
 " adds my own fuzzy file matching server fuzd
 Plugin 'ilink/ctrlp.vim'
-Plugin 'vim-airline/vim-airline'
-" Plugin 'ilink/vim-airline'
+" Plugin 'vim-airline/vim-airline'
+Plugin 'ilink/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'https://github.com/rking/ag.vim'
 Plugin 'tomtom/tcomment_vim'
@@ -23,7 +23,7 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'w0ng/vim-hybrid'
 Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'majutsushi/tagbar'
+" Plugin 'majutsushi/tagbar'
 Plugin 'dbakker/vim-projectroot'
 Plugin 'ilink/vim-bufkill'
 Plugin 'vim-scripts/C-fold'
@@ -31,6 +31,8 @@ Plugin 'ilink/vim-jumplist-files'
 Plugin 'ervandew/supertab'
 Plugin 'henrik/vim-indexed-search'
 Plugin 'vim-scripts/DoxygenToolkit.vim'
+Plugin 'mildred/vim-bufmru'
+Plugin 'airblade/vim-gitgutter'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -317,11 +319,11 @@ nnoremap <Leader>bd :BD<CR>
 nnoremap <Leader>bu :BUNDO<CR>
 nnoremap <Leader>bf :CtrlPBuffer<CR>
 
-function GetListedBuffers()
+function! GetListedBuffers()
 	return filter(range(1, bufnr('$')), 'buflisted(v:val)')
 endfunction
 
-function GetListedBuffer(idx)
+function! GetListedBuffer(idx)
 	let listed_buffs = GetListedBuffers()
 	if a:idx >= len(listed_buffs)
 	    return bufnr('%')
@@ -335,16 +337,27 @@ function! GetLastBuffer()
 endfunction
 
 let g:airline#extensions#tabline#buffer_idx_mode = 1
-nmap <Leader>g1 :b<C-R>=GetListedBuffer(1)<CR><CR>
-nmap <Leader>g2 :b<C-R>=GetListedBuffer(2)<CR><CR>
-nmap <Leader>g3 :b<C-R>=GetListedBuffer(3)<CR><CR>
-nmap <Leader>g4 :b<C-R>=GetListedBuffer(4)<CR><CR>
-nmap <Leader>g5 :b<C-R>=GetListedBuffer(5)<CR><CR>
-nmap <Leader>g6 :b<C-R>=GetListedBuffer(6)<CR><CR>
-nmap <Leader>g7 :b<C-R>=GetListedBuffer(7)<CR><CR>
-nmap <Leader>g8 :b<C-R>=GetListedBuffer(8)<CR><CR>
-nmap <Leader>g9 :b<C-R>=GetListedBuffer(9)<CR><CR>
-nmap <Leader>g0 :b<C-R>=GetLastBuffer()<CR><CR>
+nmap <Leader>g1 :AirlineGotoOrderedBuffer1<CR>
+nmap <Leader>g2 :AirlineGotoOrderedBuffer2<CR>
+nmap <Leader>g3 :AirlineGotoOrderedBuffer3<CR>
+nmap <Leader>g4 :AirlineGotoOrderedBuffer4<CR>
+nmap <Leader>g5 :AirlineGotoOrderedBuffer5<CR>
+nmap <Leader>g6 :AirlineGotoOrderedBuffer6<CR>
+nmap <Leader>g7 :AirlineGotoOrderedBuffer7<CR>
+nmap <Leader>g8 :AirlineGotoOrderedBuffer8<CR>
+nmap <Leader>g9 :AirlineGotoOrderedBuffer9<CR>
+nmap <Leader>g0 :AirlineLastBuffer<CR>
+
+" nmap <Leader>g1 :b<C-R>=GetListedBuffer(1)<CR><CR>
+" nmap <Leader>g2 :b<C-R>=GetListedBuffer(2)<CR><CR>
+" nmap <Leader>g3 :b<C-R>=GetListedBuffer(3)<CR><CR>
+" nmap <Leader>g4 :b<C-R>=GetListedBuffer(4)<CR><CR>
+" nmap <Leader>g5 :b<C-R>=GetListedBuffer(5)<CR><CR>
+" nmap <Leader>g6 :b<C-R>=GetListedBuffer(6)<CR><CR>
+" nmap <Leader>g7 :b<C-R>=GetListedBuffer(7)<CR><CR>
+" nmap <Leader>g8 :b<C-R>=GetListedBuffer(8)<CR><CR>
+" nmap <Leader>g9 :b<C-R>=GetListedBuffer(9)<CR><CR>
+" nmap <Leader>g0 :b<C-R>=GetLastBuffer()<CR><CR>
 
 " Folding
 " toggle fold
@@ -636,13 +649,13 @@ nnoremap xx "cdd
 
 
 " Buffer manipulation
-:nnoremap <c-k> :AirlineMoveCurBufBackward<CR>
-:nnoremap <c-l> :AirlineMoveCurBufForward<CR>
+nnoremap <c-k> :AirlineMoveCurBufBackward<CR>
+nnoremap <c-l> :AirlineMoveCurBufForward<CR>
 
-:nnoremap - :bprev<CR>
-:nnoremap = :bnext<CR>
-" :nnoremap - :call NextBufRestricted(-1)<CR>
-" :nnoremap = :call NextBufRestricted(0)<CR>
+" :nnoremap - :bprev<CR>
+" :nnoremap = :bnext<CR>
+nnoremap - :call NextBufRestricted(-1)<CR>
+nnoremap = :call NextBufRestricted(0)<CR>
 " :map - :bprev<CR>
 " :map = :bnext<CR>
 " :nnoremap <c-h> :AirlinePrevBuffer<CR>
