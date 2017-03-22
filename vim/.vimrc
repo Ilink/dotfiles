@@ -13,6 +13,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'ilink/ctrlp.vim'
 " Plugin 'vim-airline/vim-airline'
 Plugin 'ilink/vim-airline'
+Plugin 'ilink/vim-markdown'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'https://github.com/rking/ag.vim'
 Plugin 'tomtom/tcomment_vim'
@@ -253,9 +254,11 @@ autocmd FileType markdown setlocal textwidth=60
 " autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 augroup markdown
     au!
-    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=markdown
 augroup END
-au BufRead,BufNewFile *.md set filetype=ghmarkdown
+au BufRead,BufNewFile *.md set filetype=markdown
+
+let g:markdown_fenced_languages = ['cpp', 'python', 'bash=sh']
 
 " delimit mate
 """"""""""""""""""""""""""
