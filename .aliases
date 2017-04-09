@@ -1,7 +1,7 @@
-if [ ! -f /usr/local/bin/vim ]; then
+if [ ! -f $HOME/local/bin/vim ]; then
 	alias vi='/usr/bin/vim'
 else
-	alias vi='/usr/local/bin/vim'
+	alias vi='$HOME/local/bin/vim'
 fi
 
 alias t='touch'
