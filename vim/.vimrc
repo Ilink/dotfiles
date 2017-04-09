@@ -34,6 +34,8 @@ Plugin 'henrik/vim-indexed-search'
 Plugin 'vim-scripts/DoxygenToolkit.vim'
 Plugin 'mildred/vim-bufmru'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'lyuts/vim-rtags'
+Plugin 'skywind3000/asyncrun.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -99,7 +101,7 @@ let g:matchparen_timeout = 20
 let g:matchparen_insert_timeout = 20
 
 " remove auto comment extension stuff
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+autocmd! FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " can override these with inline settings in actual text files apparently
 set foldmethod=indent
@@ -233,6 +235,58 @@ if !exists('g:airline_symbols')
 endif
 let g:airline_symbols.space = "\ua0"
 
+" Quickfix Toggle
+" http://vim.wikia.com/wiki/Toggle_to_open_or_close_the_quickfix_window
+"""""""""""""""""""""""""
+function! GetBufferList()
+  redir =>buflist
+  silent! ls!
+  redir END
+  return buflist
+endfunction
+
+function! ToggleList(bufname, pfx)
+  let buflist = GetBufferList()
+  for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
+    if bufwinnr(bufnum) != -1
+      exec(a:pfx.'close')
+      return
+    endif
+  endfor
+  if a:pfx == 'l' && len(getloclist(0)) == 0
+      echohl ErrorMsg
+      echo "Location List is Empty."
+      return
+  endif
+  let winnr = winnr()
+  exec(a:pfx.'open')
+  if winnr() != winnr
+    wincmd p
+  endif
+endfunction
+
+function AsyncCmdFn(cmd)
+    AsyncStop
+    exec(":AsyncRun! ".a:cmd)
+    " opens the quickfix, focuses the window if it's already open
+    copen 
+endfunction
+
+command! -nargs=+ -complete=file AsyncCmd
+    \ call AsyncCmdFn(<q-args>)
+
+" Load buid.log errors
+function! LoadBuildLog()
+    cgetfile build.log 
+    copen
+endfunction
+
+function! Build()
+    AsyncStop
+    exec(":AsyncRun! ./build_srsmem.sh \|& tee build.log")
+    " opens the quickfix, focuses the window if it's already open
+    copen 
+endfunction
 
 " startify
 """"""""""""""""""""""""""
@@ -322,6 +376,9 @@ nnoremap <Leader>bd :BD<CR>
 nnoremap <Leader>bu :BUNDO<CR>
 nnoremap <Leader>bf :CtrlPBuffer<CR>
 
+" Tagbar
+nnoremap <Leader>bb :TagbarToggle<CR>
+
 function! GetListedBuffers()
 	return filter(range(1, bufnr('$')), 'buflisted(v:val)')
 endfunction
@@ -384,6 +441,15 @@ nnoremap <Leader>wh :split #<C-R>=bufnr('%')<CR><CR>
 nnoremap <Leader>w+ :vertical res +
 nnoremap <Leader>w- :vertical res -
 
+" Quickfix
+nnoremap <Leader>qn :cnewer<CR>
+nnoremap <Leader>qp :colder<CR>
+nnoremap <Leader>qe :call LoadBuildLog()<CR> 
+" nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
+" nmap <silent> <leader>e :call ToggleList("Quickfix List", 'c')<CR>
+nnoremap <silent> <Leader>qq :call ToggleList("Quickfix List", 'c')<CR> 
+
+
 " Doxygen
 nnoremap <Leader>dd :Dox<CR>
 
@@ -402,11 +468,14 @@ while i <= 9
 " The <C-R>=fn()<CR> part will get the result of the function
 " and place it into the command
 " nnoremap <Leader>/ :Ag! <C-R>=GetSearchFtype()<CR><Space>
-nnoremap <Leader>/ :Ag! --cpp --cc<Space>
+nnoremap <Leader>/ :AsyncCmd ag --cpp --cc<Space>
+" nnoremap <Leader>/ :AsyncRun! ag --cpp --cc<Space>
+nnoremap <Leader>/ :AsyncCmd ag --cpp --cc<Space>
 " :<C-U> enters command mode and deletes (Ctrl-u) the '<,'> range
 " automatically inserted due to the visual selection.
-vnoremap <Leader>/ :<C-U>Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>=Quote(GetVisualSelection())<CR>
-vnoremap <Leader>/ :<C-U>Ag! --cpp --cc<Space><C-R>=Quote(GetVisualSelection())<CR>
+" TODO do async version of ag
+" vnoremap <Leader>/ :<C-U>Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>=Quote(GetVisualSelection())<CR>
+vnoremap <Leader>/ :<C-U>AsyncCmd ag --cpp --cc<Space><C-R>=Quote(GetVisualSelection())<CR>
 
 " Comments
 " For some reason this doesnt with with nore
@@ -446,8 +515,6 @@ nnoremap <Leader>jfn :JumpFileForward<CR>
 nnoremap <Leader>cb g;
 nnoremap <Leader>cn g, 
 
-" Tagbar
-nnoremap <Leader>bb :TagbarToggle<CR>
 
 " MRU
 " nnoremap <C-M> :MRU <C-R>=getcwd()<CR><CR>
@@ -664,7 +731,8 @@ nnoremap = :call NextBufRestricted(0)<CR>
 " :nnoremap <c-h> :AirlinePrevBuffer<CR>
 " :nnoremap <c-j> :AirlineNextBuffer<CR>
 
-
+" nnoremap <F12> :AsyncRun ./build_srsmem.sh \|& tee build.log<CR>
+nnoremap <F12> :call Build()<CR>
 
 " Pasting stuff without ruining the formatting
 set pastetoggle=<F2>
@@ -682,7 +750,8 @@ inoremap <m-v> <F10><C-r>+<F10>
 " this appears instantly
 vnoremap // y/<C-R>"<CR>
 " the S-N at the end will take us back one match so we dont jump
-nnoremap // /<C-R>=expand("<cword>")<CR><CR><S-N>
+" the \< and \ are word-boundary  characters
+nnoremap // /\<<C-R>=expand("<cword>")<CR>\><CR><S-N>
 " nnoremap // :<C-U>Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>=Quote(GetVisualSelection())<CR>
 " nnoremap <Leader>gd :cs find g <C-R>=expand("<cword>")<CR><CR>  
 
@@ -795,3 +864,33 @@ match Important /NOTE/
 "       git config --global core.editor /usr/bin/vim
 " where the path to vim matches your environment
 
+" rtags
+"""""""""""""""""""""""""""
+let g:rtagsUseDefaultMappings = 0
+noremap <Leader>ri :call rtags#SymbolInfo()<CR>
+noremap <Leader>rj :call rtags#JumpTo(g:SAME_WINDOW)<CR>
+noremap <Leader>rJ :call rtags#JumpTo(g:SAME_WINDOW, { '--declaration-only' : '' })<CR>
+noremap <Leader>rS :call rtags#JumpTo(g:H_SPLIT)<CR>
+noremap <Leader>rV :call rtags#JumpTo(g:V_SPLIT)<CR>
+noremap <Leader>rT :call rtags#JumpTo(g:NEW_TAB)<CR>
+noremap <Leader>rp :call rtags#JumpToParent()<CR>
+noremap <Leader>rf :call rtags#FindRefs()<CR>
+noremap <Leader>rn :call rtags#FindRefsByName(input("Pattern? ", "", "customlist,rtags#CompleteSymbols"))<CR>
+noremap <Leader>rs :call rtags#FindSymbols(input("Pattern? ", "", "customlist,rtags#CompleteSymbols"))<CR>
+" noremap <Leader>rr :call rtags#ReindexFile()<CR>
+noremap <Leader>rl :call rtags#ProjectList()<CR>
+noremap <Leader>rw :call rtags#RenameSymbolUnderCursor()<CR>
+noremap <Leader>rv :call rtags#FindVirtuals()<CR>
+noremap <Leader>rb :call rtags#JumpBack()<CR>
+noremap <Leader>rC :call rtags#FindSuperClasses()<CR>
+noremap <Leader>rc :call rtags#FindSubClasses()<CR>
+noremap <Leader>rd :call rtags#Diagnostics()<CR>
+
+
+function! SRPort()
+   :exec "%s/searchresultdatum/SRal/g" 
+   :exec "%s/SrColumn/SRIdx/g" 
+   :exec "%s/ArenaMultiStr/MVStr/g" 
+   :exec "%s/_nrows/_size/g" 
+   :exec "%s/_alloc_guts/allocHeader/g" 
+endfunction
