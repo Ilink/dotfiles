@@ -265,8 +265,15 @@ function! ToggleList(bufname, pfx)
   endif
 endfunction
 
+function WaitStopCurrentJob()
+    AsyncStop!
+    while g:asyncrun_status == 'running'
+        sleep 50m
+    endwhile
+endfunction
+
 function AsyncCmdFn(cmd)
-    AsyncStop
+    call WaitStopCurrentJob()
     exec(":AsyncRun! ".a:cmd)
     " opens the quickfix, focuses the window if it's already open
     copen 
@@ -282,8 +289,9 @@ function! LoadBuildLog()
 endfunction
 
 function! Build()
-    AsyncStop
-    exec(":AsyncRun! ./build_srsmem.sh \|& tee build.log")
+    call WaitStopCurrentJob()
+    " exec(":AsyncRun! ./build_srsmem.sh \|& tee build.log")
+    exec(":AsyncRun! pity install \|& tee build.log")
     " opens the quickfix, focuses the window if it's already open
     copen 
 endfunction
@@ -893,4 +901,5 @@ function! SRPort()
    :exec "%s/ArenaMultiStr/MVStr/g" 
    :exec "%s/_nrows/_size/g" 
    :exec "%s/_alloc_guts/allocHeader/g" 
+   :exec "%s/elementExisting/getExisting/g" 
 endfunction
