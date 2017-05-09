@@ -12,9 +12,11 @@ Plugin 'VundleVim/Vundle.vim'
 " adds my own fuzzy file matching server fuzd
 Plugin 'ilink/ctrlp.vim'
 " Plugin 'vim-airline/vim-airline'
-Plugin 'ilink/vim-airline'
+" Plugin 'ilink/vim-airline'
+" Plugin 'vim-airline/vim-airline-themes'
+Plugin 'itchyny/lightline.vim'
+Plugin 'ap/vim-buftabline'
 Plugin 'ilink/vim-markdown'
-Plugin 'vim-airline/vim-airline-themes'
 Plugin 'https://github.com/rking/ag.vim'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'MattesGroeger/vim-bookmarks'
@@ -32,10 +34,11 @@ Plugin 'ilink/vim-jumplist-files'
 Plugin 'ervandew/supertab'
 Plugin 'henrik/vim-indexed-search'
 Plugin 'vim-scripts/DoxygenToolkit.vim'
-Plugin 'mildred/vim-bufmru'
+" Plugin 'mildred/vim-bufmru'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'lyuts/vim-rtags'
+" Plugin 'lyuts/vim-rtags'
 Plugin 'skywind3000/asyncrun.vim'
+" Plugin 'sickill/vim-pasta'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -206,34 +209,41 @@ function! LongEnough( timer, delay, ... )
 endfunction
 
 
+" Lightline Config
+"""""""""""""""""""
+let g:lightline = {
+      \ 'colorscheme': 'wombat'
+\}
+
+
 
 " Enable the list of buffers
-let g:airline#extensions#tabline#enabled = 1
-" Show just the filename
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_theme='distinguished'
-let g:airline_powerline_fonts = 1
-" remove stupid whitespace garbage
-let g:airline_section_warning = ''
-" let g:airline_section_z = '%{g:airline_symbols.linenr} %l/%L %{%l/%L}'
-let g:airline_section_y = ''
-let g:airline_section_z = '%{g:airline_symbols.linenr} %l/%L (%p%%)'
-let g:airline#extensions#wordcount#enabled = 0
-
-function! WindowNumber()
-    let str=tabpagewinnr(tabpagenr())
-        return str
-        endfunction
-"let g:airline_section_b = '%{WindowNumber()}'
-let g:airline_section_a_inactive = '%{WindowNumber()}'
-
-let g:airline_section_a = '%{WindowNumber()} %#__accent_bold#%{airline#util#wrap(airline#parts#mode(),0)}%#__restore__#%{airline#util#append(airline#parts#crypt(),0)}%{airline#util#append(airline#parts#paste(),0)}%{airline#util#append(airline#parts#spell(),0)}%{airline#util#append("",0)}%{airline#util#append(airline#parts#iminsert(),0)}'
-
-" This fixes airline symbols on some of my machines
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_symbols.space = "\ua0"
+" let g:airline#extensions#tabline#enabled = 1
+" " Show just the filename
+" let g:airline#extensions#tabline#fnamemod = ':t'
+" let g:airline_theme='distinguished'
+" let g:airline_powerline_fonts = 1
+" " remove stupid whitespace garbage
+" let g:airline_section_warning = ''
+" " let g:airline_section_z = '%{g:airline_symbols.linenr} %l/%L %{%l/%L}'
+" let g:airline_section_y = ''
+" let g:airline_section_z = '%{g:airline_symbols.linenr} %l/%L (%p%%)'
+" let g:airline#extensions#wordcount#enabled = 0
+"
+" function! WindowNumber()
+"     let str=tabpagewinnr(tabpagenr())
+"         return str
+"         endfunction
+" "let g:airline_section_b = '%{WindowNumber()}'
+" let g:airline_section_a_inactive = '%{WindowNumber()}'
+"
+" let g:airline_section_a = '%{WindowNumber()} %#__accent_bold#%{airline#util#wrap(airline#parts#mode(),0)}%#__restore__#%{airline#util#append(airline#parts#crypt(),0)}%{airline#util#append(airline#parts#paste(),0)}%{airline#util#append(airline#parts#spell(),0)}%{airline#util#append("",0)}%{airline#util#append(airline#parts#iminsert(),0)}'
+"
+" " This fixes airline symbols on some of my machines
+" if !exists('g:airline_symbols')
+"   let g:airline_symbols = {}
+" endif
+" let g:airline_symbols.space = "\ua0"
 
 " Quickfix Toggle
 " http://vim.wikia.com/wiki/Toggle_to_open_or_close_the_quickfix_window
@@ -265,14 +275,14 @@ function! ToggleList(bufname, pfx)
   endif
 endfunction
 
-function WaitStopCurrentJob()
+function! WaitStopCurrentJob()
     AsyncStop!
     while g:asyncrun_status == 'running'
         sleep 50m
     endwhile
 endfunction
 
-function AsyncCmdFn(cmd)
+function! AsyncCmdFn(cmd)
     call WaitStopCurrentJob()
     exec(":AsyncRun! ".a:cmd)
     " opens the quickfix, focuses the window if it's already open
@@ -291,7 +301,8 @@ endfunction
 function! Build()
     call WaitStopCurrentJob()
     " exec(":AsyncRun! ./build_srsmem.sh \|& tee build.log")
-    exec(":AsyncRun! pity install \|& tee build.log")
+    " exec(":AsyncRun! pity install \|& tee build.log")
+    exec(":AsyncRun! ninja install -j150 -l45 \|& tee build.log")
     " opens the quickfix, focuses the window if it's already open
     copen 
 endfunction
@@ -303,7 +314,6 @@ let g:startify_session_persistence = 1
 let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks'] 
 let g:startify_session_savevars = [
            \ 'g:startify_session_savevars',
-           \ 'g:airline_session_order',
            \ 'g:session_type'
 \ ]
 
@@ -400,21 +410,34 @@ function! GetListedBuffer(idx)
 endfunction
 
 function! GetLastBuffer()
-	let listed_buffs = GetListedBuffers()
-	return listed_buffs[len(listed_buffs)-1]
+	" let listed_buffs = GetListedBuffers()
+	" return listed_buffs[len(listed_buffs)-1]
+	return get(buftabline#user_buffers(),-1,'')
 endfunction
 
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-nmap <Leader>g1 :AirlineGotoOrderedBuffer1<CR>
-nmap <Leader>g2 :AirlineGotoOrderedBuffer2<CR>
-nmap <Leader>g3 :AirlineGotoOrderedBuffer3<CR>
-nmap <Leader>g4 :AirlineGotoOrderedBuffer4<CR>
-nmap <Leader>g5 :AirlineGotoOrderedBuffer5<CR>
-nmap <Leader>g6 :AirlineGotoOrderedBuffer6<CR>
-nmap <Leader>g7 :AirlineGotoOrderedBuffer7<CR>
-nmap <Leader>g8 :AirlineGotoOrderedBuffer8<CR>
-nmap <Leader>g9 :AirlineGotoOrderedBuffer9<CR>
-nmap <Leader>g0 :AirlineLastBuffer<CR>
+" let g:airline#extensions#tabline#buffer_idx_mode = 1
+" nmap <Leader>g1 :AirlineGotoOrderedBuffer1<CR>
+" nmap <Leader>g2 :AirlineGotoOrderedBuffer2<CR>
+" nmap <Leader>g3 :AirlineGotoOrderedBuffer3<CR>
+" nmap <Leader>g4 :AirlineGotoOrderedBuffer4<CR>
+" nmap <Leader>g5 :AirlineGotoOrderedBuffer5<CR>
+" nmap <Leader>g6 :AirlineGotoOrderedBuffer6<CR>
+" nmap <Leader>g7 :AirlineGotoOrderedBuffer7<CR>
+" nmap <Leader>g8 :AirlineGotoOrderedBuffer8<CR>
+" nmap <Leader>g9 :AirlineGotoOrderedBuffer9<CR>
+" nmap <Leader>g0 :AirlineLastBuffer<CR>
+nmap <leader>g1 <Plug>BufTabLine.Go(1)
+nmap <leader>g2 <Plug>BufTabLine.Go(2)
+nmap <leader>g3 <Plug>BufTabLine.Go(3)
+nmap <leader>g4 <Plug>BufTabLine.Go(4)
+nmap <leader>g5 <Plug>BufTabLine.Go(5)
+nmap <leader>g6 <Plug>BufTabLine.Go(6)
+nmap <leader>g7 <Plug>BufTabLine.Go(7)
+nmap <leader>g8 <Plug>BufTabLine.Go(8)
+nmap <leader>g9 <Plug>BufTabLine.Go(9)
+nmap <leader>g0 :b<C-R>=GetLastBuffer()<CR><CR>
+
+" :exe 'b'.get(buftabline#user_buffers(),9,'')
 
 " nmap <Leader>g1 :b<C-R>=GetListedBuffer(1)<CR><CR>
 " nmap <Leader>g2 :b<C-R>=GetListedBuffer(2)<CR><CR>
@@ -541,11 +564,11 @@ function! NextBufRestricted(dir)
     let curBufName = bufname(curBufNum)
     if curBufName != "NERD_tree_1" && getbufvar(curBufNum, "&buftype") != "quickfix" 
         if a:dir == 0 
-            exec ":AirlineNextBuffer"
-            " exec ":bn"
+            " exec ":AirlineNextBuffer"
+            exec ":bn"
         else
-            exec ":AirlinePrevBuffer"
-            " exec ":bp"
+            " exec ":AirlinePrevBuffer"
+            exec ":bp"
         endif
     endif
 endfunction
@@ -727,13 +750,13 @@ nnoremap xx "cdd
 
 
 " Buffer manipulation
-nnoremap <c-k> :AirlineMoveCurBufBackward<CR>
-nnoremap <c-l> :AirlineMoveCurBufForward<CR>
+" nnoremap <c-k> :AirlineMoveCurBufBackward<CR>
+" nnoremap <c-l> :AirlineMoveCurBufForward<CR>
 
-" :nnoremap - :bprev<CR>
-" :nnoremap = :bnext<CR>
-nnoremap - :call NextBufRestricted(-1)<CR>
-nnoremap = :call NextBufRestricted(0)<CR>
+nnoremap - :bprev<CR>
+nnoremap = :bnext<CR>
+" nnoremap - :call NextBufRestricted(-1)<CR>
+" nnoremap = :call NextBufRestricted(0)<CR>
 " :map - :bprev<CR>
 " :map = :bnext<CR>
 " :nnoremap <c-h> :AirlinePrevBuffer<CR>
@@ -741,6 +764,7 @@ nnoremap = :call NextBufRestricted(0)<CR>
 
 " nnoremap <F12> :AsyncRun ./build_srsmem.sh \|& tee build.log<CR>
 nnoremap <F12> :call Build()<CR>
+nnoremap <F11> :call WaitStopCurrentJob()<CR>
 
 " Pasting stuff without ruining the formatting
 set pastetoggle=<F2>
@@ -895,11 +919,25 @@ noremap <Leader>rc :call rtags#FindSubClasses()<CR>
 noremap <Leader>rd :call rtags#Diagnostics()<CR>
 
 
-function! SRPort()
-   :exec "%s/searchresultdatum/SRal/g" 
-   :exec "%s/SrColumn/SRIdx/g" 
-   :exec "%s/ArenaMultiStr/MVStr/g" 
-   :exec "%s/_nrows/_size/g" 
-   :exec "%s/_alloc_guts/allocHeader/g" 
-   :exec "%s/elementExisting/getExisting/g" 
+
+" Closes all buffers to the right of the current window
+function! CloseRight()
+    let l:startBuf = bufnr('%') 
+    " exec ":AirlineLastBuffer"
+    exec ":b<C-R>=GetLastBuffer()<CR><CR>"
+    while 1
+        let l:curBuf = bufnr('%') 
+        if l:startBuf == l:curBuf
+            break
+        endif
+
+        " exec ":AirlinePrevBuffer"
+        exec ":bnext"
+        " delete previous buffer
+        exec "bd ".l:curBuf
+    endwhile
 endfunction
+
+" Ignore warnings from gcc
+" TODO this still lets some warnings through
+set errorformat^=%-G%f:%l:\ warning:%m
