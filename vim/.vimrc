@@ -212,9 +212,26 @@ endfunction
 " Lightline Config
 """""""""""""""""""
 let g:lightline = {
-      \ 'colorscheme': 'wombat'
+    \ 'colorscheme': 'wombat',
+    \ 'component': {
+    \   'lineinfo': '%3l:%-2v(%L)', 'line': '%l', 'column': '%c'
+    \},
+	\ 'component_function': {
+    \   'filename': 'StatusFilename',
+ 	\ },
 \}
 
+function! StatusFilename()
+    " http://stackoverflow.com/a/42194918/187469
+    let fname = fnamemodify(resolve(expand('%:p')),':~')
+    let max_chars = 90
+    let len_fname = len(fname)
+    if (len_fname > max_chars)
+        let suffix_len = len_fname - max_chars 
+	    let fname = "..." . fname[suffix_len:]	
+	endif
+	return fname
+endfunction
 
 
 " Enable the list of buffers
@@ -437,6 +454,7 @@ nmap <leader>g8 <Plug>BufTabLine.Go(8)
 nmap <leader>g9 <Plug>BufTabLine.Go(9)
 nmap <leader>g0 :b<C-R>=GetLastBuffer()<CR><CR>
 
+let g:buftabline_indicators=1
 " :exe 'b'.get(buftabline#user_buffers(),9,'')
 
 " nmap <Leader>g1 :b<C-R>=GetListedBuffer(1)<CR><CR>
@@ -559,17 +577,29 @@ nnoremap <Leader>cn g,
 
 " Functions
 """"""""""""""""""""""""
-function! NextBufRestricted(dir)
+function! IsValidBuffer()
     let curBufNum = bufnr("%")
     let curBufName = bufname(curBufNum)
-    if curBufName != "NERD_tree_1" && getbufvar(curBufNum, "&buftype") != "quickfix" 
+    return curBufName != "NERD_tree_1" && getbufvar(curBufNum, "&buftype") != "quickfix" 
+endfunction
+
+function! NextBufRestricted(dir)
+    " TODO does vim have a do-while loop that i can use instead of this
+    " code duplication?
+    if IsValidBuffer()
         if a:dir == 0 
-            " exec ":AirlineNextBuffer"
             exec ":bn"
         else
-            " exec ":AirlinePrevBuffer"
             exec ":bp"
         endif
+        
+        while !IsValidBuffer()
+            if a:dir == 0 
+                exec ":bn"
+            else
+                exec ":bp"
+            endif
+        endwhile
     endif
 endfunction
 
@@ -753,8 +783,8 @@ nnoremap xx "cdd
 " nnoremap <c-k> :AirlineMoveCurBufBackward<CR>
 " nnoremap <c-l> :AirlineMoveCurBufForward<CR>
 
-nnoremap - :bprev<CR>
-nnoremap = :bnext<CR>
+nnoremap <silent> - :bprev<CR>
+nnoremap <silent> = :bnext<CR>
 " nnoremap - :call NextBufRestricted(-1)<CR>
 " nnoremap = :call NextBufRestricted(0)<CR>
 " :map - :bprev<CR>
@@ -924,7 +954,7 @@ noremap <Leader>rd :call rtags#Diagnostics()<CR>
 function! CloseRight()
     let l:startBuf = bufnr('%') 
     " exec ":AirlineLastBuffer"
-    exec ":b<C-R>=GetLastBuffer()<CR><CR>"
+    exec ":b".GetLastBuffer()
     while 1
         let l:curBuf = bufnr('%') 
         if l:startBuf == l:curBuf
@@ -932,7 +962,7 @@ function! CloseRight()
         endif
 
         " exec ":AirlinePrevBuffer"
-        exec ":bnext"
+        exec ":bprev"
         " delete previous buffer
         exec "bd ".l:curBuf
     endwhile
