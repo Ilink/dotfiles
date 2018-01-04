@@ -566,6 +566,7 @@ nnoremap <Leader>jn <C-I>
 nnoremap <Leader>jb <C-O>
 nnoremap <Leader>jfb :JumpFileBack<CR>
 nnoremap <Leader>jfn :JumpFileForward<CR>
+nnoremap <Leader>jm v%
 
 nnoremap <Leader>cb g;
 nnoremap <Leader>cn g, 
