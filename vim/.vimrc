@@ -36,9 +36,10 @@ Plugin 'ervandew/supertab'
 Plugin 'henrik/vim-indexed-search'
 Plugin 'vim-scripts/DoxygenToolkit.vim'
 " Plugin 'mildred/vim-bufmru'
-Plugin 'airblade/vim-gitgutter'
+" Plugin 'airblade/vim-gitgutter'
 " Plugin 'lyuts/vim-rtags'
 Plugin 'skywind3000/asyncrun.vim'
+Plugin 'chrisbra/csv.vim'
 " Plugin 'sickill/vim-pasta'
 Plugin 'tikhomirov/vim-glsl'
 Plugin 'ilink/nts'
@@ -322,7 +323,11 @@ function! Build()
     call WaitStopCurrentJob()
     " exec(":AsyncRun! ./build_srsmem.sh \|& tee build.log")
     " exec(":AsyncRun! pity install \|& tee build.log")
-    exec(":AsyncRun! ninja install -j150 -l45 \|& tee build.log")
+    if filereadable("make.sh")
+        exec(":AsyncRun! ./make.sh \|& tee build.log")
+    else
+        exec(":AsyncRun! ninja install -j150 \|& tee build.log")
+    endif
     " opens the quickfix, focuses the window if it's already open
     copen 
 endfunction
@@ -984,14 +989,14 @@ function! CloseRight()
     endwhile
 endfunction
 
-" Ignore warnings from gcc
-" TODO this still lets some warnings through
-set errorformat^=%-G%f:%l:\ warning:%m
-
-
 function! SynStack()
   if !exists("*synstack")
     return
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
+set errorformat^=%-G%f:%l:\ warning:%m,%-G%f:%l:\ note:%m 
+" set errorformat=%*[^\"]\"%f\"%*\\D%l:\ %m,\"%f\"%*\\D%l:\ %m,%-G%f:%l:\ (Each\ undeclared\ identifier\ is\ reported\ only\ once,%-G%f:%l:\ for\ each\ function\ it\ appears\ in.),%-GIn\ file\ included\ from\ %f:%l:%c:,%-GIn\ file\ included\ from\ %f:%l:%c,%-GIn\ file\ included\ from\ %f:%l,%-Gfrom\ %f:%l:%c,%-Gfrom\ %f:%l,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,\"%f\"\\,\ line\ %l%*\\D%c%*[^\ ]\ %m,%D%*\\a[%*\\d]:\ Entering\ directory\ `%f',%X%*\\a[%*\\d]:\ Leaving\ directory\ `%f',%D%*\\a:\ Entering\ directory\ `%f',%X%*\\a:\ Leaving\ directory\ `%f',%DMaking\ %*\\a\ in\ %f,%f\|%l\|\ %m
+
+
+exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guifg=#c5c8c6 guibg=DarkGrey"
