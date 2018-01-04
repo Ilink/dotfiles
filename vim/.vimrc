@@ -319,6 +319,23 @@ function! LoadBuildLog()
     copen
 endfunction
 
+function! GetNumCores()
+    " It was easier to make this work on hostname rather than actually do the smart thing
+    " some of the hosts use distcc so j > physical cores
+    let host=system('hostname')
+    if host =~ "(ronnie)|(mrt)|(wimpy).*"
+        return 200
+    elseif host =~ "ilink_linux"
+        return 12
+    elseif host =~ "squid"
+        return 4
+    else
+        return 4
+    endif
+endfunction
+
+let g:num_cores = GetNumCores()
+
 function! Build()
     call WaitStopCurrentJob()
     " exec(":AsyncRun! ./build_srsmem.sh \|& tee build.log")
@@ -326,7 +343,8 @@ function! Build()
     if filereadable("make.sh")
         exec(":AsyncRun! ./make.sh \|& tee build.log")
     else
-        exec(":AsyncRun! ninja install -j150 \|& tee build.log")
+        let cmd = printf(":AsyncRun! ninja install -j%d \|& tee build.log", g:num_cores)
+        exec(cmd)
     endif
     " opens the quickfix, focuses the window if it's already open
     copen 
