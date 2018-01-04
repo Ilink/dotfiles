@@ -40,6 +40,8 @@ Plugin 'airblade/vim-gitgutter'
 " Plugin 'lyuts/vim-rtags'
 Plugin 'skywind3000/asyncrun.vim'
 " Plugin 'sickill/vim-pasta'
+Plugin 'tikhomirov/vim-glsl'
+Plugin 'ilink/nts'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -515,12 +517,25 @@ while i <= 9
 " search (silver searcher) with ag.vim
 " nnoremap <Leader>/ :Ag! --cpp --cc<Space>
 
+function! GetAgFlags()
+    let extension=expand('%:e')
+    if extension=="js"
+        return "--js"
+    elseif extension=="cpp" || extension=="c" || extension=="h" || extension=="hpp"
+        return "--cpp --cc"
+    elseif extension=="py"
+        return "--py"
+    else
+        return ""
+    endif
+endfunction
+
 " The <C-R>=fn()<CR> part will get the result of the function
 " and place it into the command
 " nnoremap <Leader>/ :Ag! <C-R>=GetSearchFtype()<CR><Space>
-nnoremap <Leader>/ :AsyncCmd ag --cpp --cc<Space>
-" nnoremap <Leader>/ :AsyncRun! ag --cpp --cc<Space>
-nnoremap <Leader>/ :AsyncCmd ag --cpp --cc<Space>
+" nnoremap <Leader>/ :AsyncCmd ag --cpp --cc<Space>
+nnoremap <Leader>/ :AsyncCmd ag <C-R>=GetAgFlags()<CR><Space>
+
 " :<C-U> enters command mode and deletes (Ctrl-u) the '<,'> range
 " automatically inserted due to the visual selection.
 " TODO do async version of ag
@@ -972,3 +987,11 @@ endfunction
 " Ignore warnings from gcc
 " TODO this still lets some warnings through
 set errorformat^=%-G%f:%l:\ warning:%m
+
+
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
