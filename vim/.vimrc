@@ -41,6 +41,8 @@ Plugin 'vim-scripts/DoxygenToolkit.vim'
 Plugin 'skywind3000/asyncrun.vim'
 Plugin 'chrisbra/csv.vim'
 " Plugin 'sickill/vim-pasta'
+Plugin 'tikhomirov/vim-glsl'
+Plugin 'ilink/nts'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -520,12 +522,25 @@ while i <= 9
 " search (silver searcher) with ag.vim
 " nnoremap <Leader>/ :Ag! --cpp --cc<Space>
 
+function! GetAgFlags()
+    let extension=expand('%:e')
+    if extension=="js"
+        return "--js"
+    elseif extension=="cpp" || extension=="c" || extension=="h" || extension=="hpp"
+        return "--cpp --cc"
+    elseif extension=="py"
+        return "--py"
+    else
+        return ""
+    endif
+endfunction
+
 " The <C-R>=fn()<CR> part will get the result of the function
 " and place it into the command
 " nnoremap <Leader>/ :Ag! <C-R>=GetSearchFtype()<CR><Space>
-nnoremap <Leader>/ :AsyncCmd ag --cpp --cc<Space>
-" nnoremap <Leader>/ :AsyncRun! ag --cpp --cc<Space>
-nnoremap <Leader>/ :AsyncCmd ag --cpp --cc<Space>
+" nnoremap <Leader>/ :AsyncCmd ag --cpp --cc<Space>
+nnoremap <Leader>/ :AsyncCmd ag <C-R>=GetAgFlags()<CR><Space>
+
 " :<C-U> enters command mode and deletes (Ctrl-u) the '<,'> range
 " automatically inserted due to the visual selection.
 " TODO do async version of ag
@@ -975,13 +990,14 @@ function! CloseRight()
     endwhile
 endfunction
 
-" Ignore warnings from gcc
-" TODO this still lets some warnings through
-" set errorformat^=%-G%f:%l:\ warning:%m
-" set errorformat^=%-G%f:%l:\ warning:%m,%-G%f:%l:\ note:%m 
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 set errorformat^=%-G%f:%l:\ warning:%m,%-G%f:%l:\ note:%m 
 " set errorformat=%*[^\"]\"%f\"%*\\D%l:\ %m,\"%f\"%*\\D%l:\ %m,%-G%f:%l:\ (Each\ undeclared\ identifier\ is\ reported\ only\ once,%-G%f:%l:\ for\ each\ function\ it\ appears\ in.),%-GIn\ file\ included\ from\ %f:%l:%c:,%-GIn\ file\ included\ from\ %f:%l:%c,%-GIn\ file\ included\ from\ %f:%l,%-Gfrom\ %f:%l:%c,%-Gfrom\ %f:%l,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,\"%f\"\\,\ line\ %l%*\\D%c%*[^\ ]\ %m,%D%*\\a[%*\\d]:\ Entering\ directory\ `%f',%X%*\\a[%*\\d]:\ Leaving\ directory\ `%f',%D%*\\a:\ Entering\ directory\ `%f',%X%*\\a:\ Leaving\ directory\ `%f',%DMaking\ %*\\a\ in\ %f,%f\|%l\|\ %m
-
 
 
 exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guifg=#c5c8c6 guibg=DarkGrey"
