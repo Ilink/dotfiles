@@ -6,7 +6,11 @@ wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-com
 ln -s $PWD/.colors $HOME/.colors
 ln -s $PWD/git-prompt.sh $HOME/.git-prompt.sh
 ln -s $PWD/.bash_prompt $HOME/.bash_prompt
+ln -s $PWD/.bash_profile $HOME/.bash_profile
 ln -s $PWD/git-completion.bash $HOME/.git-completion.bash 
 ln -s $PWD/.aliases $HOME/.aliases
 ln -s $PWD/.bashrc $HOME/.bashrc
 ln -s $PWD/.tmux.conf $HOME/.tmux.conf
+ln -s $PWD/vim/.vimrc $HOME/.vimrc
+
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim

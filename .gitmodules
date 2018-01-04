@@ -1,3 +1,0 @@
-[submodule "vim/colors/hybrid"]
-	path = vim/colors/hybrid
-	url = git://github.com/w0ng/vim-hybrid
