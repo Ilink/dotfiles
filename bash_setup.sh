@@ -11,5 +11,6 @@ ln -s $PWD/git-completion.bash $HOME/.git-completion.bash
 ln -s $PWD/.aliases $HOME/.aliases
 ln -s $PWD/.bashrc $HOME/.bashrc
 ln -s $PWD/.tmux.conf $HOME/.tmux.conf
+ln -s $PWD/vim/.vimrc $HOME/.vimrc
 
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
