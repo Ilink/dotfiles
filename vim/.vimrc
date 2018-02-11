@@ -26,6 +26,9 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'w0ng/vim-hybrid'
+" Plugin 'dracula/vim'
+Plugin 'crusoexia/vim-dracula'
+Plugin 'felipesousa/rupza'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 " Plugin 'majutsushi/tagbar'
 Plugin 'dbakker/vim-projectroot'
@@ -39,7 +42,7 @@ Plugin 'vim-scripts/DoxygenToolkit.vim'
 " Plugin 'airblade/vim-gitgutter'
 " Plugin 'lyuts/vim-rtags'
 Plugin 'skywind3000/asyncrun.vim'
-Plugin 'chrisbra/csv.vim'
+" Plugin 'chrisbra/csv.vim'
 " Plugin 'sickill/vim-pasta'
 Plugin 'tikhomirov/vim-glsl'
 Plugin 'ilink/nts'
@@ -405,7 +408,12 @@ set background=dark
 " let g:hybrid_use_iTerm_colors = 1
 " let g:hybrid_custom_term_colors = 1
 
-colorscheme hybrid 
+" colorscheme hybrid 
+colorscheme dracula
+" colorscheme rupza 
+
+let g:dracula_italic = 1
+hi clear CursorLine
 
 
 " bookmarks
