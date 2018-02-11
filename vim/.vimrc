@@ -44,6 +44,7 @@ Plugin 'vim-scripts/DoxygenToolkit.vim'
 Plugin 'skywind3000/asyncrun.vim'
 " Plugin 'chrisbra/csv.vim'
 " Plugin 'sickill/vim-pasta'
+Plugin 'tpope/vim-fugitive'
 Plugin 'tikhomirov/vim-glsl'
 Plugin 'ilink/nts'
 
@@ -341,16 +342,18 @@ let g:num_cores = GetNumCores()
 
 function! Build()
     call WaitStopCurrentJob()
-    " exec(":AsyncRun! ./build_srsmem.sh \|& tee build.log")
-    " exec(":AsyncRun! pity install \|& tee build.log")
     if filereadable("make.sh")
         exec(":AsyncRun! ./make.sh \|& tee build.log")
+        " opens the quickfix, focuses the window if it's already open
+        copen 
+    elseif(filereadable("build.py"))
+        exec(":AsyncRun! ./build.py")
     else
         let cmd = printf(":AsyncRun! ninja install -j%d \|& tee build.log", g:num_cores)
         exec(cmd)
+        " opens the quickfix, focuses the window if it's already open
+        copen 
     endif
-    " opens the quickfix, focuses the window if it's already open
-    copen 
 endfunction
 
 " startify
