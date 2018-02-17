@@ -417,7 +417,6 @@ colorscheme dracula
 " colorscheme rupza 
 
 let g:dracula_italic = 1
-hi clear CursorLine
 
 
 " bookmarks
