@@ -47,6 +47,7 @@ Plugin 'skywind3000/asyncrun.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tikhomirov/vim-glsl'
 Plugin 'ilink/nts'
+Plugin 'fidian/hexmode'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -416,7 +417,6 @@ colorscheme dracula
 " colorscheme rupza 
 
 let g:dracula_italic = 1
-hi clear CursorLine
 
 
 " bookmarks
