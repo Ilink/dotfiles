@@ -47,7 +47,7 @@ Plugin 'skywind3000/asyncrun.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tikhomirov/vim-glsl'
 Plugin 'ilink/nts'
-Plugin 'fidian/hexmode'
+Plugin 'ilink/hexmode'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -1032,3 +1032,5 @@ set errorformat^=%-G%f:%l:\ warning:%m,%-G%f:%l:\ note:%m
 exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guifg=#c5c8c6 guibg=DarkGrey"
 
 let g:hexmode_patterns = '*.bin,*.exe,*.dat,*.o,*.srs'
+
+let g:hexmode_cols = 1
