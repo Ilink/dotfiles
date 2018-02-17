@@ -1,8 +1,4 @@
-if [ ! -f $HOME/local/bin/vim ]; then
-	alias vi='/usr/bin/vim'
-else
-	alias vi='$HOME/local/bin/vim'
-fi
+alias vi='/home/ilink/local/bin/vim'
 
 alias t='touch'
 alias ls='ls --color=auto'
