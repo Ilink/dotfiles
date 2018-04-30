@@ -49,6 +49,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tikhomirov/vim-glsl'
 Plugin 'ilink/nts'
 Plugin 'ilink/hexmode'
+Plugin 'dkprice/vim-easygrep'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -329,7 +330,7 @@ function! GetNumCores()
     " It was easier to make this work on hostname rather than actually do the smart thing
     " some of the hosts use distcc so j > physical cores
     let host=system('hostname')
-    if host =~ "(ronnie)|(mrt)|(wimpy).*"
+    if host =~ "ronnie" || host =~ "wimpy" || host =~ "mrt" || host =~ "fool\\d\\{2\}"
         return 200
     elseif host =~ "ilink_linux"
         return 12
