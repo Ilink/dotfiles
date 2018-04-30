@@ -26,6 +26,9 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'w0ng/vim-hybrid'
+" Plugin 'dracula/vim'
+Plugin 'ilink/vim-dracula'
+Plugin 'felipesousa/rupza'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 " Plugin 'majutsushi/tagbar'
 Plugin 'dbakker/vim-projectroot'
@@ -39,10 +42,12 @@ Plugin 'vim-scripts/DoxygenToolkit.vim'
 " Plugin 'airblade/vim-gitgutter'
 " Plugin 'lyuts/vim-rtags'
 Plugin 'skywind3000/asyncrun.vim'
-Plugin 'chrisbra/csv.vim'
+" Plugin 'chrisbra/csv.vim'
+" Plugin 'sickill/vim-pasta'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tikhomirov/vim-glsl'
 Plugin 'ilink/nts'
+Plugin 'ilink/hexmode'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -407,7 +412,11 @@ set background=dark
 " let g:hybrid_use_iTerm_colors = 1
 " let g:hybrid_custom_term_colors = 1
 
-colorscheme hybrid 
+" colorscheme hybrid 
+colorscheme dracula
+" colorscheme rupza 
+
+let g:dracula_italic = 1
 
 
 " bookmarks
@@ -1021,3 +1030,7 @@ set errorformat^=%-G%f:%l:\ warning:%m,%-G%f:%l:\ note:%m
 
 
 exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guifg=#c5c8c6 guibg=DarkGrey"
+
+let g:hexmode_patterns = '*.bin,*.exe,*.dat,*.o,*.srs'
+
+let g:hexmode_cols = 1
