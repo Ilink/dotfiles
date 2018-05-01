@@ -141,26 +141,26 @@ set complete=.,w,b,u,t
 
 " ctrlp
 """"""""""""""""""""""""""
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-let g:ctrlp_working_path_mode = 'rw'
-" Should never open a duplicate
-" instead it will switch to buffer
-let g:ctrlp_switch_buffer = 'ET'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-" let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard --exclude=*\.js --exclude=*html']
-let g:ctrlp_regexp_search=1
-" let g:ctrlp_lazy_update=1
-let g:ctrlp_lazy_update=300
-" apparently some settings of this variable override the custom ignore below
-" not sure why
-unlet g:ctrlp_user_command
-" let g:ctrlp_custom_ignore = {
-" 	\ 'dir':  '\v(contrib)|([\/]\.(git|hg|svn|js|html))$',
-" 	\ 'file': '\v\.(exe|so|dll|js|html)$',
-" 	\ }
-" let g:ctrlp_custom_ignore = {
-" 	\ 'dir':  'contrib$\|\.git$\|\.hg$\|\.svn$\|bower_components$\|dist$\|node_modules$\|project_files$\|test$',
-"     \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$\|\.js$\|\.html$\|\.map$\|\.md5$\|\.png$\|\.jpg$' }
+" set runtimepath^=~/.vim/bundle/ctrlp.vim
+" let g:ctrlp_working_path_mode = 'rw'
+" " Should never open a duplicate
+" " instead it will switch to buffer
+" let g:ctrlp_switch_buffer = 'ET'
+" let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+" " let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard --exclude=*\.js --exclude=*html']
+" let g:ctrlp_regexp_search=1
+" " let g:ctrlp_lazy_update=1
+" let g:ctrlp_lazy_update=300
+" " apparently some settings of this variable override the custom ignore below
+" " not sure why
+" unlet g:ctrlp_user_command
+" " let g:ctrlp_custom_ignore = {
+" " 	\ 'dir':  '\v(contrib)|([\/]\.(git|hg|svn|js|html))$',
+" " 	\ 'file': '\v\.(exe|so|dll|js|html)$',
+" " 	\ }
+" " let g:ctrlp_custom_ignore = {
+" " 	\ 'dir':  'contrib$\|\.git$\|\.hg$\|\.svn$\|bower_components$\|dist$\|node_modules$\|project_files$\|test$',
+" "     \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$\|\.js$\|\.html$\|\.map$\|\.md5$\|\.png$\|\.jpg$' }
 
 " bufkill
 """"""""""""""""""""""""""
