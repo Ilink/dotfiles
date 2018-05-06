@@ -10,7 +10,8 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugin 'https://github.com/ctrlpvim/ctrlp.vim.git'
 " This is my fork of ctrlp which re-uses its whole UI, but
 " adds my own fuzzy file matching server fuzd
-Plugin 'ilink/ctrlp.vim'
+" Plugin 'ilink/ctrlp.vim'
+Plugin 'junegunn/fzf'
 " Plugin 'vim-airline/vim-airline'
 " Plugin 'ilink/vim-airline'
 " Plugin 'vim-airline/vim-airline-themes'
@@ -49,6 +50,7 @@ Plugin 'tikhomirov/vim-glsl'
 Plugin 'ilink/nts'
 Plugin 'ilink/hexmode'
 Plugin 'pangloss/vim-javascript'
+Plugin 'dkprice/vim-easygrep'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -140,26 +142,26 @@ set complete=.,w,b,u,t
 
 " ctrlp
 """"""""""""""""""""""""""
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-let g:ctrlp_working_path_mode = 'rw'
-" Should never open a duplicate
-" instead it will switch to buffer
-let g:ctrlp_switch_buffer = 'ET'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-" let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard --exclude=*\.js --exclude=*html']
-let g:ctrlp_regexp_search=1
-" let g:ctrlp_lazy_update=1
-let g:ctrlp_lazy_update=300
-" apparently some settings of this variable override the custom ignore below
-" not sure why
-unlet g:ctrlp_user_command
-" let g:ctrlp_custom_ignore = {
-" 	\ 'dir':  '\v(contrib)|([\/]\.(git|hg|svn|js|html))$',
-" 	\ 'file': '\v\.(exe|so|dll|js|html)$',
-" 	\ }
-" let g:ctrlp_custom_ignore = {
-" 	\ 'dir':  'contrib$\|\.git$\|\.hg$\|\.svn$\|bower_components$\|dist$\|node_modules$\|project_files$\|test$',
-"     \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$\|\.js$\|\.html$\|\.map$\|\.md5$\|\.png$\|\.jpg$' }
+" set runtimepath^=~/.vim/bundle/ctrlp.vim
+" let g:ctrlp_working_path_mode = 'rw'
+" " Should never open a duplicate
+" " instead it will switch to buffer
+" let g:ctrlp_switch_buffer = 'ET'
+" let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+" " let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard --exclude=*\.js --exclude=*html']
+" let g:ctrlp_regexp_search=1
+" " let g:ctrlp_lazy_update=1
+" let g:ctrlp_lazy_update=300
+" " apparently some settings of this variable override the custom ignore below
+" " not sure why
+" unlet g:ctrlp_user_command
+" " let g:ctrlp_custom_ignore = {
+" " 	\ 'dir':  '\v(contrib)|([\/]\.(git|hg|svn|js|html))$',
+" " 	\ 'file': '\v\.(exe|so|dll|js|html)$',
+" " 	\ }
+" " let g:ctrlp_custom_ignore = {
+" " 	\ 'dir':  'contrib$\|\.git$\|\.hg$\|\.svn$\|bower_components$\|dist$\|node_modules$\|project_files$\|test$',
+" "     \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$\|\.js$\|\.html$\|\.map$\|\.md5$\|\.png$\|\.jpg$' }
 
 " bufkill
 """"""""""""""""""""""""""
@@ -329,7 +331,7 @@ function! GetNumCores()
     " It was easier to make this work on hostname rather than actually do the smart thing
     " some of the hosts use distcc so j > physical cores
     let host=system('hostname')
-    if host =~ "(ronnie)|(mrt)|(wimpy).*"
+    if host =~ "ronnie" || host =~ "wimpy" || host =~ "mrt" || host =~ "fool\\d\\{2\}"
         return 200
     elseif host =~ "ilink_linux"
         return 12
@@ -1026,7 +1028,8 @@ function! SynStack()
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
-set errorformat^=%-G%f:%l:\ warning:%m,%-G%f:%l:\ note:%m 
+" set errorformat^=%-G%f:%l:\ warning:%m,%-G%f:%l:\ note:%m 
+" set errorformat^=%-G%f:%l:%c\ \ \ required\ from\ %m,%-G%f:%l:\ note:%m 
 " set errorformat=%*[^\"]\"%f\"%*\\D%l:\ %m,\"%f\"%*\\D%l:\ %m,%-G%f:%l:\ (Each\ undeclared\ identifier\ is\ reported\ only\ once,%-G%f:%l:\ for\ each\ function\ it\ appears\ in.),%-GIn\ file\ included\ from\ %f:%l:%c:,%-GIn\ file\ included\ from\ %f:%l:%c,%-GIn\ file\ included\ from\ %f:%l,%-Gfrom\ %f:%l:%c,%-Gfrom\ %f:%l,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,\"%f\"\\,\ line\ %l%*\\D%c%*[^\ ]\ %m,%D%*\\a[%*\\d]:\ Entering\ directory\ `%f',%X%*\\a[%*\\d]:\ Leaving\ directory\ `%f',%D%*\\a:\ Entering\ directory\ `%f',%X%*\\a:\ Leaving\ directory\ `%f',%DMaking\ %*\\a\ in\ %f,%f\|%l\|\ %m
 
 
@@ -1035,3 +1038,7 @@ exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guifg=#c5c8c6 guibg=DarkG
 let g:hexmode_patterns = '*.bin,*.exe,*.dat,*.o,*.srs'
 
 let g:hexmode_cols = 1
+
+
+" fzf
+noremap <C-p> :FZF src<CR>

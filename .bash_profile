@@ -21,7 +21,14 @@ export LD_RUN_PATH=$HOME/local/lib64:$HOME/local/lib:$LD_RUN_PATH
 
 # User specific environment and startup programs
 alias cmake=$HOME/local/bin/cmake
-PATH=$HOME/local/bin:$HOME/bin:$HOME/local/bin:$HOME/.fuz/bin:$PATH
+PATH=$HOME/local/bin:$HOME/bin:$HOME/local/bin:$HOME/.fuz/bin:$HOME/.fzf/bin:$PATH
 
 export PATH
 
+
+# Python 
+export PYTHONUSERBASE=$HOME/local/python
+export WORKON_HOME=$HOME/python_envs
+
+# Go
+GOROOT=/home/ilink/local/go
