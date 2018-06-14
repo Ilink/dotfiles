@@ -769,6 +769,8 @@ nmap <silent> <A-C-Right> :wincmd l<CR>
 nnoremap q x
 vnoremap q x
 nnoremap <S-q> q
+" Paste from the default register during insert mode
+inoremap <C-p> <C-r>"
 
 " nmap <C-p> 
 
@@ -1036,7 +1038,7 @@ exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guifg=#c5c8c6 guibg=DarkG
 
 let g:hexmode_patterns = '*.bin,*.exe,*.dat,*.o,*.srs'
 
-let g:hexmode_cols = 1
+let g:hexmode_cols = 8
 
 
 " fzf
