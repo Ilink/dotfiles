@@ -20,7 +20,7 @@ Plugin 'ilink/vim-buftabline'
 " Plugin 'ap/vim-buftabline'
 Plugin 'ilink/vim-markdown'
 Plugin 'https://github.com/rking/ag.vim'
-Plugin 'tomtom/tcomment_vim'
+Plugin 'tyru/caw.vim'
 Plugin 'MattesGroeger/vim-bookmarks'
 Plugin 'mhinz/vim-startify'
 Plugin 'scrooloose/nerdtree'
@@ -391,7 +391,7 @@ let delimitMate_expand_cr = 1
 
 " comments
 """"""""""""""""""""""""""
-let g:tcommentMaps = 0 
+let g:caw_operator_keymappings = 0
 
 " ycm
 """"""""""""""""""""""""""
@@ -581,8 +581,8 @@ vnoremap <Leader>/ :<C-U>AsyncCmd ag --cpp --cc<Space><C-R>=Quote(GetVisualSelec
 
 " Comments
 " For some reason this doesnt with with nore
-vmap <Leader>' <Plug>TComment_gc
-nmap <Leader>' <Plug>TComment_gcc
+vmap <Leader>' <Plug>(caw:hatpos:toggle)
+nmap <Leader>' <Plug>(caw:hatpos:toggle)
 
 " Bookmarks
 nnoremap <Leader>mm :BookmarkToggle<CR>
