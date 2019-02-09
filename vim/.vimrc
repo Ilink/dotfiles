@@ -12,6 +12,7 @@ Plugin 'VundleVim/Vundle.vim'
 " adds my own fuzzy file matching server fuzd
 " Plugin 'ilink/ctrlp.vim'
 Plugin 'junegunn/fzf'
+" Plugin 'haya14busa/vim-poweryank'
 " Plugin 'vim-airline/vim-airline'
 " Plugin 'ilink/vim-airline'
 " Plugin 'vim-airline/vim-airline-themes'
@@ -43,7 +44,7 @@ Plugin 'vim-scripts/DoxygenToolkit.vim'
 " Plugin 'airblade/vim-gitgutter'
 " Plugin 'lyuts/vim-rtags'
 Plugin 'skywind3000/asyncrun.vim'
-" Plugin 'chrisbra/csv.vim'
+Plugin 'chrisbra/csv.vim'
 " Plugin 'sickill/vim-pasta'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tikhomirov/vim-glsl'
@@ -51,6 +52,7 @@ Plugin 'ilink/nts'
 Plugin 'ilink/hexmode'
 Plugin 'pangloss/vim-javascript'
 Plugin 'dkprice/vim-easygrep'
+Plugin 'nathanaelkane/vim-indent-guides'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -129,6 +131,11 @@ set foldnestmax=1
 
 
 syntax sync minlines=256
+
+" Asyncrun
+""""""""""""""""""""
+let g:asyncrun_bell=1
+let g:asyncrun_timer=1000
 
 " Tags
 """"""""""""""""""""""""""
@@ -433,12 +440,30 @@ highlight BookmarkLine ctermbg=235
 let g:bookmark_sign = '*'
 let g:bookmark_highlight_lines = 1
 
+function! BetterPaste()
+    " https://vi.stackexchange.com/questions/11476/how-can-i-get-the-character-at-the-cursor-position-in-a-multibyte-aware-manner
+    " Gets the current character under the cursor
+    " let l:cursorCh = matchstr(getline('.'), '\%'.col('.').'c.')
+    " if l:cursorCh != ' '
+    "     echom "not a space"
+    "     " insert a space
+    " endif 
+    " let l:lineLen = strlen(getline(".")) 
+    " if l:cursorCh == '<CR>'
+    "     echom "CR"
+    " endif
+    " echom l:cursorCh
+    exec "normal a \e"
+    normal lp 
+endfunction
 
 "Leader Key Bindings
 """""""""""""""""""""""""""
 " to make space leader key work, must unmap space
 nnoremap <SPACE> <Nop>
 let mapleader = "\<Space>"
+
+nnoremap <Leader>pp :call BetterPaste()<CR>
 
 " Project/file management
 nnoremap <Leader>pf :CtrlP<CR>
@@ -1037,10 +1062,19 @@ endfunc
 
 exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guifg=#c5c8c6 guibg=DarkGrey"
 
-let g:hexmode_patterns = '*.bin,*.exe,*.dat,*.o,*.srs'
+" let g:hexmode_patterns = '*.bin,*.exe,*.dat,*.o,*.srs'
+let g:hexmode_patterns = '*.bin,*.exe,*.dat,*.o'
 
 let g:hexmode_cols = 8
 
 
 " fzf
 noremap <C-p> :FZF src<CR>
+
+function! LoadSRS()
+    " The '%:p' part is the current filename being loaded
+    exec "noautocmd %!bin/splunkd toCsv '%:p'"
+endfunction
+
+" au FileReadPre,FileReadPost,BufReadPre,BufReadPost,BufNewFile *.srs,*.srs.gz,*.srs.zst call LoadSRS()
+au FileReadPre,FileReadPost,BufReadPre,BufReadPost,BufNewFile *.srs,*.srs.gz,*.srs.zst exec "%!$SPLUNK_HOME/bin/splunkd toCsv '%:p'"

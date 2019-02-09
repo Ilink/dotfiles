@@ -31,4 +31,4 @@ export PYTHONUSERBASE=$HOME/local/python
 export WORKON_HOME=$HOME/python_envs
 
 # Go
-GOROOT=/home/ilink/local/go
+# GOROOT=/home/ilink/local/go
