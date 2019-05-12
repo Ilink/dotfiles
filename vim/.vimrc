@@ -151,6 +151,18 @@ nmap ++ <Plug>VimwikiAddHeaderLevel
 " This makes it easy when I have different machines that have different journal git repos
 " let g:vimwiki_list = [{'path': '~/src/splunk/ilink/journal/vimwiki',
 "                   \ 'path_html': '~/src/splunk/ilink/journal/vimwiki_html'}]
+" hi! VimwikiHeader1 ctermfg=214 guifg=#ff8700
+let g:vimwiki_hl_headers=1
+" hi def VimwikiHeader1 ctermfg=214 guifg=#ff8700 term=bold cterm=bold ctermfg=214 gui=bold guifg=#ff8700 guibg=bg
+" hi def VimwikiHeader2 ctermfg=81 guifg=#5fd7ff
+
+autocmd FileType vimwiki hi VimwikiHeader1 ctermfg=210 guifg=#ff8700 term=bold cterm=bold ctermfg=214 gui=bold guifg=#ff8700 guibg=bg
+autocmd FileType vimwiki hi VimwikiHeader2 ctermfg=81 guifg=#5fd7ff term=bold cterm=bold ctermfg=81 gui=bold guifg=#5fd7ff guibg=bg
+autocmd FileType vimwiki hi VimwikiHeader3 ctermfg=141 guifg=#af87ff term=bold cterm=bold ctermfg=141 gui=bold guifg=#af87ff guibg=bg
+
+" hi link VimwikiHeader1 NotesHeader
+
+" let g:vimwiki_global_vars.hcolor_guifg_light = ['#ff8700', '#ff8700', '#ff8700', '#ff8700']
 
 " Asyncrun
 """"""""""""""""""""
