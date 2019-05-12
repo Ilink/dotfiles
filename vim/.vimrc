@@ -1,6 +1,8 @@
 set nocompatible
 filetype off
 
+let g:vimwiki_map_prefix = '<Leader>n'
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -53,6 +55,7 @@ Plugin 'ilink/hexmode'
 Plugin 'pangloss/vim-javascript'
 Plugin 'dkprice/vim-easygrep'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'vimwiki/vimwiki'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -110,6 +113,11 @@ set encoding=utf-8
 set fileencoding=utf-8
 set t_Co=256
 let &t_Co=256
+" This makes 'labels' not get de-indendeted to the start of the line
+" A label is something like 'abc:'
+" note the trailing colon
+set cinoptions+=L0
+
 " this allows the cursor to go 1-past the end of the line
 " set virtualedit=onemore
 
@@ -131,6 +139,18 @@ set foldnestmax=1
 
 
 syntax sync minlines=256
+
+" Vimwiki
+""""""""""""""""""""
+" Change mappings so this doesnt conflict with '-' and '+'
+" which i use for moving between open buffers
+nmap __ <Plug>VimwikiRemoveHeaderLevel
+nmap ++ <Plug>VimwikiAddHeaderLevel
+" Instead of setting the below, i just linked the ~/vimwiki dir to
+" my journal git repo
+" This makes it easy when I have different machines that have different journal git repos
+" let g:vimwiki_list = [{'path': '~/src/splunk/ilink/journal/vimwiki',
+"                   \ 'path_html': '~/src/splunk/ilink/journal/vimwiki_html'}]
 
 " Asyncrun
 """"""""""""""""""""
