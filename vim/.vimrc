@@ -34,7 +34,7 @@ Plugin 'w0ng/vim-hybrid'
 Plugin 'ilink/vim-dracula'
 Plugin 'felipesousa/rupza'
 Plugin 'octol/vim-cpp-enhanced-highlight'
-" Plugin 'majutsushi/tagbar'
+Plugin 'majutsushi/tagbar'
 Plugin 'dbakker/vim-projectroot'
 Plugin 'ilink/vim-bufkill'
 Plugin 'vim-scripts/C-fold'
@@ -510,9 +510,6 @@ nnoremap <Leader>bd :BD<CR>
 nnoremap <Leader>bu :BUNDO<CR>
 nnoremap <Leader>bf :CtrlPBuffer<CR>
 
-" Tagbar
-nnoremap <Leader>bb :TagbarToggle<CR>
-
 function! GetListedBuffers()
 	return filter(range(1, bufnr('$')), 'buflisted(v:val)')
 endfunction
@@ -663,8 +660,10 @@ nnoremap <Leader>gc :cs find c <C-R>=expand("<cword>")<CR><CR>
 nnoremap <Leader>gs :call ToggleHeaderSrc()<CR> 
 
 
-" NERDTree
+" Sidebars: NERDTree + Tagbar
 nnoremap <Leader>tt :NERDTreeToggle<CR>
+nnoremap <Leader>tb :TagbarToggle<CR>
+nnoremap <Leader>tw :TagbarCurrentTag('s', 'f')<CR>
 
 
 " Jumps
