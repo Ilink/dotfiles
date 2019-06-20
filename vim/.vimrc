@@ -446,6 +446,13 @@ let g:ycm_allow_changing_updatetime = 0
 """"""""""""""""""""""""""
 let g:NERDCreateDefaultMappings = 0
 
+" Tagbar
+""""""""""""""""""""""""""
+" This effectively unbinds this key. It is set to <Space> by default
+" which overlaps with my leader key. I don't care about this
+" command anyway so im fine removing it.
+let g:tagbar_map_showproto = "q"
+
 " Color Theme
 """"""""""""""""""""""""""
 " elflord actually works if xterm-256 isnt
