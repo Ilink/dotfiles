@@ -57,7 +57,7 @@ Plugin 'dkprice/vim-easygrep'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'vimwiki/vimwiki'
 Plugin 'ronakg/quickr-cscope.vim'
-" Plugin 'vim-scripts/cscope-quickfix'
+Plugin 'autoload_cscope.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -182,6 +182,8 @@ set complete=.,w,b,u,t
 " cscope / quickr-cscope
 """"""""""""""""""""""""
 let g:quickr_cscope_keymaps = 0
+let g:quickr_cscope_autoload_db = 0
+" let g:quickr_cscope_debug_mode = 1
 
 " Git
 """"""""""""""""""""""""""
