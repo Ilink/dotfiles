@@ -56,6 +56,8 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'dkprice/vim-easygrep'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'vimwiki/vimwiki'
+Plugin 'ronakg/quickr-cscope.vim'
+" Plugin 'vim-scripts/cscope-quickfix'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -176,6 +178,10 @@ let g:asyncrun_timer=1000
 " remove i to not search every file in our path 
 " http://stackoverflow.com/questions/2169645/vims-autocomplete-is-excruciatingly-slow
 set complete=.,w,b,u,t
+
+" cscope / quickr-cscope
+""""""""""""""""""""""""
+let g:quickr_cscope_keymaps = 0
 
 " Git
 """"""""""""""""""""""""""
@@ -372,7 +378,7 @@ function! GetNumCores()
     " It was easier to make this work on hostname rather than actually do the smart thing
     " some of the hosts use distcc so j > physical cores
     let host=system('hostname')
-    if host =~ "ronnie" || host =~ "wimpy" || host =~ "mrt" || host =~ "fool\\d\\{2\}"
+    if host =~ "ronnie" || host =~ "wimpy" || host =~ "mrt" || host =~ "fool\\d\\{2\}" || host =~ "chieftain"
         return 200
     elseif host =~ "ilink_linux"
         return 12
@@ -601,7 +607,6 @@ nnoremap <Leader>qe :call LoadBuildLog()<CR>
 " nmap <silent> <leader>e :call ToggleList("Quickfix List", 'c')<CR>
 nnoremap <silent> <Leader>qq :call ToggleList("Quickfix List", 'c')<CR> 
 
-
 " Doxygen
 nnoremap <Leader>dd :Dox<CR>
 
@@ -660,11 +665,10 @@ nnoremap <Leader>gd g<C-]>
 " nnoremap <Leader>gd :cs find g <C-R>=expand("<cword>")<CR><CR>  
 " try to open file under cursor
 nnoremap <Leader>gf gf 
-" cscope show list of callers
-" i wonder how this works with namespace::function
-" cscope doesnt work with namespace::function it seems
-nnoremap <Leader>gc :cs find c <C-R>=expand("<cword>")<CR><CR>  
 nnoremap <Leader>gs :call ToggleHeaderSrc()<CR> 
+" Not sure why these dont work with nnoremap
+nmap <leader>gu <plug>(quickr_cscope_symbols)
+nmap <leader>gc <plug>(quickr_cscope_callers)
 
 
 " Sidebars: NERDTree + Tagbar
@@ -680,6 +684,7 @@ nnoremap <Leader>jfb :JumpFileBack<CR>
 nnoremap <Leader>jfn :JumpFileForward<CR>
 nnoremap <Leader>jm v%
 
+" Prev/next change
 nnoremap <Leader>cb g;
 nnoremap <Leader>cn g, 
 
