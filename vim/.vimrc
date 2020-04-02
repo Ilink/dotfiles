@@ -58,6 +58,7 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'vimwiki/vimwiki'
 Plugin 'ronakg/quickr-cscope.vim'
 Plugin 'autoload_cscope.vim'
+Plugin 'skywind3000/vim-quickui'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -166,6 +167,9 @@ autocmd FileType vimwiki setlocal textwidth=80
 " hi link VimwikiHeader1 NotesHeader
 
 " let g:vimwiki_global_vars.hcolor_guifg_light = ['#ff8700', '#ff8700', '#ff8700', '#ff8700']
+let wiki = {}
+let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp'}
+let g:vimwiki_list = [wiki]
 
 
 " Asyncrun
@@ -485,8 +489,7 @@ let g:bookmark_save_per_working_dir = 1
 let g:bookmark_auto_save = 1
 highlight BookmarkSign ctermfg=110
 highlight BookmarkLine ctermbg=235 
-" let g:bookmark_sign = '♥'
-let g:bookmark_sign = '*'
+" highlight BookmarkLine ctermbg=2 
 let g:bookmark_highlight_lines = 1
 
 function! BetterPaste()
@@ -653,6 +656,10 @@ vnoremap <Leader>/ :<C-U>AsyncCmd ag --cpp --cc<Space><C-R>=Quote(GetVisualSelec
 " For some reason this doesnt with with nore
 vmap <Leader>' <Plug>(caw:hatpos:toggle)
 nmap <Leader>' <Plug>(caw:hatpos:toggle)
+
+" Context menu (vim-quickui)
+let opts = {'index':g:quickui#context#cursor}
+nnoremap <Leader>fp :call quickui#preview#open("<C-R>=expand("<cfile>")<CR>", opts)<CR>
 
 " Bookmarks
 nnoremap <Leader>mm :BookmarkToggle<CR>
