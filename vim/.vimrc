@@ -295,7 +295,7 @@ endfunction
 " Lightline Config
 """""""""""""""""""
 let g:lightline = {
-    \ 'colorscheme': 'wombat',
+    \ 'colorscheme': 'dracula',
     \ 'component': {
     \   'lineinfo': '%3l:%-2v(%L)', 'line': '%l', 'column': '%c'
     \},
