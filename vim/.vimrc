@@ -108,6 +108,8 @@ set hidden
 set clipboard=unnamed,unnamedplus " use system clipboard by default
 " set clipboard=unnamedplus " use system clipboard by default
 set splitbelow
+" Gets rid of the characters to represent vertical splits
+set fillchars+=vert:\ 
 set path+=**
 set cursorline " highlight line under cursor
 set autoindent
