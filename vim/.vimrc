@@ -497,7 +497,7 @@ colorscheme dracula
 " exe "hi! TabLine ctermfg=250 ctermbg=234 gui=NONE guifg=#c5c8c6 guibg=DarkGrey"
 " exe "hi! TabLine ctermfg=250 ctermbg=234 gui=NONE guibg=#141a2b" 
 hi! TabLine ctermfg=250 ctermbg=234 term=NONE cterm=NONE gui=NONE guibg=#adbcd3 guifg=#303030
-hi! TabLineSel gui=NONE ctermfg=110 ctermbg=234 guibg=#cc8df0 guifg=#303030
+hi! TabLineSel gui=NONE ctermfg=110 ctermbg=234 guibg=#cc8df0 guifg=#303030 term=NONE cterm=NONE
 hi! TabLineFill term=reverse cterm=reverse gui=NONE ctermfg=234 ctermbg=235
 " TabLine        ctermfg=250 ctermbg=234 guifg=#303030 guibg=#adbcd3
 " TabLineSel     term=reverse cterm=reverse ctermfg=110 ctermbg=234
