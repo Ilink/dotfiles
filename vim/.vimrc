@@ -19,8 +19,8 @@ Plugin 'junegunn/fzf'
 " Plugin 'ilink/vim-airline'
 " Plugin 'vim-airline/vim-airline-themes'
 Plugin 'itchyny/lightline.vim'
-Plugin 'ilink/vim-buftabline'
-" Plugin 'ap/vim-buftabline'
+" Plugin 'ilink/vim-buftabline'
+Plugin 'ap/vim-buftabline'
 Plugin 'ilink/vim-markdown'
 Plugin 'https://github.com/rking/ag.vim'
 Plugin 'tyru/caw.vim'
@@ -30,8 +30,14 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'w0ng/vim-hybrid'
-" Plugin 'dracula/vim'
-Plugin 'ilink/vim-dracula'
+Plugin 'dracula/vim', { 'name': 'dracula' }
+" Plugin 'ilink/vim-dracula'
+Plugin 'connorholyday/vim-snazzy'
+Plugin 'rakr/vim-one'
+Plugin 'joshdick/onedark.vim'
+Plugin 'mhartington/oceanic-next'
+Bundle 'sonph/onehalf', {'rtp': 'vim/'}
+Plugin 'drewtempelmeyer/palenight.vim'
 Plugin 'felipesousa/rupza'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'majutsushi/tagbar'
@@ -46,7 +52,7 @@ Plugin 'vim-scripts/DoxygenToolkit.vim'
 " Plugin 'airblade/vim-gitgutter'
 " Plugin 'lyuts/vim-rtags'
 Plugin 'skywind3000/asyncrun.vim'
-Plugin 'chrisbra/csv.vim'
+" Plugin 'chrisbra/csv.vim'
 " Plugin 'sickill/vim-pasta'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tikhomirov/vim-glsl'
@@ -59,6 +65,8 @@ Plugin 'vimwiki/vimwiki'
 Plugin 'ronakg/quickr-cscope.vim'
 Plugin 'autoload_cscope.vim'
 Plugin 'skywind3000/vim-quickui'
+Plugin 'altercation/vim-colors-solarized'
+" Plugin 'puremourning/vimspector'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -116,6 +124,14 @@ set encoding=utf-8
 set fileencoding=utf-8
 set t_Co=256
 let &t_Co=256
+
+set termguicolors
+" Without these two lines, vim doesn't
+" support truecolors. Not sure why.
+" https://github.com/tmux/tmux/issues/1246
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
 " This makes 'labels' not get de-indendeted to the start of the line
 " A label is something like 'abc:'
 " note the trailing colon
@@ -477,6 +493,46 @@ set background=dark
 
 " colorscheme hybrid 
 colorscheme dracula
+" Tweaks for dracula
+" exe "hi! TabLine ctermfg=250 ctermbg=234 gui=NONE guifg=#c5c8c6 guibg=DarkGrey"
+" exe "hi! TabLine ctermfg=250 ctermbg=234 gui=NONE guibg=#141a2b" 
+hi! TabLine ctermfg=250 ctermbg=234 term=NONE cterm=NONE gui=NONE guibg=#adbcd3 guifg=#303030
+hi! TabLineSel gui=NONE ctermfg=110 ctermbg=234 guibg=#cc8df0 guifg=#303030
+hi! TabLineFill term=reverse cterm=reverse gui=NONE ctermfg=234 ctermbg=235
+" TabLine        ctermfg=250 ctermbg=234 guifg=#303030 guibg=#adbcd3
+" TabLineSel     term=reverse cterm=reverse ctermfg=110 ctermbg=234
+" TabLineFill    term=reverse cterm=reverse ctermfg=234 ctermbg=235
+hi type guibg=NONE guifg=#8be9fd
+hi comment guifg=#8a8a8a
+
+
+" colorscheme onehalfdark
+" colorscheme palenight
+" Tweaks for palenight
+" hi normal ctermfg=145 ctermbg=235 guifg=#bfc7d5 guibg=#232735
+" Colors for tab plugin
+" exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guibg=DarkGrey" 
+" exe "hi! TabLineSel term=reverse cterm=reverse ctermfg=110 ctermbg=234 gui=bold" 
+" exe "hi! TabLineFill term=reverse cterm=reverse ctermfg=234 ctermbg=235 gui=reverse" 
+
+" colorscheme snazzy
+
+" colorscheme one
+" colorscheme onedark
+
+" colorscheme OceanicNext
+" let g:oceanic_next_terminal_bold = 1
+" let g:oceanic_next_terminal_italic = 1
+" Tweaks for OceanicNext 
+" exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guibg=DarkGrey" 
+" exe "hi! TabLineSel term=reverse cterm=reverse ctermfg=110 ctermbg=234 gui=bold" 
+" exe "hi! TabLineFill term=reverse cterm=reverse ctermfg=234 ctermbg=235 gui=reverse" 
+
+
+" let g:solarized_termcolors=256
+" set background=dark
+" colorscheme solarized
+
 " colorscheme rupza 
 
 let g:dracula_italic = 1
@@ -615,7 +671,6 @@ nnoremap <silent> <Leader>qq :call ToggleList("Quickfix List", 'c')<CR>
 " Doxygen
 nnoremap <Leader>dd :Dox<CR>
 
-
 " map leader + [1-9] to jump to a window
 let i = 1
 while i <= 9
@@ -684,6 +739,13 @@ nmap <leader>gc <plug>(quickr_cscope_callers)
 nnoremap <Leader>tt :NERDTreeToggle<CR>
 nnoremap <Leader>tb :TagbarToggle<CR>
 nnoremap <Leader>tw :TagbarCurrentTag('s', 'f')<CR>
+
+" Text Processing
+" Format line
+nnoremap <Leader>tf gqq
+" Format visual selection
+vnoremap <Leader>tf gq
+
 
 
 " Jumps
@@ -953,9 +1015,9 @@ nnoremap // /\<<C-R>=expand("<cword>")<CR>\><CR><S-N>
 " nnoremap <Leader>gd :cs find g <C-R>=expand("<cword>")<CR><CR>  
 
 " Colors for tab plugin
-exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guibg=DarkGrey" 
-exe "hi! TabLineSel term=reverse cterm=reverse ctermfg=110 ctermbg=234 gui=bold" 
-exe "hi! TabLineFill term=reverse cterm=reverse ctermfg=234 ctermbg=235 gui=reverse" 
+" exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guibg=DarkGrey" 
+" exe "hi! TabLineSel term=reverse cterm=reverse ctermfg=110 ctermbg=234 gui=bold" 
+" exe "hi! TabLineFill term=reverse cterm=reverse ctermfg=234 ctermbg=235 gui=reverse" 
 
 " colors for indent guide
 hi IndentGuidesOdd  ctermbg=white
@@ -1114,7 +1176,7 @@ endfunc
 " set errorformat=%*[^\"]\"%f\"%*\\D%l:\ %m,\"%f\"%*\\D%l:\ %m,%-G%f:%l:\ (Each\ undeclared\ identifier\ is\ reported\ only\ once,%-G%f:%l:\ for\ each\ function\ it\ appears\ in.),%-GIn\ file\ included\ from\ %f:%l:%c:,%-GIn\ file\ included\ from\ %f:%l:%c,%-GIn\ file\ included\ from\ %f:%l,%-Gfrom\ %f:%l:%c,%-Gfrom\ %f:%l,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,\"%f\"\\,\ line\ %l%*\\D%c%*[^\ ]\ %m,%D%*\\a[%*\\d]:\ Entering\ directory\ `%f',%X%*\\a[%*\\d]:\ Leaving\ directory\ `%f',%D%*\\a:\ Entering\ directory\ `%f',%X%*\\a:\ Leaving\ directory\ `%f',%DMaking\ %*\\a\ in\ %f,%f\|%l\|\ %m
 
 
-exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guifg=#c5c8c6 guibg=DarkGrey"
+" exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guifg=#c5c8c6 guibg=DarkGrey"
 
 " let g:hexmode_patterns = '*.bin,*.exe,*.dat,*.o,*.srs'
 let g:hexmode_patterns = '*.bin,*.exe,*.dat,*.o'
@@ -1132,3 +1194,22 @@ endfunction
 
 " au FileReadPre,FileReadPost,BufReadPre,BufReadPost,BufNewFile *.srs,*.srs.gz,*.srs.zst call LoadSRS()
 au FileReadPre,FileReadPost,BufReadPre,BufReadPost,BufNewFile *.srs,*.srs.gz,*.srs.zst exec "%!$SPLUNK_HOME/bin/splunkd toCsv '%:p'"
+
+
+" Terminal and Termdebug
+" packadd termdebug
+
+" https://github.com/vim/vim/issues/2716
+" I think the idea is that double tapping escape switches immedietly back
+" to normal mode. However, hitting escape once makes it wait for ttimeoutlen
+" to elapse before going back to normal mode. I'm not sure exactly.
+" The setting seems to fix the issue with arrow keys (which begin with escape)
+" trigger exiting back to normal mode. That's why we cant just map escape without 
+" the other stuff.
+" I think the double escape is needed to make sure vim will try waiting for more input before continuing
+" Idk
+tnoremap <Esc> <C-W>N
+tnoremap <Esc><Esc> <C-W>N
+set timeout timeoutlen=1000  " Default
+" set ttimeout ttimeoutlen=100  " Set by defaults.vim
+set ttimeout ttimeoutlen=0  " Set by defaults.vim
