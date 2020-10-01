@@ -66,7 +66,9 @@ Plugin 'ronakg/quickr-cscope.vim'
 Plugin 'autoload_cscope.vim'
 Plugin 'skywind3000/vim-quickui'
 Plugin 'altercation/vim-colors-solarized'
+" Plugin 'yggdroot/indentline'
 " Plugin 'puremourning/vimspector'
+" Plugin 'google/vim-searchindex'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -126,6 +128,24 @@ set encoding=utf-8
 set fileencoding=utf-8
 set t_Co=256
 let &t_Co=256
+
+function! LoadProjectSettings()
+    let l:projFile = ".vim_project"
+    if filereadable(l:projFile)
+        exec "source " . l:projFile
+    else
+        let g:project_settings = {}
+    endif
+
+    " Set defaults
+    if !has_key(g:project_settings, "fzf_root")
+        let g:project_settings.fzf_root = "."
+    endif
+    if !has_key(g:project_settings, "ignore_files")
+        let g:project_settings.ignore_files = []
+    endif
+endfunction
+call LoadProjectSettings()
 
 set termguicolors
 " Without these two lines, vim doesn't
@@ -193,7 +213,7 @@ let g:vimwiki_list = [wiki]
 " Asyncrun
 """"""""""""""""""""
 let g:asyncrun_bell=1
-let g:asyncrun_timer=1000
+" let g:asyncrun_timer=1000
 
 " Tags
 """"""""""""""""""""""""""
@@ -454,16 +474,15 @@ function! Build()
     call WaitStopCurrentJob()
     if filereadable("make.sh")
         exec(":AsyncRun! ./make.sh \|& tee build.log")
-        " opens the quickfix, focuses the window if it's already open
-        copen 
     elseif(filereadable("build.py"))
-        exec(":AsyncRun! ./build.py")
+        exec(":AsyncRun! ./build.py \|& tee build.log")
     else
-        let cmd = printf(":AsyncRun! ninja install -j%d \|& tee build.log", g:num_cores)
-        exec(cmd)
-        " opens the quickfix, focuses the window if it's already open
-        copen 
+        " let cmd = printf(":AsyncRun! ninja install -j%d \|& tee build.log", g:num_cores)
+        " let cmd = printf(":AsyncRun! ninja install -j%d \|& tee build.log", g:num_cores)
+        exec(":AsyncRun pity install \|& tee build.log")
     endif
+    " opens the quickfix, focuses the window if it's already open
+    copen 
 endfunction
 
 " startify
@@ -608,7 +627,7 @@ endfunction
 nnoremap <SPACE> <Nop>
 let mapleader = "\<Space>"
 
-nnoremap <Leader>pp :call BetterPaste()<CR>
+nnoremap <Leader>pp li<space><esc>p
 
 " Project/file management
 nnoremap <Leader>pf :CtrlP<CR>
@@ -1028,15 +1047,12 @@ nnoremap <silent> = :bnext<CR>
 
 " nnoremap <F12> :AsyncRun ./build_srsmem.sh \|& tee build.log<CR>
 nnoremap <F12> :call Build()<CR>
+" nnoremap <F12> :AsyncRun pity install<CR>
 nnoremap <F11> :call WaitStopCurrentJob()<CR>
+nnoremap <F10> :call LoadBuildLog()<CR>
 
 " Pasting stuff without ruining the formatting
 set pastetoggle=<F2>
-" windows
-inoremap <C-v> <F10><C-r>+<F10>
-inoremap <S-Insert> <F10><C-r>+<F10>
-" os x
-inoremap <m-v> <F10><C-r>+<F10>
 
 " this just flat out doesnt work
 " map <m-v> :set paste<CR>o<esc>"*]p:set nopaste<CR>
@@ -1212,6 +1228,10 @@ endfunc
 " set errorformat^=%-G%f:%l:%c\ \ \ required\ from\ %m,%-G%f:%l:\ note:%m 
 " set errorformat=%*[^\"]\"%f\"%*\\D%l:\ %m,\"%f\"%*\\D%l:\ %m,%-G%f:%l:\ (Each\ undeclared\ identifier\ is\ reported\ only\ once,%-G%f:%l:\ for\ each\ function\ it\ appears\ in.),%-GIn\ file\ included\ from\ %f:%l:%c:,%-GIn\ file\ included\ from\ %f:%l:%c,%-GIn\ file\ included\ from\ %f:%l,%-Gfrom\ %f:%l:%c,%-Gfrom\ %f:%l,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,\"%f\"\\,\ line\ %l%*\\D%c%*[^\ ]\ %m,%D%*\\a[%*\\d]:\ Entering\ directory\ `%f',%X%*\\a[%*\\d]:\ Leaving\ directory\ `%f',%D%*\\a:\ Entering\ directory\ `%f',%X%*\\a:\ Leaving\ directory\ `%f',%DMaking\ %*\\a\ in\ %f,%f\|%l\|\ %m
 
+" GCC only
+" src/pipeline/indexer/search/TaskGraph.cpp:856:52: error: no matching function for call to ‘make_edge(std::tuple_element<0, std::tuple<tbb::flow::interface11::internal::multifunction_output<tg::StatusMsg> > >::type&, tbb::flow::interface11::function_node<tg::StatusMsg::MessageT, tbb::flow::interface11::continue_msg>&)’
+" set errorformat=%f:%l:%c:\ error:\ %m
+
 
 " exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guifg=#c5c8c6 guibg=DarkGrey"
 
@@ -1222,7 +1242,8 @@ let g:hexmode_cols = 8
 
 
 " fzf
-noremap <C-p> :FZF src<CR>
+exec "noremap <C-p> :FZF ".g:project_settings.fzf_root."<CR>"
+let g:fzf_layout = { 'down': '~40%' }
 
 function! LoadSRS()
     " The '%:p' part is the current filename being loaded
@@ -1250,3 +1271,5 @@ tnoremap <Esc><Esc> <C-W>N
 set timeout timeoutlen=1000  " Default
 " set ttimeout ttimeoutlen=100  " Set by defaults.vim
 set ttimeout ttimeoutlen=0  " Set by defaults.vim
+
+set shortmess-=S
