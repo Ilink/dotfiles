@@ -1242,6 +1242,12 @@ let g:hexmode_cols = 8
 
 
 " fzf
+let fzfCmd = 'fd --type f' 
+for ignore_pattern in g:project_settings.ignore_files
+    let fzfCmd .= " --exclude " . ignore_pattern
+endfor
+
+let $FZF_DEFAULT_COMMAND=fzfCmd
 exec "noremap <C-p> :FZF ".g:project_settings.fzf_root."<CR>"
 let g:fzf_layout = { 'down': '~40%' }
 
