@@ -957,18 +957,21 @@ nmap <silent> <A-C-Down> :wincmd j<CR>
 nmap <silent> <A-C-Left> :wincmd h<CR>
 nmap <silent> <A-C-Right> :wincmd l<CR>
 
-:nnoremap ; :
-:vnoremap ; :
-:ca W w
-:map <S-w> :MBEbd<CR> 
-:map <Home> ^
-:imap <Home> <esc><Home>i
+nnoremap ; :
+vnoremap ; :
+ca W w
+map <S-w> :MBEbd<CR> 
+map <Home> ^
+imap <Home> <esc><Home>i
 " Since x got turned into cut, i need a new key to delete a single char
 nnoremap q x
 vnoremap q x
 nnoremap <S-q> q
 " Paste from the default register during insert mode
 inoremap <C-p> <C-r>"
+" Paste at the end of the line
+" Note that this will add a space, paste, then remove the space
+nmap P A <esc>p$q
 
 " nmap <C-p> 
 
