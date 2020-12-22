@@ -66,6 +66,7 @@ Plugin 'ronakg/quickr-cscope.vim'
 Plugin 'autoload_cscope.vim'
 Plugin 'skywind3000/vim-quickui'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'vim-scripts/ShaderHighLight'
 " Plugin 'puremourning/vimspector'
 
 " All of your Plugins must be added before the following line
@@ -498,6 +499,7 @@ let delimitMate_expand_cr = 1
 " comments
 """"""""""""""""""""""""""
 let g:caw_operator_keymappings = 0
+autocmd FileType shaderlab let b:caw_oneline_comment = '//'
 
 " ycm
 """"""""""""""""""""""""""
@@ -1132,6 +1134,8 @@ autocmd SessionLoadPost * call SetupSession()
 """"""""""""""""""""""""
 au BufRead,BufNewFile *.scala set filetype=java
 au BufRead,BufNewFile *.conf set filetype=apache
+au BufRead,BufNewFile *.cginc set filetype=shaderlab
+au BufRead,BufNewFile *.compute set filetype=shaderlab
 
 
 " Find replace
