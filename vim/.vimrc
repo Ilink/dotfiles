@@ -13,6 +13,7 @@ Plugin 'VundleVim/Vundle.vim'
 " This is my fork of ctrlp which re-uses its whole UI, but
 " adds my own fuzzy file matching server fuzd
 " Plugin 'ilink/ctrlp.vim'
+Plugin 'junegunn/fzf.vim'
 Plugin 'junegunn/fzf'
 " Plugin 'haya14busa/vim-poweryank'
 " Plugin 'vim-airline/vim-airline'
@@ -53,6 +54,7 @@ Plugin 'vim-scripts/DoxygenToolkit.vim'
 " Plugin 'lyuts/vim-rtags'
 Plugin 'skywind3000/asyncrun.vim'
 " Plugin 'chrisbra/csv.vim'
+Plugin 'mechatroner/rainbow_csv'
 " Plugin 'sickill/vim-pasta'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tikhomirov/vim-glsl'
@@ -183,6 +185,11 @@ syntax sync minlines=256
 
 " Vimwiki
 """"""""""""""""""""
+augroup vimwiki_ft
+  au!
+  autocmd BufNewFile,BufRead *.vimwiki set filetype=vimwiki
+augroup END
+
 " Change mappings so this doesnt conflict with '-' and '+'
 " which i use for moving between open buffers
 nmap __ <Plug>VimwikiRemoveHeaderLevel
@@ -1243,6 +1250,15 @@ let g:hexmode_patterns = '*.bin,*.exe,*.dat,*.o'
 
 let g:hexmode_cols = 8
 
+" csv
+" The python code used by rainbow csv uses tempfile.gettempdir()
+" which uses /tmp by default, apparently. However it will also use
+" the TMPDIR environment variable to decide where to put files
+let temp_dir = $HOME . "/.vim_temp"
+if !isdirectory(temp_dir)
+    call mkdir(temp_dir, "p")
+endif
+let $TMPDIR=temp_dir
 
 " fzf
 let fzfCmd = 'fd --type f' 
@@ -1251,7 +1267,8 @@ for ignore_pattern in g:project_settings.ignore_files
 endfor
 
 let $FZF_DEFAULT_COMMAND=fzfCmd
-exec "noremap <C-p> :FZF ".g:project_settings.fzf_root."<CR>"
+exec "nnoremap <C-p> :FZF ".g:project_settings.fzf_root."<CR>"
+nnoremap <C-o> :Buffers<CR>
 let g:fzf_layout = { 'down': '~40%' }
 
 function! LoadSRS()
