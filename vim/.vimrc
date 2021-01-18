@@ -72,6 +72,7 @@ Plugin 'vim-scripts/ShaderHighLight'
 " Plugin 'yggdroot/indentline'
 " Plugin 'puremourning/vimspector'
 " Plugin 'google/vim-searchindex'
+Plugin 'andymass/vim-matchup'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
