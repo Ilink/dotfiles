@@ -221,8 +221,20 @@ let g:vimwiki_list = [wiki]
 
 " Asyncrun
 """"""""""""""""""""
-let g:asyncrun_bell=1
+let g:asyncrun_bell = 1
+" This allows the errorformat to be determined by the local
+" language instead of the global errorformat.
+let g:asyncrun_local = 1
 " let g:asyncrun_timer=1000
+" From the manual:
+"     Vim may parse errorformat-multi-line incorrectly (using %A, %C, %Z) and omit or
+"     duplicate output. You can ask vim to re-parse quickfix content with 'copen'.
+"     This autocmd will automatically re-parse quickfix on job completion.
+" I added to this to make it stay in the quickfix window, then scroll to the bottom
+augroup local-asyncrun
+    au!
+    au User AsyncRunStop copen | exec "normal G"
+augroup END
 
 " Tags
 """"""""""""""""""""""""""
@@ -482,12 +494,13 @@ let g:num_cores = GetNumCores()
 function! Build()
     call WaitStopCurrentJob()
     if filereadable("make.sh")
-        exec(":AsyncRun! ./make.sh \|& tee build.log")
+        exec(":AsyncRun ./make.sh \|& tee build.log")
     elseif(filereadable("build.py"))
-        exec(":AsyncRun! ./build.py \|& tee build.log")
+        exec(":AsyncRun ./build.py \|& tee build.log")
+    elseif(filereadable("script/build.sh"))
+        exec(":AsyncRun bash script/build.sh \|& tee build.log")
     else
-        " let cmd = printf(":AsyncRun! ninja install -j%d \|& tee build.log", g:num_cores)
-        " let cmd = printf(":AsyncRun! ninja install -j%d \|& tee build.log", g:num_cores)
+        " exec(":AsyncRun -raw pity install \|& tee build.log")
         exec(":AsyncRun pity install \|& tee build.log")
     endif
     " opens the quickfix, focuses the window if it's already open
