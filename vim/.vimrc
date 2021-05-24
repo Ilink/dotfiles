@@ -802,12 +802,44 @@ nnoremap <Leader>mp :BookmarkPrev<CR>
 nnoremap <Leader>ma :BookmarkShowAll<CR>
 nnoremap <Leader>ml :BookmarkShowAll<CR>
 
+function! GitDiffGf()
+    echom "foobar"
+    " The diff format we're trying to follow is:
+    "
+    " +++ b/src/framework/Arena.cpp
+    " @@ -65,7 +65,7 @@ void* Arena::fallbackAllocate(size_t n)
+    "
+    " b: searches in reverse
+    " n: doesn't move the cursor
+    let cur_line = line(".")
+    " The \v means 'very magic' and makes the regexes more like those
+    " in other languages.
+    let file_name_line = search('\v\+\+\+ b', "bn")
+    let file_offset_line = search('\v\@\@ [\+|-]\d', "bn")
+    let line_num_match = matchlist(getline(file_offset_line), '\v\@\@ .*\+(\d*)')[1]
+    let line_num = str2nr(line_num_match)
+    " b contains the modified file, so we want to use that.
+    " At least, it does with how I generate diffs.
+    let file_name = matchlist(getline(file_name_line), '\vb/(.*)')[1]
+
+    " echom "cur_line: " . cur_line
+    " echom "file offset line: " . getline(file_offset_line)
+    " echom "line_num_match: " . line_num_match
+    " echom "file_name_line: " . file_name_line
+    " echom "file_offset_line: " . file_offset_line
+    " echom "file_name: " . file_name
+
+    exec "edit +" . line_num . " " . file_name
+
+endfunction
+
 " Goto
 " goto definition
 nnoremap <Leader>gd g<C-]>
 " nnoremap <Leader>gd :cs find g <C-R>=expand("<cword>")<CR><CR>  
 " try to open file under cursor
 nnoremap <Leader>gf gf 
+autocmd FileType diff nnoremap <buffer> <Leader>gf :call GitDiffGf()<CR>
 nnoremap <Leader>gs :call ToggleHeaderSrc()<CR> 
 " Not sure why these dont work with nnoremap
 nmap <leader>gu <plug>(quickr_cscope_symbols)
