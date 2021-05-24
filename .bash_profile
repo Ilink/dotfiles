@@ -32,6 +32,7 @@ export WORKON_HOME=$HOME/python_envs
 
 # Go
 # GOROOT=/home/ilink/local/go
+export GOPATH=/home/ilink/.go
 
 if [ ! -S ~/.ssh/ssh_auth_sock ]; then
   eval `ssh-agent`

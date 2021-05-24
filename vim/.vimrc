@@ -233,7 +233,7 @@ let g:asyncrun_local = 1
 " I added to this to make it stay in the quickfix window, then scroll to the bottom
 augroup local-asyncrun
     au!
-    au User AsyncRunStop copen | exec "normal G"
+    au User AsyncRunStop | copen | exec "normal G"
 augroup END
 
 " Tags
@@ -470,6 +470,7 @@ command! -nargs=+ -complete=file AsyncCmd
 
 " Load buid.log errors
 function! LoadBuildLog()
+    " cgetfile doesn't jump to first error like cfile does
     cgetfile build.log 
     copen
 endfunction
@@ -493,18 +494,29 @@ let g:num_cores = GetNumCores()
 
 function! Build()
     call WaitStopCurrentJob()
+    let extension=expand('%:e')
+
     if filereadable("make.sh")
         exec(":AsyncRun ./make.sh \|& tee build.log")
     elseif(filereadable("build.py"))
         exec(":AsyncRun ./build.py \|& tee build.log")
     elseif(filereadable("script/build.sh"))
         exec(":AsyncRun bash script/build.sh \|& tee build.log")
+    elseif(extension == "go")
+        let file=expand('%')
+        exec(":AsyncRun go build \|& tee build.log")
     else
         " exec(":AsyncRun -raw pity install \|& tee build.log")
-        exec(":AsyncRun pity install \|& tee build.log")
+        exec(":AsyncRun pity install &> build.log")
     endif
     " opens the quickfix, focuses the window if it's already open
     copen 
+endfunction
+
+function! BuildCurrentFile()
+    " cpp/ninja only
+    call WaitStopCurrentJob()
+    exec(":AsyncRun ninja %^ &> build.log")
 endfunction
 
 " startify
@@ -1108,6 +1120,7 @@ nnoremap <F12> :call Build()<CR>
 " nnoremap <F12> :AsyncRun pity install<CR>
 nnoremap <F11> :call WaitStopCurrentJob()<CR>
 nnoremap <F10> :call LoadBuildLog()<CR>
+nnoremap <F9> :call BuildCurrentFile()<CR>
 
 " Pasting stuff without ruining the formatting
 set pastetoggle=<F2>
