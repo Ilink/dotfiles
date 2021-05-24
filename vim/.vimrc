@@ -823,26 +823,54 @@ function! GitDiffGf()
     "
     " b: searches in reverse
     " n: doesn't move the cursor
-    let cur_line = line(".")
+    let cur_line_num = line(".")
     " The \v means 'very magic' and makes the regexes more like those
     " in other languages.
-    let file_name_line = search('\v\+\+\+ b', "bn")
-    let file_offset_line = search('\v\@\@ [\+|-]\d', "bn")
-    let line_num_match = matchlist(getline(file_offset_line), '\v\@\@ .*\+(\d*)')[1]
-    let line_num = str2nr(line_num_match)
+    let file_name_line_num = search('\v\+\+\+ b', "bn")
+    let file_offset_line_num = search('\v\@\@ [\+|-]\d', "bn")
+    let dert_line_num_match = matchlist(getline(file_offset_line_num), '\v\@\@ .*\+(\d*)')[1]
+    let dest_line_num = str2nr(dert_line_num_match)
     " b contains the modified file, so we want to use that.
     " At least, it does with how I generate diffs.
-    let file_name = matchlist(getline(file_name_line), '\vb/(.*)')[1]
+    let file_name = matchlist(getline(file_name_line_num), '\vb/(.*)')[1]
 
-    " echom "cur_line: " . cur_line
-    " echom "file offset line: " . getline(file_offset_line)
-    " echom "line_num_match: " . line_num_match
-    " echom "file_name_line: " . file_name_line
-    " echom "file_offset_line: " . file_offset_line
-    " echom "file_name: " . file_name
+    echom "cur_line_num: " . cur_line_num
+    echom "file offset line: " . getline(file_offset_line_num)
+    echom "dest_line_num: " . dest_line_num  
+    echom "file_name_line_num: " . file_name_line_num
+    echom "file_offset_line_num: " . file_offset_line_num
+    echom "file_name: " . file_name
 
-    exec "edit +" . line_num . " " . file_name
+    let offset = cur_line_num - file_offset_line_num - 1
+    echom "offset (before subtraction of -): " . offset
 
+    " If the line starts with a "-" we dont bother with the offset
+    " calculation.  We are assuming the user has the "changed" file opened. So
+    " it doesn't make much sense to try to jump to a modification/line which
+    " doesnt exist on the current file.
+    if getline(cur_line_num)[0] != '-'
+        " The minus 1 is because the line after the "@@ " line number reference
+        " is the line which it refers to.
+        " The goal here is to find the true offset of the line within the file.
+        " There are removed lines mixed in with the diff, so we can't just use
+        " the current line relative to the file header.
+        " Lines which were removed by this branch have a '-' at the start of the line.
+        let line_num = file_offset_line_num
+        while line_num < cur_line_num
+            let line = getline(line_num)
+            if line[0] == '-'
+                let offset -= 1
+            endif
+
+            let line_num += 1
+        endwhile
+    endif
+
+    echom "offset: " . offset
+    let full_line_num = offset + dest_line_num
+    echom "full_line_num: " . full_line_num  
+
+    exec "edit +" . full_line_num . " " . file_name
 endfunction
 
 " Goto
