@@ -815,62 +815,77 @@ nnoremap <Leader>ma :BookmarkShowAll<CR>
 nnoremap <Leader>ml :BookmarkShowAll<CR>
 
 function! GitDiffGf()
-    echom "foobar"
-    " The diff format we're trying to follow is:
-    "
-    " +++ b/src/framework/Arena.cpp
-    " @@ -65,7 +65,7 @@ void* Arena::fallbackAllocate(size_t n)
-    "
-    " b: searches in reverse
-    " n: doesn't move the cursor
-    let cur_line_num = line(".")
-    " The \v means 'very magic' and makes the regexes more like those
-    " in other languages.
-    let file_name_line_num = search('\v\+\+\+ b', "bn")
-    let file_offset_line_num = search('\v\@\@ [\+|-]\d', "bn")
-    let dert_line_num_match = matchlist(getline(file_offset_line_num), '\v\@\@ .*\+(\d*)')[1]
-    let dest_line_num = str2nr(dert_line_num_match)
-    " b contains the modified file, so we want to use that.
-    " At least, it does with how I generate diffs.
-    let file_name = matchlist(getline(file_name_line_num), '\vb/(.*)')[1]
+    try
+        " The diff format we're trying to follow is:
+        "
+        " +++ b/src/framework/Arena.cpp
+        " @@ -65,7 +65,7 @@ void* Arena::fallbackAllocate(size_t n)
+        "
+        " b: searches in reverse
+        " n: doesn't move the cursor
+        let cur_line_num = line(".")
+        " The \v means 'very magic' and makes the regexes more like those
+        " in other languages.
+        let file_name_line_num = search('\v\+\+\+ b', "bn")
+        let file_offset_line_num = search('\v\@\@ [\+|-]\d', "bn")
+        let dert_line_num_match = matchlist(getline(file_offset_line_num), '\v\@\@ .*\+(\d*)')[1]
+        let dest_line_num = str2nr(dert_line_num_match)
+        " b contains the modified file, so we want to use that.
+        " At least, it does with how I generate diffs.
+        let file_name = matchlist(getline(file_name_line_num), '\vb/(.*)')[1]
 
-    echom "cur_line_num: " . cur_line_num
-    echom "file offset line: " . getline(file_offset_line_num)
-    echom "dest_line_num: " . dest_line_num  
-    echom "file_name_line_num: " . file_name_line_num
-    echom "file_offset_line_num: " . file_offset_line_num
-    echom "file_name: " . file_name
+        " echom "cur_line_num: " . cur_line_num
+        " echom "file offset line: " . getline(file_offset_line_num)
+        " echom "dest_line_num: " . dest_line_num  
+        " echom "file_name_line_num: " . file_name_line_num
+        " echom "file_offset_line_num: " . file_offset_line_num
+        " echom "file_name: " . file_name
 
-    let offset = cur_line_num - file_offset_line_num - 1
-    echom "offset (before subtraction of -): " . offset
+        let offset = cur_line_num - file_offset_line_num - 1
+        " echom "offset (before subtraction of -): " . offset
 
-    " If the line starts with a "-" we dont bother with the offset
-    " calculation.  We are assuming the user has the "changed" file opened. So
-    " it doesn't make much sense to try to jump to a modification/line which
-    " doesnt exist on the current file.
-    if getline(cur_line_num)[0] != '-'
-        " The minus 1 is because the line after the "@@ " line number reference
-        " is the line which it refers to.
-        " The goal here is to find the true offset of the line within the file.
-        " There are removed lines mixed in with the diff, so we can't just use
-        " the current line relative to the file header.
-        " Lines which were removed by this branch have a '-' at the start of the line.
-        let line_num = file_offset_line_num
-        while line_num < cur_line_num
-            let line = getline(line_num)
-            if line[0] == '-'
-                let offset -= 1
-            endif
+        " If the line starts with a "-" we dont bother with the offset
+        " calculation.  We are assuming the user has the "changed" file opened. So
+        " it doesn't make much sense to try to jump to a modification/line which
+        " doesnt exist on the current file.
+        if getline(cur_line_num)[0] != '-'
+            " The minus 1 is because the line after the "@@ " line number reference
+            " is the line which it refers to.
+            " The goal here is to find the true offset of the line within the file.
+            " There are removed lines mixed in with the diff, so we can't just use
+            " the current line relative to the file header.
+            " Lines which were removed by this branch have a '-' at the start of the line.
+            let line_num = file_offset_line_num
+            while line_num < cur_line_num
+                let line = getline(line_num)
+                if line[0] == '-'
+                    let offset -= 1
+                endif
 
-            let line_num += 1
-        endwhile
-    endif
+                let line_num += 1
+            endwhile
+        endif
 
-    echom "offset: " . offset
-    let full_line_num = offset + dest_line_num
-    echom "full_line_num: " . full_line_num  
+        " echom "offset: " . offset
+        let full_line_num = offset + dest_line_num
+        " echom "full_line_num: " . full_line_num  
 
-    exec "edit +" . full_line_num . " " . file_name
+        exec "edit +" . full_line_num . " " . file_name
+    catch
+        exec "normal! gd"
+    endtry
+endfunction
+
+" Jump to a modified file within the diff
+function! GitDiffJumpToFileDiff()
+    let file_path = expand('<cfile>')
+    " echom "file_path=".file_path
+    let file_path_re = '\v\+\+\+ b\/' . escape(file_path, '/\')
+    " For some reason, this needs a return value or else it wont run
+    " But we dont need the return value because search will
+    " jump to that line by default
+    " echom "file_path_re=" . file_path_re
+    let line_num = search(file_path_re)
 endfunction
 
 " Goto
@@ -878,8 +893,9 @@ endfunction
 nnoremap <Leader>gd g<C-]>
 " nnoremap <Leader>gd :cs find g <C-R>=expand("<cword>")<CR><CR>  
 " try to open file under cursor
-nnoremap <Leader>gf gf 
+nnoremap <Leader>gf gf
 autocmd FileType diff nnoremap <buffer> <Leader>gf :call GitDiffGf()<CR>
+autocmd FileType diff nnoremap <buffer> <cr> :call GitDiffJumpToFileDiff()<CR>
 nnoremap <Leader>gs :call ToggleHeaderSrc()<CR> 
 " Not sure why these dont work with nnoremap
 nmap <leader>gu <plug>(quickr_cscope_symbols)
