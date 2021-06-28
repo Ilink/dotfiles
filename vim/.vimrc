@@ -669,6 +669,49 @@ nnoremap <Leader>pf :CtrlP<CR>
 " nnoremap <Leader>ps :SSave<CR>
 nnoremap <Leader>ps :call SessionSavePrompt()<CR>
 
+" Copy/pasting
+" This makes it a little easier to setup numbered registers to paste from
+" Note that the yank uses visual mode so we dont have to worry about
+" mapping the movement stuff.
+" Otherwise, it just yanks the whole line.
+" This uses the same "[p" mapping that we use for p so it goes on the current line.
+nnoremap <Leader>p1 "1[p
+vnoremap <Leader>y1 "1y
+nnoremap <Leader>y1 "1yy
+
+nnoremap <Leader>p2 "2[p
+vnoremap <Leader>y2 "2y
+nnoremap <Leader>y2 "2yy
+
+nnoremap <Leader>p3 "3[p
+vnoremap <Leader>y3 "3y
+nnoremap <Leader>y3 "3yy
+
+nnoremap <Leader>p4 "4[p
+vnoremap <Leader>y4 "4y
+nnoremap <Leader>y4 "4yy
+
+nnoremap <Leader>p5 "5[p
+vnoremap <Leader>y5 "5y
+nnoremap <Leader>y5 "5yy
+
+nnoremap <Leader>p6 "6[p
+vnoremap <Leader>y6 "6y
+nnoremap <Leader>y6 "6yy
+
+nnoremap <Leader>p7 "7[p
+vnoremap <Leader>y7 "7y
+nnoremap <Leader>y7 "7yy
+
+nnoremap <Leader>p8 "8[p
+vnoremap <Leader>y8 "8y
+nnoremap <Leader>y8 "8yy
+
+nnoremap <Leader>p9 "9[p
+vnoremap <Leader>y9 "9y
+nnoremap <Leader>y9 "9yy
+
+
 " Buffer management
 " nnoremap <Leader>bd :call BetterDelBuf()<CR>
 nnoremap <Leader>bd :BD<CR>
