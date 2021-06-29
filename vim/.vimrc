@@ -675,41 +675,41 @@ nnoremap <Leader>ps :call SessionSavePrompt()<CR>
 " mapping the movement stuff.
 " Otherwise, it just yanks the whole line.
 " This uses the same "[p" mapping that we use for p so it goes on the current line.
-nnoremap <Leader>p1 "1[p
-vnoremap <Leader>y1 "1y
-nnoremap <Leader>y1 "1yy
+nnoremap <Leader>p1 "a[p
+vnoremap <Leader>y1 "ay
+nnoremap <Leader>y1 "ayy
 
-nnoremap <Leader>p2 "2[p
-vnoremap <Leader>y2 "2y
-nnoremap <Leader>y2 "2yy
+nnoremap <Leader>p2 "b[p
+vnoremap <Leader>y2 "by
+nnoremap <Leader>y2 "byy
 
-nnoremap <Leader>p3 "3[p
-vnoremap <Leader>y3 "3y
-nnoremap <Leader>y3 "3yy
+nnoremap <Leader>p3 "c[p
+vnoremap <Leader>y3 "cy
+nnoremap <Leader>y3 "cyy
 
-nnoremap <Leader>p4 "4[p
-vnoremap <Leader>y4 "4y
-nnoremap <Leader>y4 "4yy
+nnoremap <Leader>p4 "d[p
+vnoremap <Leader>y4 "dy
+nnoremap <Leader>y4 "dyy
 
-nnoremap <Leader>p5 "5[p
-vnoremap <Leader>y5 "5y
-nnoremap <Leader>y5 "5yy
+nnoremap <Leader>p5 "e[p
+vnoremap <Leader>y5 "ey
+nnoremap <Leader>y5 "eyy
 
-nnoremap <Leader>p6 "6[p
-vnoremap <Leader>y6 "6y
-nnoremap <Leader>y6 "6yy
+nnoremap <Leader>p6 "f[p
+vnoremap <Leader>y6 "fy
+nnoremap <Leader>y6 "fyy
 
-nnoremap <Leader>p7 "7[p
-vnoremap <Leader>y7 "7y
-nnoremap <Leader>y7 "7yy
+nnoremap <Leader>p7 "g[p
+vnoremap <Leader>y7 "gy
+nnoremap <Leader>y7 "gyy
 
-nnoremap <Leader>p8 "8[p
-vnoremap <Leader>y8 "8y
-nnoremap <Leader>y8 "8yy
+nnoremap <Leader>p8 "h[p
+vnoremap <Leader>y8 "hy
+nnoremap <Leader>y8 "hyy
 
-nnoremap <Leader>p9 "9[p
-vnoremap <Leader>y9 "9y
-nnoremap <Leader>y9 "9yy
+nnoremap <Leader>p9 "i[p
+vnoremap <Leader>y9 "iy
+nnoremap <Leader>y9 "iyy
 
 
 " Buffer management
