@@ -9,7 +9,7 @@ handle SIGPIPE nostop noprint pass
 # None of these work right now
 set debug auto-load on
 set auto-load python-scripts on
-set auto-load safe-path /usr/share/gdb/auto-load:/usr/share/gdb/auto-load/usr/lib
+set auto-load safe-path /usr/share/gdb/auto-load:/usr/share/gdb/auto-load/usr/lib:/home/linuxbrew/.linuxbrew/Cellar/go/1.17.6/libexec/src/runtime/runtime-gdb.py
 set auto-load scripts-directory /usr/share/gdb/auto-load/usr/lib:.
 
 #add-auto-load-safe-path .
