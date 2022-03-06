@@ -838,15 +838,14 @@ endfunction
 
 " The <C-R>=fn()<CR> part will get the result of the function
 " and place it into the command
-" nnoremap <Leader>/ :Ag! <C-R>=GetSearchFtype()<CR><Space>
-" nnoremap <Leader>/ :AsyncCmd ag --cpp --cc<Space>
-nnoremap <Leader>/ :AsyncCmd ag <C-R>=GetAgFlags()<CR><Space>
+" nnoremap <Leader>/ :AsyncCmd ag <C-R>=GetAgFlags()<CR><Space>
+nnoremap <Leader>/ :AsyncCmd rg --line-number --no-heading<Space>
 
 " :<C-U> enters command mode and deletes (Ctrl-u) the '<,'> range
 " automatically inserted due to the visual selection.
 " TODO do async version of ag
-" vnoremap <Leader>/ :<C-U>Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>=Quote(GetVisualSelection())<CR>
-vnoremap <Leader>/ :<C-U>AsyncCmd ag --cpp --cc<Space><C-R>=Quote(GetVisualSelection())<CR>
+" vnoremap <Leader>/ :<C-U>AsyncCmd ag --cpp --cc<Space><C-R>=Quote(GetVisualSelection())<CR>
+vnoremap <Leader>/ :<C-U>AsyncCmd rg --line-number --no-heading<Space><C-R>=Quote(GetVisualSelection())<CR>
 
 " Comments
 " For some reason this doesnt with with nore
