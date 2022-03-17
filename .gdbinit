@@ -13,7 +13,11 @@ set history save on
 set history filename ~/.gdb_history
 set history remove-duplicates unlimited
 
-# set scheduler-locking step
+# None of these work right now
+set debug auto-load on
+set auto-load python-scripts on
+set auto-load safe-path /usr/share/gdb/auto-load:/usr/share/gdb/auto-load/usr/lib:/home/linuxbrew/.linuxbrew/Cellar/go/1.17.6/libexec/src/runtime/runtime-gdb.py
+set auto-load scripts-directory /usr/share/gdb/auto-load/usr/lib:.
 
 define psimds
     print/c *((char*)&$arg0)@16

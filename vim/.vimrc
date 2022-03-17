@@ -32,7 +32,6 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'w0ng/vim-hybrid'
 Plugin 'dracula/vim', { 'name': 'dracula' }
-" Plugin 'ilink/vim-dracula'
 Plugin 'connorholyday/vim-snazzy'
 Plugin 'rakr/vim-one'
 Plugin 'joshdick/onedark.vim'
@@ -73,6 +72,10 @@ Plugin 'vim-scripts/ShaderHighLight'
 " Plugin 'puremourning/vimspector'
 " Plugin 'google/vim-searchindex'
 Plugin 'andymass/vim-matchup'
+Plugin 'fatih/vim-go'
+Plugin 'leafgarland/typescript-vim'
+" Plugin 'pangloss/vim-javascript'
+" Plugin 'herringtondarkholme/yats.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -500,6 +503,8 @@ function! Build()
         exec(":AsyncRun ./make.sh \|& tee build.log")
     elseif(filereadable("build.py"))
         exec(":AsyncRun ./build.py \|& tee build.log")
+    elseif(filereadable("build.sh"))
+        exec(":AsyncRun ./build.sh \|& tee build.log")
     elseif(filereadable("script/build.sh"))
         exec(":AsyncRun bash script/build.sh \|& tee build.log")
     elseif(extension == "go")
@@ -821,6 +826,8 @@ function! GetAgFlags()
     let extension=expand('%:e')
     if extension=="js"
         return "--js"
+    elseif extension=="ts"
+        return "--ts"
     elseif extension=="cpp" || extension=="c" || extension=="h" || extension=="hpp"
         return "--cpp --cc"
     elseif extension=="py"
@@ -832,15 +839,14 @@ endfunction
 
 " The <C-R>=fn()<CR> part will get the result of the function
 " and place it into the command
-" nnoremap <Leader>/ :Ag! <C-R>=GetSearchFtype()<CR><Space>
-" nnoremap <Leader>/ :AsyncCmd ag --cpp --cc<Space>
-nnoremap <Leader>/ :AsyncCmd ag <C-R>=GetAgFlags()<CR><Space>
+" nnoremap <Leader>/ :AsyncCmd ag <C-R>=GetAgFlags()<CR><Space>
+nnoremap <Leader>/ :AsyncCmd rg --line-number --no-heading<Space>
 
 " :<C-U> enters command mode and deletes (Ctrl-u) the '<,'> range
 " automatically inserted due to the visual selection.
 " TODO do async version of ag
-" vnoremap <Leader>/ :<C-U>Ag! <C-R>=GetSearchFtype()<CR><Space><C-R>=Quote(GetVisualSelection())<CR>
-vnoremap <Leader>/ :<C-U>AsyncCmd ag --cpp --cc<Space><C-R>=Quote(GetVisualSelection())<CR>
+" vnoremap <Leader>/ :<C-U>AsyncCmd ag --cpp --cc<Space><C-R>=Quote(GetVisualSelection())<CR>
+vnoremap <Leader>/ :<C-U>AsyncCmd rg --line-number --no-heading<Space><C-R>=Quote(GetVisualSelection())<CR>
 
 " Comments
 " For some reason this doesnt with with nore
@@ -1430,6 +1436,9 @@ endfunction
 " au FileReadPre,FileReadPost,BufReadPre,BufReadPost,BufNewFile *.srs,*.srs.gz,*.srs.zst call LoadSRS()
 au FileReadPre,FileReadPost,BufReadPre,BufReadPost,BufNewFile *.srs,*.srs.gz,*.srs.zst exec "%!$SPLUNK_HOME/bin/splunkd toCsv '%:p'"
 
+" golang
+let g:go_fmt_autosave = 0
+let g:go_imports_autosave = 0
 
 " Terminal and Termdebug
 " packadd termdebug
@@ -1450,3 +1459,6 @@ set timeout timeoutlen=1000  " Default
 set ttimeout ttimeoutlen=0  " Set by defaults.vim
 
 set shortmess-=S
+
+" Typescript
+let g:typescript_indent_disable = 1
