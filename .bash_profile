@@ -25,6 +25,7 @@ PATH=/usr/lib/icecc/bin:$HOME/local/bin:$HOME/bin:$HOME/.fuz/bin:$HOME/.fzf/bin:
 
 export PATH
 
+export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 
 # Python 
 export PYTHONUSERBASE=$HOME/local/python
