@@ -3,4 +3,4 @@ alias vi='/home/ilink/local/bin/vim'
 alias t='touch'
 alias ls='ls --color=auto'
 alias ll='ls -la'
-
+alias tf='tail -f'

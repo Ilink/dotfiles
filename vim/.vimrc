@@ -76,6 +76,7 @@ Plugin 'fatih/vim-go'
 Plugin 'leafgarland/typescript-vim'
 " Plugin 'pangloss/vim-javascript'
 " Plugin 'herringtondarkholme/yats.vim'
+Plugin 'ycm-core/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -149,7 +150,7 @@ function! LoadProjectSettings()
         let g:project_settings.fzf_root = "."
     endif
     if !has_key(g:project_settings, "ignore_files")
-        let g:project_settings.ignore_files = []
+        let g:project_settings.ignore_files = ["*.java", "*.js"]
     endif
 endfunction
 call LoadProjectSettings()
@@ -840,13 +841,13 @@ endfunction
 " The <C-R>=fn()<CR> part will get the result of the function
 " and place it into the command
 " nnoremap <Leader>/ :AsyncCmd ag <C-R>=GetAgFlags()<CR><Space>
-nnoremap <Leader>/ :AsyncCmd rg --line-number --no-heading<Space>
+nnoremap <Leader>/ :AsyncCmd rg --line-number --no-heading --smart-case -tcpp -tc<Space>
 
 " :<C-U> enters command mode and deletes (Ctrl-u) the '<,'> range
 " automatically inserted due to the visual selection.
 " TODO do async version of ag
 " vnoremap <Leader>/ :<C-U>AsyncCmd ag --cpp --cc<Space><C-R>=Quote(GetVisualSelection())<CR>
-vnoremap <Leader>/ :<C-U>AsyncCmd rg --line-number --no-heading<Space><C-R>=Quote(GetVisualSelection())<CR>
+vnoremap <Leader>/ :<C-U>AsyncCmd rg --line-number --no-heading -tcpp --smart-case<Space><C-R>=Quote(GetVisualSelection())<CR>
 
 " Comments
 " For some reason this doesnt with with nore
@@ -940,7 +941,12 @@ endfunction
 
 " Goto
 " goto definition
-nnoremap <Leader>gd g<C-]>
+" nnoremap <Leader>gd g<C-]>
+nnoremap <Leader>gd :YcmCompleter GoToDefinition<CR>
+nnoremap <Leader>ge :YcmCompleter GoToDeclaration<CR>
+nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
+nnoremap <Leader>gc :YcmCompleter GoToCallers<CR>
+
 " nnoremap <Leader>gd :cs find g <C-R>=expand("<cword>")<CR><CR>  
 " try to open file under cursor
 nnoremap <Leader>gf gf
@@ -948,8 +954,8 @@ autocmd FileType diff nnoremap <buffer> <Leader>gf :call GitDiffGf()<CR>
 autocmd FileType diff nnoremap <buffer> <cr> :call GitDiffJumpToFileDiff()<CR>
 nnoremap <Leader>gs :call ToggleHeaderSrc()<CR> 
 " Not sure why these dont work with nnoremap
-nmap <leader>gu <plug>(quickr_cscope_symbols)
-nmap <leader>gc <plug>(quickr_cscope_callers)
+" nmap <leader>gu <plug>(quickr_cscope_symbols)
+" nmap <leader>gc <plug>(quickr_cscope_callers)
 
 
 " Sidebars: NERDTree + Tagbar
@@ -1462,3 +1468,8 @@ set shortmess-=S
 
 " Typescript
 let g:typescript_indent_disable = 1
+
+" YouCompleteMe
+let g:ycm_server_python_interpreter = '/home/ilink/.linuxbrew/bin/python3'
+let g:ycm_auto_trigger = 0
+let g:ycm_auto_hover = ''
