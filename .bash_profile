@@ -16,12 +16,12 @@ source ~/.bash_prompt
 source ~/.git-completion.bash
 source ~/.aliases
 
-export LD_LIBRARY_PATH=$HOME/local/lib64:$HOME/local/lib:$LD_LIBRARY_PATH
-export LD_RUN_PATH=$HOME/local/lib64:$HOME/local/lib:$LD_RUN_PATH
+export LD_LIBRARY_PATH=/home/linuxbrew/.linuxbrew/opt/libpq/lib:$HOME/local/lib64:$HOME/local/lib:/home/linuxbrew/.linuxbrew/lib:$LD_LIBRARY_PATH
+export LD_RUN_PATH=$HOME/local/lib64:$HOME/local/lib:/home/linuxbrew/.linuxbrew/lib:$LD_RUN_PATH
 
 # User specific environment and startup programs
 # alias cmake=$HOME/local/bin/cmake
-PATH=/usr/lib/icecc/bin:$HOME/local/bin:$HOME/bin:$HOME/.fuz/bin:$HOME/.fzf/bin:$PATH
+PATH=/usr/lib/icecc/bin:$HOME/.cargo/bin:$HOME/local/bin:$HOME/bin:$HOME/.fuz/bin:$HOME/.fzf/bin:$PATH
 
 export PATH
 
@@ -35,17 +35,16 @@ export WORKON_HOME=$HOME/python_envs
 # GOROOT=/home/ilink/local/go
 export GOPATH=/home/ilink/.go
 
-if [ ! -S ~/.ssh/ssh_auth_sock ]; then
-  eval `ssh-agent`
-  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
-fi
-export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
-
-eval $(/home/ilink/.linuxbrew/bin/brew shellenv)
-# The above puts linuxbrew (which has gcc) at the front of its path
-# Just for simpliciy, we put icecc at the front of the path, rather than
-# trying to use the CC/CXX env variables
-PATH=/usr/lib/icecc/bin:$PATH
+# if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+#   eval `ssh-agent`
+#   ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+# fi
+# export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 
 # export CC=/usr/bin/gcc
 # export CXX=/usr/bin/g++
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+export PATH="/home/linuxbrew/.linuxbrew/opt/postgresql@15/bin:$PATH"
+
+export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
+. "$HOME/.cargo/env"
