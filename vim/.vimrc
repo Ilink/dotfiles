@@ -1405,13 +1405,20 @@ endfunc
 " src/pipeline/indexer/search/TaskGraph.cpp:856:52: error: no matching function for call to ‘make_edge(std::tuple_element<0, std::tuple<tbb::flow::interface11::internal::multifunction_output<tg::StatusMsg> > >::type&, tbb::flow::interface11::function_node<tg::StatusMsg::MessageT, tbb::flow::interface11::continue_msg>&)’
 " set errorformat=%f:%l:%c:\ error:\ %m
 
-" Taken from https://github.com/rust-lang/rust.vim/blob/889b9a7515db477f4cb6808bef1769e53493c578/syntax_checkers/rust/cargo.vim
-" set errorformat ^=
-"        \ '%Eerror: %m,' .
-"        \ '%Eerror[E%n]: %m,' .
-"        \ '%Wwarning: %m,' .
-"        \ '%Inote: %m,' .
-"        \ '%C %#--> %f:%l:%c'
+
+
+" Taken from
+" https://github.com/rust-lang/rust.vim/blob/889b9a7515db477f4cb6808bef1769e53493c578/compiler/rustc.vim#L32
+set errorformat ^=
+            \%-G,
+            \%-Gerror:\ aborting\ %.%#,
+            \%-Gerror:\ Could\ not\ compile\ %.%#,
+            \%Eerror:\ %m,
+            \%Eerror[E%n]:\ %m,
+            \%Wwarning:\ %m,
+            \%Inote:\ %m,
+            \%C\ %#-->\ %f:%l:%c,
+            \%E\ \ left:%m,%C\ right:%m\ %f:%l:%c,%Z
 
 set mouse=
 
