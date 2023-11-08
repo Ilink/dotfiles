@@ -1,0 +1,8 @@
+{
+    "rust-analyzer.server.path": "rust-analyzer",
+    "suggest.autoTrigger": "none",
+    "signature.enable": false,
+    "inlayHint.enable": false,
+    "coc.preferences.useQuickfixForLocations": true
+}
+

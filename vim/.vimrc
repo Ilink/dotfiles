@@ -3,94 +3,89 @@ filetype off
 
 let g:vimwiki_map_prefix = '<Leader>n'
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin()
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-" Plugin 'https://github.com/ctrlpvim/ctrlp.vim.git'
+" Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
 " This is my fork of ctrlp which re-uses its whole UI, but
 " adds my own fuzzy file matching server fuzd
-" Plugin 'ilink/ctrlp.vim'
-Plugin 'junegunn/fzf.vim'
-Plugin 'junegunn/fzf'
-" Plugin 'haya14busa/vim-poweryank'
-" Plugin 'vim-airline/vim-airline'
-" Plugin 'ilink/vim-airline'
-" Plugin 'vim-airline/vim-airline-themes'
-Plugin 'itchyny/lightline.vim'
-" Plugin 'ilink/vim-buftabline'
-Plugin 'ap/vim-buftabline'
-Plugin 'ilink/vim-markdown'
-Plugin 'https://github.com/rking/ag.vim'
-Plugin 'tyru/caw.vim'
-Plugin 'MattesGroeger/vim-bookmarks'
-Plugin 'mhinz/vim-startify'
-Plugin 'scrooloose/nerdtree'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'ConradIrwin/vim-bracketed-paste'
-Plugin 'w0ng/vim-hybrid'
-Plugin 'dracula/vim', { 'name': 'dracula' }
-Plugin 'connorholyday/vim-snazzy'
-Plugin 'rakr/vim-one'
-Plugin 'joshdick/onedark.vim'
-Plugin 'mhartington/oceanic-next'
-Bundle 'sonph/onehalf', {'rtp': 'vim/'}
-Plugin 'drewtempelmeyer/palenight.vim'
-Plugin 'felipesousa/rupza'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'majutsushi/tagbar'
-Plugin 'dbakker/vim-projectroot'
-Plugin 'ilink/vim-bufkill'
-Plugin 'vim-scripts/C-fold'
-Plugin 'ilink/vim-jumplist-files'
-Plugin 'ervandew/supertab'
-Plugin 'henrik/vim-indexed-search'
-Plugin 'vim-scripts/DoxygenToolkit.vim'
-" Plugin 'mildred/vim-bufmru'
-" Plugin 'airblade/vim-gitgutter'
-" Plugin 'lyuts/vim-rtags'
-Plugin 'skywind3000/asyncrun.vim'
-" Plugin 'chrisbra/csv.vim'
-Plugin 'mechatroner/rainbow_csv'
-" Plugin 'sickill/vim-pasta'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tikhomirov/vim-glsl'
-Plugin 'ilink/nts'
-Plugin 'ilink/hexmode'
-Plugin 'pangloss/vim-javascript'
-Plugin 'dkprice/vim-easygrep'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'vimwiki/vimwiki'
-Plugin 'ronakg/quickr-cscope.vim'
-Plugin 'autoload_cscope.vim'
-Plugin 'skywind3000/vim-quickui'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'vim-scripts/ShaderHighLight'
-" Plugin 'yggdroot/indentline'
-" Plugin 'puremourning/vimspector'
-" Plugin 'google/vim-searchindex'
-Plugin 'andymass/vim-matchup'
-Plugin 'fatih/vim-go'
-Plugin 'leafgarland/typescript-vim'
-" Plugin 'pangloss/vim-javascript'
-" Plugin 'herringtondarkholme/yats.vim'
-Plugin 'ycm-core/YouCompleteMe'
-Plugin 'rodjek/vim-puppet'
+" Plug 'ilink/ctrlp.vim'
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf'
+" Plug 'haya14busa/vim-poweryank'
+" Plug 'vim-airline/vim-airline'
+" Plug 'ilink/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
+" Plug 'ilink/vim-buftabline'
+Plug 'ap/vim-buftabline'
+Plug 'ilink/vim-markdown'
+Plug 'https://github.com/rking/ag.vim'
+Plug 'tyru/caw.vim'
+Plug 'MattesGroeger/vim-bookmarks'
+" Plug 'mhinz/vim-startify'
+Plug 'scrooloose/nerdtree'
+Plug 'jiangmiao/auto-pairs'
+Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'w0ng/vim-hybrid'
+Plug 'dracula/vim', { 'name': 'dracula' }
+Plug 'connorholyday/vim-snazzy'
+Plug 'rakr/vim-one'
+Plug 'joshdick/onedark.vim'
+Plug 'mhartington/oceanic-next'
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'felipesousa/rupza'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'majutsushi/tagbar'
+Plug 'dbakker/vim-projectroot'
+Plug 'ilink/vim-bufkill'
+Plug 'vim-scripts/C-fold'
+Plug 'ilink/vim-jumplist-files'
+Plug 'ervandew/supertab'
+Plug 'henrik/vim-indexed-search'
+Plug 'vim-scripts/DoxygenToolkit.vim'
+" Plug 'mildred/vim-bufmru'
+" Plug 'airblade/vim-gitgutter'
+" Plug 'lyuts/vim-rtags'
+Plug 'skywind3000/asyncrun.vim'
+" Plug 'chrisbra/csv.vim'
+" Plug 'mechatroner/rainbow_csv'
+" Plug 'sickill/vim-pasta'
+Plug 'tpope/vim-fugitive'
+Plug 'tikhomirov/vim-glsl'
+Plug 'ilink/nts'
+Plug 'ilink/hexmode'
+Plug 'pangloss/vim-javascript'
+Plug 'dkprice/vim-easygrep'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'vimwiki/vimwiki'
+Plug 'skywind3000/vim-quickui'
+Plug 'altercation/vim-colors-solarized'
+Plug 'vim-scripts/ShaderHighLight'
+" Plug 'yggdroot/indentline'
+" Plug 'puremourning/vimspector'
+" Plug 'google/vim-searchindex'
+Plug 'andymass/vim-matchup'
+Plug 'fatih/vim-go'
+Plug 'leafgarland/typescript-vim'
+" Plug 'pangloss/vim-javascript'
+" Plug 'herringtondarkholme/yats.vim'
+" Plug 'ycm-core/YouCompleteMe'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'rust-lang/rust.vim'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+" Initialize plugin system
+" - Automatically executes `filetype plugin indent on` and `syntax enable`.
+call plug#end()
+" You can revert the settings after the call like so:
+"   filetype indent off   " Disable file-type-specific indentation
+"   syntax off            " Disable syntax highlighting
 
 set ff=unix
 filetype on
@@ -151,7 +146,7 @@ function! LoadProjectSettings()
         let g:project_settings.fzf_root = "."
     endif
     if !has_key(g:project_settings, "ignore_files")
-        let g:project_settings.ignore_files = ["*.java", "*.js"]
+        let g:project_settings.ignore_files = ["*.java"]
     endif
 endfunction
 call LoadProjectSettings()
@@ -246,12 +241,6 @@ augroup END
 " remove i to not search every file in our path 
 " http://stackoverflow.com/questions/2169645/vims-autocomplete-is-excruciatingly-slow
 set complete=.,w,b,u,t
-
-" cscope / quickr-cscope
-""""""""""""""""""""""""
-let g:quickr_cscope_keymaps = 0
-let g:quickr_cscope_autoload_db = 0
-" let g:quickr_cscope_debug_mode = 1
 
 " Git
 """"""""""""""""""""""""""
@@ -528,14 +517,14 @@ endfunction
 
 " startify
 """"""""""""""""""""""""""
-let g:startify_custom_header = ""
-
-let g:startify_session_persistence = 1
-let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks'] 
-let g:startify_session_savevars = [
-           \ 'g:startify_session_savevars',
-           \ 'g:session_type'
-\ ]
+" let g:startify_custom_header = ""
+" 
+" let g:startify_session_persistence = 1
+" let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks'] 
+" let g:startify_session_savevars = [
+"           \ 'g:startify_session_savevars',
+"           \ 'g:session_type'
+"\ ]
 
 " markdown
 """"""""""""""""""""""""""
@@ -561,11 +550,17 @@ let delimitMate_expand_cr = 1
 let g:caw_operator_keymappings = 0
 autocmd FileType shaderlab let b:caw_oneline_comment = '//'
 
-" ycm
+" youcompleteme (ycm)
+" and now coc
 """"""""""""""""""""""""""
-let g:ycm_server_python_interpreter='/usr/local/bin/python'
+set signcolumn=yes
+let g:ycm_server_python_interpreter='/home/linuxbrew/.linuxbrew/bin/python3'
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
 let g:ycm_allow_changing_updatetime = 0
+" let g:ycm_server_python_interpreter = '/home/ilink/.linuxbrew/bin/python3'
+let g:ycm_auto_trigger = 0
+let g:ycm_auto_hover = ''
+
 "let g:ycm_autoclose_preview_window_after_completion = 1
 "let g:ycm_autoclose_preview_window_after_insertion = 1
 
@@ -842,14 +837,12 @@ endfunction
 " The <C-R>=fn()<CR> part will get the result of the function
 " and place it into the command
 " nnoremap <Leader>/ :AsyncCmd ag <C-R>=GetAgFlags()<CR><Space>
-" nnoremap <Leader>/ :AsyncCmd rg --line-number --no-heading --smart-case -tcpp -tc<Space>
 nnoremap <Leader>/ :AsyncCmd rg --line-number --no-heading --smart-case<Space>
 
 " :<C-U> enters command mode and deletes (Ctrl-u) the '<,'> range
 " automatically inserted due to the visual selection.
 " TODO do async version of ag
 " vnoremap <Leader>/ :<C-U>AsyncCmd ag --cpp --cc<Space><C-R>=Quote(GetVisualSelection())<CR>
-" vnoremap <Leader>/ :<C-U>AsyncCmd rg --line-number --no-heading -tcpp -tc --smart-case<Space><C-R>=Quote(GetVisualSelection())<CR>
 vnoremap <Leader>/ :<C-U>AsyncCmd rg --line-number --no-heading --smart-case<Space><C-R>=Quote(GetVisualSelection())<CR>
 
 " Comments
@@ -945,10 +938,14 @@ endfunction
 " Goto
 " goto definition
 " nnoremap <Leader>gd g<C-]>
-nnoremap <Leader>gd :YcmCompleter GoToDefinition<CR>
-nnoremap <Leader>ge :YcmCompleter GoToDeclaration<CR>
-nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
-nnoremap <Leader>gc :YcmCompleter GoToCallers<CR>
+" nnoremap <Leader>gd :YcmCompleter GoToDefinition<CR>
+" nnoremap <Leader>ge :YcmCompleter GoToDeclaration<CR>
+" nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
+" nnoremap <Leader>gc :YcmCompleter GoToCallers<CR>
+nnoremap <Leader>gd <Plug>(coc-definition)
+nnoremap <Leader>gi <Plug>(coc-type-definition)
+nnoremap <Leader>ge <Plug>(coc-implementation)
+nnoremap <Leader>gr <Plug>(coc-references)
 
 " nnoremap <Leader>gd :cs find g <C-R>=expand("<cword>")<CR><CR>  
 " try to open file under cursor
@@ -1409,6 +1406,22 @@ endfunc
 " set errorformat=%f:%l:%c:\ error:\ %m
 
 
+
+" Taken from
+" https://github.com/rust-lang/rust.vim/blob/889b9a7515db477f4cb6808bef1769e53493c578/compiler/rustc.vim#L32
+set errorformat ^=
+            \%-G,
+            \%-Gerror:\ aborting\ %.%#,
+            \%-Gerror:\ Could\ not\ compile\ %.%#,
+            \%Eerror:\ %m,
+            \%Eerror[E%n]:\ %m,
+            \%Wwarning:\ %m,
+            \%Inote:\ %m,
+            \%C\ %#-->\ %f:%l:%c,
+            \%E\ \ left:%m,%C\ right:%m\ %f:%l:%c,%Z
+
+set mouse=
+
 " exe "hi! TabLine ctermfg=250 ctermbg=234 gui=underline guifg=#c5c8c6 guibg=DarkGrey"
 
 " let g:hexmode_patterns = '*.bin,*.exe,*.dat,*.o,*.srs'
@@ -1472,7 +1485,10 @@ set shortmess-=S
 " Typescript
 let g:typescript_indent_disable = 1
 
-" YouCompleteMe
-let g:ycm_server_python_interpreter = '/home/ilink/.linuxbrew/bin/python3'
-let g:ycm_auto_trigger = 0
-let g:ycm_auto_hover = ''
+" nvim stuff
+" This is stuff that was different in vim and changed in nvim
+
+" When we use find, dont just jump to the values as we type
+set noincsearch
+
+" :set guicursor=i:block

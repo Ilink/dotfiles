@@ -1,0 +1,31 @@
+shell:
+  
+  program: wsl
+  #program: powershell
+
+  # program: C:\cygwin64\bin\bash.exe
+  # args:
+  #   - --login
+  #   - -c wsl
+
+selection:
+  save_to_clipboard: true
+
+
+mouse_bindings:
+  - { mouse: Middle, action: PasteSelection }
+#  - { mouse: Left, action: Copy }
+
+font:
+  normal:
+    family: Inconsolata-g for Powerline
+  size: 13.0
+
+colors:
+  primary:
+    background: '#1C1C1C'
+#background_opacity: 1.0
+
+
+debug:
+  print_events: false
