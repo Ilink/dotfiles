@@ -77,6 +77,7 @@ Plugin 'leafgarland/typescript-vim'
 " Plugin 'pangloss/vim-javascript'
 " Plugin 'herringtondarkholme/yats.vim'
 Plugin 'ycm-core/YouCompleteMe'
+Plugin 'rodjek/vim-puppet'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -841,13 +842,15 @@ endfunction
 " The <C-R>=fn()<CR> part will get the result of the function
 " and place it into the command
 " nnoremap <Leader>/ :AsyncCmd ag <C-R>=GetAgFlags()<CR><Space>
-nnoremap <Leader>/ :AsyncCmd rg --line-number --no-heading --smart-case -tcpp -tc<Space>
+" nnoremap <Leader>/ :AsyncCmd rg --line-number --no-heading --smart-case -tcpp -tc<Space>
+nnoremap <Leader>/ :AsyncCmd rg --line-number --no-heading --smart-case<Space>
 
 " :<C-U> enters command mode and deletes (Ctrl-u) the '<,'> range
 " automatically inserted due to the visual selection.
 " TODO do async version of ag
 " vnoremap <Leader>/ :<C-U>AsyncCmd ag --cpp --cc<Space><C-R>=Quote(GetVisualSelection())<CR>
-vnoremap <Leader>/ :<C-U>AsyncCmd rg --line-number --no-heading -tcpp --smart-case<Space><C-R>=Quote(GetVisualSelection())<CR>
+" vnoremap <Leader>/ :<C-U>AsyncCmd rg --line-number --no-heading -tcpp -tc --smart-case<Space><C-R>=Quote(GetVisualSelection())<CR>
+vnoremap <Leader>/ :<C-U>AsyncCmd rg --line-number --no-heading --smart-case<Space><C-R>=Quote(GetVisualSelection())<CR>
 
 " Comments
 " For some reason this doesnt with with nore
