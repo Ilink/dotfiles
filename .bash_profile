@@ -16,12 +16,12 @@ source ~/.bash_prompt
 source ~/.git-completion.bash
 source ~/.aliases
 
-export LD_LIBRARY_PATH=/home/linuxbrew/.linuxbrew/opt/libpq/lib:$HOME/local/lib64:$HOME/local/lib:/home/linuxbrew/.linuxbrew/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/home/linuxbrew/.linuxbrew/opt/libpq/lib:$HOME/local/lib64:$HOME/local/lib:/home/linuxbrew/.linuxbrew/lib:/usr/include/uuid:/usr/include/tcl8.6:$LD_LIBRARY_PATH
 export LD_RUN_PATH=$HOME/local/lib64:$HOME/local/lib:/home/linuxbrew/.linuxbrew/lib:$LD_RUN_PATH
 
 # User specific environment and startup programs
 # alias cmake=$HOME/local/bin/cmake
-PATH=/usr/lib/icecc/bin:$HOME/.cargo/bin:$HOME/local/bin:$HOME/bin:$HOME/.fuz/bin:$HOME/.fzf/bin:$PATH
+PATH=/usr/lib/icecc/bin:$HOME/.cargo/bin:$HOME/local/bin:$HOME/bin:$HOME/.fuz/bin:$HOME/.fzf/bin:$HOME/.linuxbrew/bin:$PATH
 
 export PATH
 
