@@ -35,11 +35,11 @@ export WORKON_HOME=$HOME/python_envs
 # GOROOT=/home/ilink/local/go
 export GOPATH=/home/ilink/.go
 
-# if [ ! -S ~/.ssh/ssh_auth_sock ]; then
-#   eval `ssh-agent`
-#   ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
-# fi
-# export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+  eval `ssh-agent`
+  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+fi
+export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 
 # export CC=/usr/bin/gcc
 # export CXX=/usr/bin/g++
