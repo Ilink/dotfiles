@@ -31,7 +31,7 @@ Plug 'tyru/caw.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 " Plug 'mhinz/vim-startify'
 Plug 'scrooloose/nerdtree'
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'w0ng/vim-hybrid'
 Plug 'dracula/vim', { 'name': 'dracula' }
