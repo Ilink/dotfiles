@@ -13,4 +13,5 @@ ln -s $PWD/.bashrc $HOME/.bashrc
 ln -s $PWD/.tmux.conf $HOME/.tmux.conf
 ln -s $PWD/vim/.vimrc $HOME/.vimrc
 
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
