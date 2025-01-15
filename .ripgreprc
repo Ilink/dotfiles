@@ -1,4 +1,5 @@
 --smart-case
 --glob=!git/*
+--glob=!valgrind.supp
 --line-number
 --no-heading

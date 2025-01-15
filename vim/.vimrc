@@ -31,7 +31,7 @@ Plug 'tyru/caw.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 " Plug 'mhinz/vim-startify'
 Plug 'scrooloose/nerdtree'
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'w0ng/vim-hybrid'
 Plug 'dracula/vim', { 'name': 'dracula' }
@@ -77,6 +77,7 @@ Plug 'leafgarland/typescript-vim'
 " Plug 'pangloss/vim-javascript'
 " Plug 'herringtondarkholme/yats.vim'
 " Plug 'ycm-core/YouCompleteMe'
+
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'rust-lang/rust.vim'
 
@@ -503,7 +504,7 @@ function! Build()
         exec(":AsyncRun go build \|& tee build.log")
     else
         " exec(":AsyncRun -raw pity install \|& tee build.log")
-        exec(":AsyncRun pity install &> build.log")
+        exec(":AsyncRun ninja install -j100 &> build.log")
     endif
     " opens the quickfix, focuses the window if it's already open
     copen 
