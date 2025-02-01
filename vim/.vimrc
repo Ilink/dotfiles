@@ -31,7 +31,7 @@ Plug 'tyru/caw.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 " Plug 'mhinz/vim-startify'
 Plug 'scrooloose/nerdtree'
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'w0ng/vim-hybrid'
 Plug 'dracula/vim', { 'name': 'dracula' }
@@ -72,11 +72,12 @@ Plug 'vim-scripts/ShaderHighLight'
 " Plug 'puremourning/vimspector'
 " Plug 'google/vim-searchindex'
 Plug 'andymass/vim-matchup'
-Plug 'fatih/vim-go'
+" Plug 'fatih/vim-go'
 Plug 'leafgarland/typescript-vim'
 " Plug 'pangloss/vim-javascript'
 " Plug 'herringtondarkholme/yats.vim'
 " Plug 'ycm-core/YouCompleteMe'
+
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'rust-lang/rust.vim'
 
@@ -503,7 +504,7 @@ function! Build()
         exec(":AsyncRun go build \|& tee build.log")
     else
         " exec(":AsyncRun -raw pity install \|& tee build.log")
-        exec(":AsyncRun pity install &> build.log")
+        exec(":AsyncRun ninja install -j100 &> build.log")
     endif
     " opens the quickfix, focuses the window if it's already open
     copen 
@@ -1405,13 +1406,20 @@ endfunc
 " src/pipeline/indexer/search/TaskGraph.cpp:856:52: error: no matching function for call to ‘make_edge(std::tuple_element<0, std::tuple<tbb::flow::interface11::internal::multifunction_output<tg::StatusMsg> > >::type&, tbb::flow::interface11::function_node<tg::StatusMsg::MessageT, tbb::flow::interface11::continue_msg>&)’
 " set errorformat=%f:%l:%c:\ error:\ %m
 
-" Taken from https://github.com/rust-lang/rust.vim/blob/889b9a7515db477f4cb6808bef1769e53493c578/syntax_checkers/rust/cargo.vim
-" set errorformat ^=
-"        \ '%Eerror: %m,' .
-"        \ '%Eerror[E%n]: %m,' .
-"        \ '%Wwarning: %m,' .
-"        \ '%Inote: %m,' .
-"        \ '%C %#--> %f:%l:%c'
+
+
+" Taken from
+" https://github.com/rust-lang/rust.vim/blob/889b9a7515db477f4cb6808bef1769e53493c578/compiler/rustc.vim#L32
+set errorformat ^=
+            \%-G,
+            \%-Gerror:\ aborting\ %.%#,
+            \%-Gerror:\ Could\ not\ compile\ %.%#,
+            \%Eerror:\ %m,
+            \%Eerror[E%n]:\ %m,
+            \%Wwarning:\ %m,
+            \%Inote:\ %m,
+            \%C\ %#-->\ %f:%l:%c,
+            \%E\ \ left:%m,%C\ right:%m\ %f:%l:%c,%Z
 
 set mouse=
 
