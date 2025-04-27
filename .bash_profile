@@ -21,7 +21,7 @@ export LD_RUN_PATH=$HOME/local/lib64:$HOME/local/lib:/home/linuxbrew/.linuxbrew/
 
 # User specific environment and startup programs
 # alias cmake=$HOME/local/bin/cmake
-PATH=/usr/lib/icecc/bin:$HOME/.cargo/bin:$HOME/local/bin:$HOME/bin:$HOME/.fuz/bin:$HOME/.fzf/bin:$HOME/.go/bin:$PATH
+PATH=/usr/lib/icecc/bin:$HOME/.cargo/bin:$HOME/local/bin:$HOME/bin:$HOME/.fuz/bin:$HOME/.fzf/bin:$HOME/go/bin:$PATH
 
 # This is for linux machines with node issues
 # export LD_LIBRARY_PATH=/home/linuxbrew/.linuxbrew/opt/libpq/lib:$HOME/local/lib64:$HOME/local/lib:/home/linuxbrew/.linuxbrew/lib:/usr/include/uuid:/usr/include/tcl8.6:$LD_LIBRARY_PATH

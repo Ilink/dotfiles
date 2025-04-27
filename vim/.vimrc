@@ -32,22 +32,22 @@ Plug 'MattesGroeger/vim-bookmarks'
 " Plug 'mhinz/vim-startify'
 Plug 'scrooloose/nerdtree'
 " Plug 'jiangmiao/auto-pairs'
-Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'w0ng/vim-hybrid'
+" Plug 'ConradIrwin/vim-bracketed-paste'
+" Plug 'w0ng/vim-hybrid'
 Plug 'dracula/vim', { 'name': 'dracula' }
-Plug 'connorholyday/vim-snazzy'
-Plug 'rakr/vim-one'
-Plug 'joshdick/onedark.vim'
-Plug 'mhartington/oceanic-next'
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'felipesousa/rupza'
-Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'majutsushi/tagbar'
-Plug 'dbakker/vim-projectroot'
+" Plug 'connorholyday/vim-snazzy'
+" Plug 'rakr/vim-one'
+" Plug 'joshdick/onedark.vim'
+" Plug 'mhartington/oceanic-next'
+" Plug 'drewtempelmeyer/palenight.vim'
+" Plug 'felipesousa/rupza'
+" Plug 'octol/vim-cpp-enhanced-highlight'
+" Plug 'majutsushi/tagbar'
+" Plug 'dbakker/vim-projectroot'
 Plug 'ilink/vim-bufkill'
-Plug 'vim-scripts/C-fold'
+" Plug 'vim-scripts/C-fold'
 Plug 'ilink/vim-jumplist-files'
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 Plug 'henrik/vim-indexed-search'
 Plug 'vim-scripts/DoxygenToolkit.vim'
 " Plug 'mildred/vim-bufmru'
@@ -59,14 +59,14 @@ Plug 'skywind3000/asyncrun.vim'
 " Plug 'sickill/vim-pasta'
 Plug 'tpope/vim-fugitive'
 Plug 'tikhomirov/vim-glsl'
-Plug 'ilink/nts'
-Plug 'ilink/hexmode'
-Plug 'pangloss/vim-javascript'
-Plug 'dkprice/vim-easygrep'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'vimwiki/vimwiki'
-Plug 'skywind3000/vim-quickui'
-Plug 'altercation/vim-colors-solarized'
+" Plug 'ilink/nts'
+" Plug 'ilink/hexmode'
+" Plug 'pangloss/vim-javascript'
+" Plug 'dkprice/vim-easygrep'
+" Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'vimwiki/vimwiki'
+" Plug 'skywind3000/vim-quickui'
+" Plug 'altercation/vim-colors-solarized'
 Plug 'vim-scripts/ShaderHighLight'
 " Plug 'yggdroot/indentline'
 " Plug 'puremourning/vimspector'
@@ -103,7 +103,8 @@ set backspace=indent,eol,start
 set showmatch
 set ignorecase
 set smartcase
-set smarttab
+set nosmarttab
+" set smarttab
 set softtabstop=4
 set expandtab
 set hlsearch
@@ -173,6 +174,7 @@ let g:matchparen_insert_timeout = 20
 
 " remove auto comment extension stuff
 autocmd! FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+autocmd! FileType * setlocal expandtab
 
 " can override these with inline settings in actual text files apparently
 set foldmethod=indent
@@ -852,8 +854,8 @@ vmap <Leader>' <Plug>(caw:hatpos:toggle)
 nmap <Leader>' <Plug>(caw:hatpos:toggle)
 
 " Context menu (vim-quickui)
-let opts = {'index':g:quickui#context#cursor}
-nnoremap <Leader>fp :call quickui#preview#open("<C-R>=expand("<cfile>")<CR>", opts)<CR>
+" let opts = {'index':g:quickui#context#cursor}
+" nnoremap <Leader>fp :call quickui#preview#open("<C-R>=expand("<cfile>")<CR>", opts)<CR>
 
 " Bookmarks
 nnoremap <Leader>mm :BookmarkToggle<CR>
@@ -1224,7 +1226,7 @@ nnoremap <F10> :call LoadBuildLog()<CR>
 nnoremap <F9> :call BuildCurrentFile()<CR>
 
 " Pasting stuff without ruining the formatting
-set pastetoggle=<F2>
+" set pastetoggle=<F2>
 
 " this just flat out doesnt work
 " map <m-v> :set paste<CR>o<esc>"*]p:set nopaste<CR>
@@ -1492,4 +1494,5 @@ let g:typescript_indent_disable = 1
 " When we use find, dont just jump to the values as we type
 set noincsearch
 
+set expandtab
 " :set guicursor=i:block
