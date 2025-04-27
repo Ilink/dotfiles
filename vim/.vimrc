@@ -174,6 +174,7 @@ let g:matchparen_insert_timeout = 20
 
 " remove auto comment extension stuff
 autocmd! FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+" otherwise neovim's ftplugin for go will unset expandtab
 autocmd! FileType * setlocal expandtab
 
 " can override these with inline settings in actual text files apparently
